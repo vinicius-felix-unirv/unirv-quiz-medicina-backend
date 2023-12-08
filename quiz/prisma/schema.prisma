@@ -29,6 +29,7 @@ model campus {
 model categorias {
   id             Int              @id @default(autoincrement())
   descricao      String?          @db.VarChar(25)
+  status         Boolean          @default(true)
   perguntasnivel perguntasnivel[]
 }
 
@@ -46,6 +47,7 @@ model perguntas {
   nivel              Int
   tempo              Int
   pathimage          String?
+  status             Boolean               @default(true)
   alternativas       alternativas[]
   progressoperguntas progressoperguntas[]
   quiz               quiz[]
@@ -87,6 +89,7 @@ model usuarios {
   campus             Int?
   foto               String               @db.VarChar(255)
   pontuacao          Int
+  status             Boolean              @default(true)
   campuslist             campus[]
   logs               logs[]
   progressoperguntas progressoperguntas[]
