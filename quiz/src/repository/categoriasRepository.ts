@@ -15,9 +15,23 @@ export default {
 
   async createCategoria(categoria: CategoriasDTO): Promise<categorias>{
 
-    const newCategoria = prisma.categorias.create({data: {descricao: categoria.getDescricao(), status: categoria.getStatus()}});
+    const newCategoria = await prisma.categorias.create({data: {descricao: categoria.getDescricao(), status: categoria.getStatus()}});
 
     return newCategoria;
   },
+
+  async updateCategoria(id: number, categoria: CategoriasDTO): Promise<categorias> {
+
+    const updatedCategory = await prisma.categorias.update(
+      { where: {id: id}, 
+        data: {
+          descricao: categoria.getDescricao(),
+          status: categoria.getStatus()
+        }
+      }
+    );
+
+    return updatedCategory;
+  } 
 
 };

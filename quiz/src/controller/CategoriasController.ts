@@ -19,4 +19,23 @@ export class CategoriasController {
       res.status(500).json({message: 'internal server error'});    
     }
   }
+
+  async alterCategoria(req: Request, res: Response) {
+
+    try{
+
+      const descricao = req.params.descricao;
+      const body = req.body;
+
+      const categoria = new CategoriasDTO(body.descricao, body.status);
+
+      const updatedCategoria = await categoriasService.alterCategoria(descricao, categoria);
+
+      res.status(200).json(updatedCategoria);
+
+    }catch(err){
+      res.status(500).json({message: 'Internal server error'});
+    }
+
+  }
 }

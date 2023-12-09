@@ -16,4 +16,15 @@ export class CategoriasService{
 
     return newCategoria;
   }
+
+  async alterCategoria(descricao: string, categoria: CategoriasDTO): Promise<categorias> {
+
+    const categoriaExist = await categoriasRepository.getCategoria(descricao);
+
+    if(categoriaExist == null) throw new Error('Categoria não existe');
+
+    const updatedCategoria = await categoriasRepository.updateCategoria(categoriaExist.id, categoria);
+
+    return updatedCategoria;
+  }
 }
