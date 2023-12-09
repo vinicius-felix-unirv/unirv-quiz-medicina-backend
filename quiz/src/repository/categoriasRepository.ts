@@ -1,6 +1,7 @@
 import { categorias } from '@prisma/client';
 import { prisma } from '../db/quizClientPrisma';
-import { IcategoriaDTO } from '../model/CategoriasDTO';
+import { CategoriasDTO } from '../model/CategoriasDTO';
+
 
 
 export default {
@@ -12,9 +13,9 @@ export default {
     return categoria!;
   },
 
-  async createCategoria(categoria: IcategoriaDTO): Promise<categorias>{
+  async createCategoria(categoria: CategoriasDTO): Promise<categorias>{
 
-    const newCategoria = prisma.categorias.create({data: {descricao: categoria.descricao, status: categoria.status}});
+    const newCategoria = prisma.categorias.create({data: {descricao: categoria.getDescricao(), status: categoria.getStatus()}});
 
     return newCategoria;
   },

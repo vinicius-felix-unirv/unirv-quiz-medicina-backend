@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
 import { categoriasService } from '../service/containerConfig';
+import { CategoriasDTO } from '../model/CategoriasDTO';
 
 export class CategoriasController {
 
   async postCategoria(req:Request, res: Response) {
 
     try{
-      const categoria = req.body;
+      const body = req.body;
 
-      const createdCategoria = categoriasService.saveCategoria(categoria);
+      const categoria = new CategoriasDTO(body.descricao, body.status);
+
+      const createdCategoria = await categoriasService.saveCategoria(categoria);
 
       return res.status(201).json(createdCategoria);
 
