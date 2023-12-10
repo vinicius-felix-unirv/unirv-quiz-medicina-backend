@@ -27,4 +27,11 @@ export class CategoriasService{
 
     return updatedCategoria;
   }
+
+  async getAllCategorias(): Promise<categorias[]> {
+
+    const categorias = await categoriasRepository.getAllCategorias();
+
+    return categorias;
+  }
 }

@@ -38,4 +38,11 @@ export class CategoriasController {
     }
 
   }
+
+  async getAllCategorias(req: Request, res: Response){
+
+    const categorias = await categoriasService.getAllCategorias();
+
+    res.status(200).json(categorias);
+  }
 }

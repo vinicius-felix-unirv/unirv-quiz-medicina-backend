@@ -32,6 +32,13 @@ export default {
     );
 
     return updatedCategory;
-  } 
+  },
+
+  async getAllCategorias(): Promise<categorias[]> {
+
+    const categorias = await prisma.categorias.findMany();
+
+    return categorias;
+  }
 
 };
