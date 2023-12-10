@@ -1,4 +1,4 @@
-import { categorias } from '@prisma/client';
+
 import { CategoriasDTO } from '../model/CategoriasDTO';
 import categoriasRepository from '../repository/categoriasRepository';
 import { Service } from 'typedi';
@@ -6,7 +6,7 @@ import { Service } from 'typedi';
 @Service()
 export class CategoriasService{
 
-  async saveCategoria(categoria: CategoriasDTO): Promise<categorias> {
+  async saveCategoria(categoria: CategoriasDTO): Promise<CategoriasDTO> {
 
     const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
 
@@ -14,10 +14,10 @@ export class CategoriasService{
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
-    return newCategoria;
+    return new CategoriasDTO(newCategoria.descricao ?? '', newCategoria.status, newCategoria.id);
   }
 
-  async alterCategoria(descricao: string, categoria: CategoriasDTO): Promise<categorias> {
+  async alterCategoria(descricao: string, categoria: CategoriasDTO): Promise<CategoriasDTO> {
 
     const categoriaExist = await categoriasRepository.getCategoria(descricao);
 
@@ -25,13 +25,16 @@ export class CategoriasService{
 
     const updatedCategoria = await categoriasRepository.updateCategoria(categoriaExist.id, categoria);
 
-    return updatedCategoria;
+    return new CategoriasDTO(updatedCategoria.descricao ?? '', updatedCategoria.status, updatedCategoria.id);
   }
 
-  async getAllCategorias(): Promise<categorias[]> {
+  async getAllCategorias(): Promise<CategoriasDTO[]> {
 
     const categorias = await categoriasRepository.getAllCategorias();
 
-    return categorias;
+    const categoriasDTOs = categorias.map((categoria) => new CategoriasDTO(categoria.descricao ?? '', categoria.status, categoria.id));
+
+
+    return categoriasDTOs;
   }
 }
