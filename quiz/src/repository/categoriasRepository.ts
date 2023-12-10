@@ -13,6 +13,13 @@ export default {
     return categoria!;
   },
 
+  async getCategoriaId(id: number): Promise<categorias> {
+    
+    const categoria = await prisma.categorias.findFirst({where: {id: id}});
+
+    return categoria!;
+  },
+
   async createCategoria(categoria: CategoriasDTO): Promise<categorias>{
 
     const newCategoria = await prisma.categorias.create({data: {descricao: categoria.getDescricao(), status: categoria.getStatus()}});

@@ -24,12 +24,12 @@ export class CategoriasController {
 
     try{
 
-      const descricao = req.params.descricao;
+      const id = parseInt(req.params.id);
       const body = req.body;
 
       const categoria = new CategoriasDTO(body.descricao, body.status);
 
-      const updatedCategoria = await categoriasService.alterCategoria(descricao, categoria);
+      const updatedCategoria = await categoriasService.alterCategoria(id, categoria);
 
       res.status(200).json(updatedCategoria);
 
