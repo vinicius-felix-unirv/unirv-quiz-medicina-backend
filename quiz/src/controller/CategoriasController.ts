@@ -9,9 +9,7 @@ export class CategoriasController {
     try{
       const body = req.body;
 
-      const categoria = new CategoriasDTO(body.descricao, body.status);
-
-      const createdCategoria = await categoriasService.saveCategoria(categoria);
+      const createdCategoria = await categoriasService.saveCategoria(new CategoriasDTO(body));
 
       return res.status(201).json(createdCategoria);
 
@@ -27,9 +25,7 @@ export class CategoriasController {
       const id = parseInt(req.params.id);
       const body = req.body;
 
-      const categoria = new CategoriasDTO(body.descricao, body.status);
-
-      const updatedCategoria = await categoriasService.alterCategoria(id, categoria);
+      const updatedCategoria = await categoriasService.alterCategoria(id, new CategoriasDTO(body));
 
       res.status(200).json(updatedCategoria);
 

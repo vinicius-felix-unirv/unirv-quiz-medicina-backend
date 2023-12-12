@@ -1,26 +1,28 @@
+import { categorias } from '@prisma/client';
 
-// export interface IcategoriaDTO {
+export interface IcategoriaDTO {
 
-//     descricao: string;
-//     status: boolean;
-// }
+    id?: number;
+    descricao: string;
+    status: boolean;
+}
 
 
 export class CategoriasDTO{
 
   private id?: number;
-  private descricao: string;
+  private descricao: string | null;
   private status: boolean;
 
-  constructor(descricao: string, status: boolean, id?: number) {
-    this.id = id;
-    this.descricao = descricao;
-    this.status = status;
+  constructor(data: IcategoriaDTO | categorias) {
+    this.id = data.id;
+    this.descricao = data.descricao;
+    this.status = data.status;
   }
 
   getId(): number | undefined { return this.id; }
 
-  getDescricao(): string {
+  getDescricao(): string | null{
     return this.descricao;
   }
 
