@@ -23,6 +23,10 @@ export class CategoriasService{
 
     if(categoriaExist == null) throw new Error('Categoria não existe');
 
+    const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao() ?? '');
+
+    if(descricaoRegistered != null) throw new Error('Categoria já existe');
+
     const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
 
     return new CategoriasDTO(updatedCategoria);
