@@ -5,6 +5,16 @@ import perguntasRepository from '../repository/perguntasRepository';
 @Service()
 export class PerguntasService {
 
+  async getPergunta(id: number): Promise<PerguntaDTO> {
+
+    const perguntaExists = await perguntasRepository.getPergunta(id);
+
+    if (perguntaExists == null) throw new Error('Pergunta does not exist');
+
+    return new PerguntaDTO(perguntaExists);
+
+  }
+
   async savePergunta(pergunta: PerguntaDTO): Promise<PerguntaDTO> {
         
     const newPergunta = await perguntasRepository.createPergunta(pergunta);

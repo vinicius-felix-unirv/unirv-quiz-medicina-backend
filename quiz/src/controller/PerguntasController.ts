@@ -4,6 +4,21 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 
 export class PerguntasController{
 
+  async getPergunta(req: Request, res: Response){
+
+    try{
+
+      const id = parseInt(req.params.id);
+
+      const pergunta = await perguntaService.getPergunta(id);
+
+      return res.status(200).json(pergunta);
+
+    }catch(err) {
+      return res.status(500).json({ message: 'Internal Server Error'});
+    }
+  }
+
   async postPergunta(req: Request, res: Response){
     
     const data = req.body;
