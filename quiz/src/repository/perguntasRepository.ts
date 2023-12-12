@@ -11,6 +11,13 @@ export default {
     return pergunta!;
   },
 
+  async getAllPerguntas(): Promise<perguntas[]> {
+
+    const perguntas = await prisma.perguntas.findMany();
+
+    return perguntas;
+  },
+
   async createPergunta(pergunta: PerguntaDTO): Promise<perguntas>{
             
     const newPergunta = await prisma.perguntas.create(

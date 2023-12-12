@@ -15,6 +15,16 @@ export class PerguntasService {
 
   }
 
+  async getAllPerguntas(): Promise<PerguntaDTO[]> {
+
+    const perguntas = await perguntasRepository.getAllPerguntas();
+
+    const perguntasDTOs = perguntas.map((pergunta) => new PerguntaDTO(pergunta));
+
+    return perguntasDTOs;
+
+  }
+
   async savePergunta(pergunta: PerguntaDTO): Promise<PerguntaDTO> {
         
     const newPergunta = await perguntasRepository.createPergunta(pergunta);

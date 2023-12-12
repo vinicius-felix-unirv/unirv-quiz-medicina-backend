@@ -6,6 +6,7 @@ const perguntasRoutes = Router();
 const perguntasController = new PerguntasController();
 
 perguntasRoutes.get('/perguntas/:id', perguntasController.getPergunta);
+perguntasRoutes.get('/perguntas', perguntasController.getAllPergunta);
 perguntasRoutes.post('/perguntas', perguntasController.postPergunta);
 perguntasRoutes.put('/perguntas/:id', perguntasController.putPergunta);
 

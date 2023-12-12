@@ -19,6 +19,13 @@ export class PerguntasController{
     }
   }
 
+  async getAllPergunta(req: Request, res: Response){
+
+    const perguntas = await perguntaService.getAllPerguntas();
+
+    return res.status(200).json(perguntas);
+  }
+
   async postPergunta(req: Request, res: Response){
     
     const data = req.body;
