@@ -12,4 +12,21 @@ export class PerguntasController{
 
     return res.status(201).json(pergunta);
   }
+
+  async putPergunta(req: Request, res: Response){
+
+    try{
+
+      const id = parseInt(req.params.id);
+      const body = req.body;
+
+      const updatedPergunta = await perguntaService.alterPergunta(id, new PerguntaDTO(body));
+
+      return res.status(200).json(updatedPergunta);
+
+    }catch(err) {
+      return res.status(500).json({message: 'Internal Server Error'});
+    }
+
+  }
 }

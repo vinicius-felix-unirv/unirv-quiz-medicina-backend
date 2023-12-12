@@ -27,6 +27,27 @@ export default {
     );
 
     return newPergunta;
+  },
+
+  async updatePergunta(id: number, pergunta: PerguntaDTO): Promise<perguntas>{
+
+    const updatedPergunta = await prisma.perguntas.update(
+
+      { 
+        where: { id: id },
+        data:
+                {
+                  conteudo: pergunta.getConteudo(),
+                  nivel: pergunta.getNivel(),
+                  tempo: pergunta.getTempo(),
+                  pathimage: pergunta.getPathImage(),
+                  status: pergunta.getStatus()
+                }
+      }
+    );
+
+    return updatedPergunta;
   }
+
 
 };
