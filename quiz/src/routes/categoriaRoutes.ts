@@ -6,7 +6,7 @@ const categoriasRoutes = Router();
 const categoriasController = new CategoriasController();
 
 categoriasRoutes.post('/categorias', categoriasController.postCategoria);
-categoriasRoutes.put('/categorias/:id', categoriasController.alterCategoria);
+categoriasRoutes.put('/categorias/:id', categoriasController.putCategoria);
 categoriasRoutes.get('/categorias', categoriasController.getAllCategorias);
 
 

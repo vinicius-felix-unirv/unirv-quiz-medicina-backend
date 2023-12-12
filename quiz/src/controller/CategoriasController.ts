@@ -18,7 +18,7 @@ export class CategoriasController {
     }
   }
 
-  async alterCategoria(req: Request, res: Response) {
+  async putCategoria(req: Request, res: Response) {
 
     try{
 
