@@ -43,4 +43,19 @@ export class PerguntasService {
     return new PerguntaDTO(updatedPergunta);
   }
 
+  async alterStatusPergunta(id: number): Promise<PerguntaDTO> {
+
+    const perguntaExists = await perguntasRepository.getPergunta(id);
+
+    if(perguntaExists == null) throw new Error('Pergunta not found');
+
+    const pergunta = new PerguntaDTO(perguntaExists);
+    
+    pergunta.setStatus(!pergunta.getStatus());
+
+    const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
+
+    return new PerguntaDTO(updatedPergunta);
+  }
+
 }

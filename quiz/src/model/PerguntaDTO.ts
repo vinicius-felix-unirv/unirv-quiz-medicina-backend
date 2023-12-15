@@ -50,4 +50,8 @@ export class PerguntaDTO {
   getStatus(): boolean {
     return this.status;
   }
+
+  setStatus(status: boolean): void {
+    this.status = status;
+  }
 }
