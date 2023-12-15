@@ -35,6 +35,22 @@ export class CategoriasController {
 
   }
 
+  async putStatusCategoria(req: Request, res: Response) {
+
+    try{
+
+      const id = parseInt(req.params.id);
+
+      const updatedCategoria = await categoriasService.alterStatusCategoria(id);
+
+      res.status(200).json(updatedCategoria);
+
+    }catch(err){
+      res.status(500).json({message: 'Internal server error'});
+    }
+
+  }
+
   async getAllCategorias(req: Request, res: Response){
 
     const categoriasDTOs = await categoriasService.getAllCategorias();

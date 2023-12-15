@@ -29,4 +29,8 @@ export class CategoriasDTO{
   getStatus(): boolean {
     return this.status;
   }
+
+  setStatus(status: boolean): void {
+    this.status = status;
+  }
 }
