@@ -1,6 +1,7 @@
 import { Service } from 'typedi';
 import { PerguntaDTO } from '../model/PerguntaDTO';
 import perguntasRepository from '../repository/perguntasRepository';
+import { NotFoundError } from '../exception/NotFoundError';
 
 @Service()
 export class PerguntasService {
@@ -9,7 +10,7 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPergunta(id);
 
-    if (perguntaExists == null) throw new Error('Pergunta does not exist');
+    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
 
     return new PerguntaDTO(perguntaExists);
 
@@ -36,7 +37,7 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPergunta(id);
 
-    if(perguntaExists == null) throw new Error('Pergunta not found');
+    if(perguntaExists == null) throw new NotFoundError('pergunta not found');
 
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
@@ -47,7 +48,7 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPergunta(id);
 
-    if(perguntaExists == null) throw new Error('Pergunta not found');
+    if(perguntaExists == null) throw new NotFoundError('pergunta not found');
 
     const pergunta = new PerguntaDTO(perguntaExists);
     

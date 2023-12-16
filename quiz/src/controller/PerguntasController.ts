@@ -6,17 +6,12 @@ export class PerguntasController{
 
   async getPergunta(req: Request, res: Response){
 
-    try{
+    const id = parseInt(req.params.id);
 
-      const id = parseInt(req.params.id);
+    const pergunta = await perguntaService.getPergunta(id);
 
-      const pergunta = await perguntaService.getPergunta(id);
+    return res.status(200).json(pergunta);
 
-      return res.status(200).json(pergunta);
-
-    }catch(err) {
-      return res.status(500).json({ message: 'Internal Server Error'});
-    }
   }
 
   async getAllPergunta(req: Request, res: Response){
@@ -37,34 +32,22 @@ export class PerguntasController{
 
   async putPergunta(req: Request, res: Response){
 
-    try{
+    const id = parseInt(req.params.id);
+    const body = req.body;
 
-      const id = parseInt(req.params.id);
-      const body = req.body;
+    const updatedPergunta = await perguntaService.alterPergunta(id, new PerguntaDTO(body));
 
-      const updatedPergunta = await perguntaService.alterPergunta(id, new PerguntaDTO(body));
-
-      return res.status(200).json(updatedPergunta);
-
-    }catch(err) {
-      return res.status(500).json({message: 'Internal Server Error'});
-    }
+    return res.status(200).json(updatedPergunta);
 
   }
 
   async putStatusPergunta(req: Request, res: Response){
 
-    try{
+    const id = parseInt(req.params.id);
 
-      const id = parseInt(req.params.id);
+    const updatedPergunta = await perguntaService.alterStatusPergunta(id);
 
-      const updatedPergunta = await perguntaService.alterStatusPergunta(id);
-
-      return res.status(200).json(updatedPergunta);
-
-    }catch(err) {
-      return res.status(500).json({message: 'Internal Server Error'});
-    }
+    return res.status(200).json(updatedPergunta);
 
   }
 }
