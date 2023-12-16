@@ -1,4 +1,6 @@
 
+import { BadRequestError } from '../exception/BadRequestError';
+import { NotFoundError } from '../exception/NotFoundError';
 import { CategoriasDTO } from '../model/CategoriasDTO';
 import categoriasRepository from '../repository/categoriasRepository';
 import { Service } from 'typedi';
@@ -10,7 +12,7 @@ export class CategoriasService{
 
     const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao() ?? '');
 
-    if(categoriaExist != null) throw new Error('Categoria já existe');
+    if(categoriaExist != null) throw new BadRequestError('Categoria already exists');
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
@@ -21,11 +23,11 @@ export class CategoriasService{
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if(categoriaExist == null) throw new Error('Categoria não existe');
+    if(categoriaExist == null) throw new NotFoundError('Categoria not found');
 
     const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao() ?? '');
 
-    if(descricaoRegistered != null) throw new Error('Categoria já existe');
+    if(descricaoRegistered != null) throw new BadRequestError('Categoria already exists');
 
     const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
 
@@ -36,7 +38,7 @@ export class CategoriasService{
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if(categoriaExist == null) throw new Error('Categoria não existe');
+    if(categoriaExist == null) throw new NotFoundError('Categoria not found');
 
     const categoria = new CategoriasDTO(categoriaExist);
     
