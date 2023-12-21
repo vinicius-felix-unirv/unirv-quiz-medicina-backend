@@ -58,4 +58,13 @@ export class CategoriasService{
 
     return categoriasDTOs;
   }
+
+  async getCategoriaId(id: number): Promise<CategoriasDTO> {
+
+    const categoriaExist = await categoriasRepository.getCategoriaId(id);
+
+    if(categoriaExist == null) throw new NotFoundError('Categoria not found');
+
+    return new CategoriasDTO(categoriaExist);
+  }
 }

@@ -41,4 +41,13 @@ export class CategoriasController {
 
     res.status(200).json(categoriasDTOs);
   }
+
+  async getCategoriaId(req: Request, res: Response){
+
+    const id = parseInt(req.params.id);
+
+    const categoria = await categoriasService.getCategoriaId(id);
+
+    return res.status(200).json(categoria);
+  }
 }
