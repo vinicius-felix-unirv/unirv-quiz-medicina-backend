@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { perguntaService } from '../service/containerConfig';
 import { PerguntaDTO } from '../model/PerguntaDTO';
 
-export class PerguntasController{
+export class PerguntasController {
 
-  async getPergunta(req: Request, res: Response){
+  async getPergunta(req: Request, res: Response) {
 
     const id = parseInt(req.params.id);
 
@@ -14,15 +14,15 @@ export class PerguntasController{
 
   }
 
-  async getAllPergunta(req: Request, res: Response){
+  async getAllPergunta(req: Request, res: Response) {
 
     const perguntas = await perguntaService.getAllPerguntas();
 
     return res.status(200).json(perguntas);
   }
 
-  async postPergunta(req: Request, res: Response){
-    
+  async postPergunta(req: Request, res: Response) {
+
     const data = req.body;
 
     const pergunta = await perguntaService.savePergunta(new PerguntaDTO(data));
@@ -30,7 +30,7 @@ export class PerguntasController{
     return res.status(201).json(pergunta);
   }
 
-  async putPergunta(req: Request, res: Response){
+  async putPergunta(req: Request, res: Response) {
 
     const id = parseInt(req.params.id);
     const body = req.body;
@@ -41,7 +41,7 @@ export class PerguntasController{
 
   }
 
-  async putStatusPergunta(req: Request, res: Response){
+  async putStatusPergunta(req: Request, res: Response) {
 
     const id = parseInt(req.params.id);
 

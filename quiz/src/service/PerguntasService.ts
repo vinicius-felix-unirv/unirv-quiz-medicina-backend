@@ -27,8 +27,10 @@ export class PerguntasService {
   }
 
   async savePergunta(pergunta: PerguntaDTO): Promise<PerguntaDTO> {
-        
+
     const newPergunta = await perguntasRepository.createPergunta(pergunta);
+
+    if (!newPergunta) throw new NotFoundError('pergunta not found');
 
     return new PerguntaDTO(newPergunta);
   }
@@ -37,7 +39,7 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPergunta(id);
 
-    if(perguntaExists == null) throw new NotFoundError('pergunta not found');
+    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
 
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
@@ -48,10 +50,10 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPergunta(id);
 
-    if(perguntaExists == null) throw new NotFoundError('pergunta not found');
+    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
 
     const pergunta = new PerguntaDTO(perguntaExists);
-    
+
     pergunta.setStatus(!pergunta.getStatus());
 
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);

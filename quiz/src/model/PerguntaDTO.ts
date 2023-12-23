@@ -1,37 +1,36 @@
 import { perguntas } from '@prisma/client';
 
-
 export interface IperguntasDTO {
-   id?: number;                  
-   conteudo: string;
-   nivel: number;
-   tempo: number;
-   pathimage: string;
-   status: boolean; 
+  id?: number;
+  conteudo: string;
+  nivel: number;
+  tempo: number;
+  pathimage: string;
+  status: boolean;
 }
 export class PerguntaDTO {
 
-  private id?: number;                  
+  private id?: number;
   private conteudo: string | null;
   private nivel: number;
   private tempo: number;
   private pathimage: string | null;
-  private status: boolean; 
+  private status: boolean;
 
-  constructor(data: IperguntasDTO | perguntas){
+  constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
     this.conteudo = data.conteudo;
     this.nivel = data.nivel;
-    this.tempo = data.tempo; 
+    this.tempo = data.tempo;
     this.pathimage = data.pathimage;
     this.status = data.status;
   }
 
-  getId(): number | undefined{
+  getId(): number | undefined {
     return this.id;
   }
 
-  getConteudo(): string | null{
+  getConteudo(): string | null {
     return this.conteudo;
   }
 
@@ -43,7 +42,7 @@ export class PerguntaDTO {
     return this.tempo;
   }
 
-  getPathImage(): string | null{
+  getPathImage(): string | null {
     return this.pathimage;
   }
 
