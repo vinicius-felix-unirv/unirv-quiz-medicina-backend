@@ -1,0 +1,79 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "API Quiz Medicina",
+        "description": "Quiz Medicina",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/usuarios": {
+            "post": {
+                "description": "Buscar usuarios",
+                "requestBody": {
+                    "description": "Dados para adicionar usuario",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestUsuario"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cadastro realizado com sucesso"
+                    },
+                    "500": {
+                        "description": "Cadastro não finalizado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RequestUsuario": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "type": "number"
+                    },
+                    "datanascimento": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "role": {
+                        "type": "number"
+                    },
+                    "uf": {
+                        "type": "string"
+                    },
+                    "campus": {
+                        "type": "number"
+                    },
+                    "foto": {
+                        "type": "string"
+                    },
+                    "pontuacao": {
+                        "type": "number"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}
