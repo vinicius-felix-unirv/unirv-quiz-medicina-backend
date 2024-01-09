@@ -6,7 +6,7 @@ import { errorMiddleware } from './middlewares/error';
 import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import swaggerDocument from './swagger-config/swagger.json';
-import { isAuthenticated } from './middlewares/isAuthenticated';
+// import { isAuthenticated } from './middlewares/isAuthenticated';
 
 dotenv.config();
 

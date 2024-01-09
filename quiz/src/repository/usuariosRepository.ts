@@ -4,78 +4,78 @@ import { prisma } from '../db/quizClientPrisma';
 
 export default {
 
-    async getUsuarioByEmail(email: string): Promise<usuarios> {
+  async getUsuarioByEmail(email: string): Promise<usuarios> {
 
-        const usuario = await prisma.usuarios.findFirst({ where: { email: email } });
+    const usuario = await prisma.usuarios.findFirst({ where: { email: email } });
 
-        return usuario!;
-    },
+    return usuario!;
+  },
 
-    async getUsuarioById(id: number): Promise<usuarios> {
+  async getUsuarioById(id: number): Promise<usuarios> {
 
-        const usuario = await prisma.usuarios.findUnique({ where: { id: id } });
+    const usuario = await prisma.usuarios.findUnique({ where: { id: id } });
 
-        return usuario!;
-    },
+    return usuario!;
+  },
 
-    async getAllUsuarios(): Promise<usuarios[]> {
+  async getAllUsuarios(): Promise<usuarios[]> {
 
-        const usuarios = await prisma.usuarios.findMany();
+    const usuarios = await prisma.usuarios.findMany();
 
-        return usuarios;
-    },
+    return usuarios;
+  },
 
-    async createUsuario(usuario: UsuarioDTO): Promise<usuarios> {
+  async createUsuario(usuario: UsuarioDTO): Promise<usuarios> {
 
-        const newUsuario = await prisma.usuarios.create(
-            {
-                data:
+    const newUsuario = await prisma.usuarios.create(
+      {
+        data:
                     {
-                        // id: usuario.getId(),
-                        nome: usuario.getNome(),
-                        email: usuario.getEmail(),
-                        senha: usuario.getSenha(),
-                        telefone: usuario.getTelefone(),
-                        sexo: usuario.getSexo(),
-                        datanascimento: usuario.getDataNascimento(),
-                        role: usuario.getRole(),
-                        uf: usuario.getUf(),
-                        campus: usuario.getCampus(),
-                        foto: usuario.getFoto(),
-                        pontuacao: usuario.getPontuacao(),
-                        status: usuario.getStatus()
+                      // id: usuario.getId(),
+                      nome: usuario.getNome(),
+                      email: usuario.getEmail(),
+                      senha: usuario.getSenha(),
+                      telefone: usuario.getTelefone(),
+                      sexo: usuario.getSexo(),
+                      datanascimento: usuario.getDataNascimento(),
+                      role: usuario.getRole(),
+                      uf: usuario.getUf(),
+                      campus: usuario.getCampus(),
+                      foto: usuario.getFoto(),
+                      pontuacao: usuario.getPontuacao(),
+                      status: usuario.getStatus()
                     } as usuarios
-            }
-        );
+      }
+    );
 
-        return newUsuario;
-    },
+    return newUsuario;
+  },
 
-    async updateusuario(id: number, usuario: UsuarioDTO): Promise<usuarios> {
+  async updateusuario(id: number, usuario: UsuarioDTO): Promise<usuarios> {
 
-        const updatedUsuario = await prisma.usuarios.update(
+    const updatedUsuario = await prisma.usuarios.update(
 
-            {
-                where: { id: id },
-                data:
+      {
+        where: { id: id },
+        data:
                 {
-                    // id: usuario.getId(),
-                    nome: usuario.getNome(),
-                    email: usuario.getEmail(),
-                    senha: usuario.getSenha(),
-                    telefone: usuario.getTelefone(),
-                    sexo: usuario.getSexo(),
-                    datanascimento: usuario.getDataNascimento(),
-                    role: usuario.getRole(),
-                    uf: usuario.getUf(),
-                    campus: usuario.getCampus(),
-                    foto: usuario.getFoto(),
-                    pontuacao: usuario.getPontuacao(),
-                    status: usuario.getStatus()
+                  // id: usuario.getId(),
+                  nome: usuario.getNome(),
+                  email: usuario.getEmail(),
+                  senha: usuario.getSenha(),
+                  telefone: usuario.getTelefone(),
+                  sexo: usuario.getSexo(),
+                  datanascimento: usuario.getDataNascimento(),
+                  role: usuario.getRole(),
+                  uf: usuario.getUf(),
+                  campus: usuario.getCampus(),
+                  foto: usuario.getFoto(),
+                  pontuacao: usuario.getPontuacao(),
+                  status: usuario.getStatus()
                 }
-            }
-        );
+      }
+    );
 
-        return updatedUsuario;
-    }
+    return updatedUsuario;
+  }
 };

@@ -6,47 +6,47 @@ import { hash } from 'bcryptjs';
 @Service()
 export class UsuarioService {
 
-    async getUsuarioById(id: number): Promise<UsuarioDTO> {
+  async getUsuarioById(id: number): Promise<UsuarioDTO> {
 
-        const usuarioExists = await usuariosRepository.getUsuarioById(id);
+    const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-        if (usuarioExists == null) throw new Error('Pergunta does not exist');
+    if (usuarioExists == null) throw new Error('Pergunta does not exist');
 
-        return new UsuarioDTO(usuarioExists);
+    return new UsuarioDTO(usuarioExists);
 
-    }
+  }
 
-    async getAllUsuarios(): Promise<UsuarioDTO[]> {
+  async getAllUsuarios(): Promise<UsuarioDTO[]> {
 
-        const usuarios = await usuariosRepository.getAllUsuarios();
+    const usuarios = await usuariosRepository.getAllUsuarios();
 
-        const allUsuarios = usuarios.map((usuarios) => new UsuarioDTO(usuarios));
+    const allUsuarios = usuarios.map((usuarios) => new UsuarioDTO(usuarios));
 
-        return allUsuarios;
+    return allUsuarios;
 
-    }
+  }
 
-    async saveUsuario(usuario: UsuarioDTO): Promise<UsuarioDTO> {
+  async saveUsuario(usuario: UsuarioDTO): Promise<UsuarioDTO> {
 
-        const hashedPassword = await hash(usuario.getSenha(), 10);
+    const hashedPassword = await hash(usuario.getSenha(), 10);
 
-        usuario.setPasswordHashed(hashedPassword);
+    usuario.setPasswordHashed(hashedPassword);
 
-        const newUsuario = await usuariosRepository.createUsuario(usuario);
+    const newUsuario = await usuariosRepository.createUsuario(usuario);
 
-        return new UsuarioDTO(newUsuario);
-    }
+    return new UsuarioDTO(newUsuario);
+  }
 
-    async alterUsuario(id: number, usuario: UsuarioDTO): Promise<UsuarioDTO> {
+  async alterUsuario(id: number, usuario: UsuarioDTO): Promise<UsuarioDTO> {
 
-        const usuarioExists = await usuariosRepository.getUsuarioById(id);
+    const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-        if (usuarioExists == null) throw new Error('Pergunta not found');
+    if (usuarioExists == null) throw new Error('Pergunta not found');
 
-        const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
+    const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 
-        return new UsuarioDTO(updatedUsuario);
-    }
+    return new UsuarioDTO(updatedUsuario);
+  }
 
 }
 

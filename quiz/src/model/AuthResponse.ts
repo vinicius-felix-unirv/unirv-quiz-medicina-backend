@@ -6,9 +6,9 @@ export interface IAuthResponse {
 
 export class AuthResponseDTO {
 
-    token!: string;
+  token!: string;
 
-    constructor(userDTO: usuarios, _token: string) {
-        this.token = _token;
-    }
+  constructor(userDTO: usuarios, _token: string) {
+    this.token = _token;
+  }
 }

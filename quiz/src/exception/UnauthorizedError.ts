@@ -1,4 +1,4 @@
-import { ApiError } from './apiError';
+import { ApiError } from './ApiError';
 
 
 export class UnauthorizedError extends ApiError {

@@ -3,18 +3,18 @@ import { AuthenticationService } from '../service/CreateSessionService';
 
 export class AuthenticationController {
 
-    async createSession(req: Request, res: Response) {
+  async createSession(req: Request, res: Response) {
 
-        const { email, senha } = req.body;
+    const { email, senha } = req.body;
 
-        const creationSession = new AuthenticationService();
+    const creationSession = new AuthenticationService();
 
-        const user = await creationSession.createSession({
-            email,
-            senha
-        });
+    const user = await creationSession.createSession({
+      email,
+      senha
+    });
 
-        return res.status(200).json(user);
+    return res.status(200).json(user);
 
-    }
+  }
 }
