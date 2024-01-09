@@ -3,27 +3,30 @@ import { perguntas } from '@prisma/client';
 export interface IperguntasDTO {
   id?: number;
   conteudo: string;
-  nivel: number;
+  perguntasnivelid: number;
   tempo: number;
   pathimage: string;
   status: boolean;
+  categoriasid: number;
 }
 export class PerguntaDTO {
 
   private id?: number;
   private conteudo: string | null;
-  private nivel: number;
+  private perguntasnivelid: number;
   private tempo: number;
   private pathimage: string | null;
   private status: boolean;
+  private categoriasid: number | null;
 
   constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
     this.conteudo = data.conteudo;
-    this.nivel = data.nivel;
+    this.perguntasnivelid = data.perguntasnivelid;
     this.tempo = data.tempo;
     this.pathimage = data.pathimage;
     this.status = data.status;
+    this.categoriasid = data.categoriasid;
   }
 
   getId(): number | undefined {
@@ -34,8 +37,8 @@ export class PerguntaDTO {
     return this.conteudo;
   }
 
-  getNivel(): number {
-    return this.nivel;
+  getPerguntasNivelId(): number {
+    return this.perguntasnivelid;
   }
 
   getTempo(): number {
@@ -48,6 +51,10 @@ export class PerguntaDTO {
 
   getStatus(): boolean {
     return this.status;
+  }
+
+  getCategoriasId(): number | null {
+    return this.categoriasid;
   }
 
   setStatus(status: boolean): void {

@@ -25,10 +25,11 @@ export default {
         data:
         {
           conteudo: pergunta.getConteudo(),
-          nivel: pergunta.getNivel(),
+          perguntasnivelid: pergunta.getPerguntasNivelId(),
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
-          status: pergunta.getStatus()
+          status: pergunta.getStatus(),
+          categoriasid: pergunta.getCategoriasId()
         }
       }
     );
@@ -45,10 +46,11 @@ export default {
         data:
         {
           conteudo: pergunta.getConteudo(),
-          nivel: pergunta.getNivel(),
+          perguntasnivelid: pergunta.getPerguntasNivelId(),
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
-          status: pergunta.getStatus()
+          status: pergunta.getStatus(),
+          categoriasid: pergunta.getCategoriasId()
         }
       }
     );
