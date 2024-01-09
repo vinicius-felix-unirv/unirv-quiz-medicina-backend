@@ -7,7 +7,7 @@ const usuariosController = new UsuariosController();
 
 usuariosRoutes.get('/usuarios/:id', isAuthenticated, usuariosController.getUsuarioById);
 usuariosRoutes.get('/usuarios', isAuthenticated, usuariosController.getAllUsuarios);
-usuariosRoutes.post('/usuarios', isAuthenticated, usuariosController.postUsuario);
+usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
 usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
 
 export { usuariosRoutes };
