@@ -49,11 +49,13 @@ model perguntas {
   pathimage          String?
   status             Boolean               @default(true)
   categoriasid       Int?
+  quizid             Int?
   categorias   categorias? @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntasnivel   perguntasnivel? @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quiz  quiz? @relation(fields: [quizid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alternativas       alternativas[]
   progressoperguntas progressoperguntas[]
-  quiz               quiz[]
+  
 }
 
 model perguntasnivel {
@@ -74,8 +76,7 @@ model progressoperguntas {
 model quiz {
   id         Int        @id @default(autoincrement())
   titulo     String     @db.VarChar(150)
-  perguntaid Int?
-  perguntas  perguntas? @relation(fields: [perguntaid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntas  perguntas[]
 }
 
 model usuarios {
