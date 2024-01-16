@@ -29,7 +29,8 @@ export default {
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
           status: pergunta.getStatus(),
-          categoriasid: pergunta.getCategoriasId()
+          categoriasid: pergunta.getCategoriasId(),
+          quizid: pergunta.getQuizId()
         }
       }
     );
@@ -50,7 +51,8 @@ export default {
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
           status: pergunta.getStatus(),
-          categoriasid: pergunta.getCategoriasId()
+          categoriasid: pergunta.getCategoriasId(),
+          quizid: pergunta.getQuizId()
         }
       }
     );

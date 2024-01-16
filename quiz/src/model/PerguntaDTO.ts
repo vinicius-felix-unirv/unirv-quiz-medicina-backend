@@ -8,6 +8,7 @@ export interface IperguntasDTO {
   pathimage: string;
   status: boolean;
   categoriasid: number;
+  quizid: number;
 }
 export class PerguntaDTO {
 
@@ -18,6 +19,7 @@ export class PerguntaDTO {
   private pathimage: string | null;
   private status: boolean;
   private categoriasid: number | null;
+  private quizid: number | null;
 
   constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
@@ -27,6 +29,7 @@ export class PerguntaDTO {
     this.pathimage = data.pathimage;
     this.status = data.status;
     this.categoriasid = data.categoriasid;
+    this.quizid = data.quizid;
   }
 
   getId(): number | undefined {
@@ -55,6 +58,10 @@ export class PerguntaDTO {
 
   getCategoriasId(): number | null {
     return this.categoriasid;
+  }
+
+  getQuizId(): number | null {
+    return this.quizid;
   }
 
   setStatus(status: boolean): void {
