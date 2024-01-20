@@ -43,6 +43,12 @@ export class CampusService{
 
     if(campusExist === null)  throw new NotFoundError('Campus not found');
 
+    const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId()!);
+
+    const campusAlreadyExists = campusList?.filter(c => c.curso === campus.getCurso());
+
+    if(campusAlreadyExists?.length != 0) throw new BadRequestError('Campus already exists');
+
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
     return new CampusDTO(updatedCampus);
