@@ -6,7 +6,7 @@ import { PerguntasNivelController } from '../controller/PerguntasNivelController
 const perguntasNivelRoutes = Router();
 const perguntasNivelController = new PerguntasNivelController();
 
-// perguntasNivelRoutes.get('/perguntas/:id', isAuthenticated, perguntasNivelController.getPergunta);
+perguntasNivelRoutes.get('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.getPerguntaNivelById);
 // perguntasNivelRoutes.get('/perguntas', isAuthenticated, perguntasNivelController.getAllPergunta);
 perguntasNivelRoutes.post('/perguntasNivel', isAuthenticated, perguntasNivelController.postPerguntasNivel);
 // perguntasNivelRoutes.put('/perguntas/:id', isAuthenticated, perguntasNivelController.putPergunta);

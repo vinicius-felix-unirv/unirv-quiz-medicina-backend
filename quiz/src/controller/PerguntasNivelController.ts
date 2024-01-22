@@ -11,6 +11,15 @@ export class PerguntasNivelController{
 
     const perguntaNivel = await perguntasNivelService.createPerguntNivel(new PerguntasNivelDTO(body));
 
+    return res.status(201).json(perguntaNivel);
+  }
+
+  async getPerguntaNivelById(req: Request, res: Response){
+
+    const id = parseInt(req.params.id);
+
+    const perguntaNivel = await perguntasNivelService.getPerguntasNivelById(id);
+
     return res.status(200).json(perguntaNivel);
   }
 }
