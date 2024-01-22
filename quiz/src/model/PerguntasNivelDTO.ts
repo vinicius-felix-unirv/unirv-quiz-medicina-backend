@@ -8,7 +8,7 @@ export interface IPerguntasNivelDTO{
     tempo: number;   
 }
 
-export class PerguntasNivel{
+export class PerguntasNivelDTO{
 
   private id?: number;
   private nivel: number;    
