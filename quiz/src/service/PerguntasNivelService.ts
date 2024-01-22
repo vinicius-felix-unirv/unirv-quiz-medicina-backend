@@ -27,5 +27,12 @@ export class PerguntasNivelService{
     return new PerguntasNivelDTO(perguntaNivelExists);
   }
 
+  async getAllPerguntasNivel(): Promise<PerguntasNivelDTO[]> {
+
+    const perguntasNivel = await perguntasNivelRepository.getAllPerguntasNivel();
+
+    return perguntasNivel.map(perguntasNivel => new PerguntasNivelDTO(perguntasNivel));
+  }
+
 
 }

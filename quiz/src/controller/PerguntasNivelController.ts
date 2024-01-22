@@ -22,4 +22,11 @@ export class PerguntasNivelController{
 
     return res.status(200).json(perguntaNivel);
   }
+
+  async getAllPerguntaNivel(req: Request, res: Response){
+
+    const perguntaNivel = await perguntasNivelService.getAllPerguntasNivel();
+
+    return res.status(200).json(perguntaNivel);
+  }
 }

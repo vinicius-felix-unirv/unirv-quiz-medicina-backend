@@ -35,4 +35,11 @@ export default {
 
     return perguntaNivel;
   },
+
+  async getAllPerguntasNivel(): Promise<perguntasnivel[]>{
+
+    const perguntaNivel = await prisma.perguntasnivel.findMany();
+
+    return perguntaNivel;
+  },
 };
