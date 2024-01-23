@@ -39,4 +39,13 @@ export class PerguntasNivelController{
 
     return res.status(200).json(updatedPerguntasNivel);
   }
+
+  async deletePerguntasNivel(req: Request, res: Response){
+
+    const id = parseInt(req.params.id);
+
+    await perguntasNivelService.deletePerguntasNivel(id);
+
+    return res.status(200).json({ message: 'PerguntasNivel deleted successfully'});
+  }
 }

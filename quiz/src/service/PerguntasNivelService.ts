@@ -49,5 +49,15 @@ export class PerguntasNivelService{
     return new PerguntasNivelDTO(updatedPerguntasNivel);
   }
 
+  async deletePerguntasNivel(id: number): Promise<void> {
+
+    const perguntasNivelExists = await perguntasNivelRepository.getPerguntasNivelById(id);
+
+    if (perguntasNivelExists === null) throw new NotFoundError('PerguntasNivel not found');
+
+    await perguntasNivelRepository.deletePerguntasNivel(id);
+    
+  }
+
 
 }

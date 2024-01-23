@@ -56,5 +56,10 @@ export default {
 
     return updatedPerguntaNivel;
 
+  },
+
+  async deletePerguntasNivel(id: number): Promise<void> {
+
+    await prisma.perguntasnivel.delete({where: {id: id}});
   }
 };
