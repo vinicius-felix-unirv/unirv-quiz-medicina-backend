@@ -42,4 +42,19 @@ export default {
 
     return perguntaNivel;
   },
+
+  async alterPerguntasNivel(id: number, perguntasNivel: PerguntasNivelDTO): Promise<perguntasnivel> {
+
+    const updatedPerguntaNivel = await prisma.perguntasnivel.update({
+      where: { id: id},
+      data: {
+        nivel: perguntasNivel.getNivel(),
+        pontuacao: perguntasNivel.getPontuacao(),
+        tempo: perguntasNivel.getTempo()
+      }
+    });
+
+    return updatedPerguntaNivel;
+
+  }
 };

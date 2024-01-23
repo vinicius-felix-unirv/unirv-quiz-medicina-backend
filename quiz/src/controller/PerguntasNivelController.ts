@@ -29,4 +29,14 @@ export class PerguntasNivelController{
 
     return res.status(200).json(perguntaNivel);
   }
+
+  async putPerguntasNivel(req: Request, res: Response){
+
+    const id = parseInt(req.params.id);
+    const body = req.body;
+
+    const updatedPerguntasNivel = await perguntasNivelService.updatePerguntasNivel(id, new PerguntasNivelDTO(body));
+
+    return res.status(200).json(updatedPerguntasNivel);
+  }
 }

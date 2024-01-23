@@ -34,5 +34,20 @@ export class PerguntasNivelService{
     return perguntasNivel.map(perguntasNivel => new PerguntasNivelDTO(perguntasNivel));
   }
 
+  async updatePerguntasNivel(id: number, perguntasNivel: PerguntasNivelDTO): Promise<PerguntasNivelDTO> {
+
+    const perguntasNivelExists = await perguntasNivelRepository.getPerguntasNivelById(id);
+
+    if(perguntasNivelExists === null) throw new NotFoundError('PerguntasNivel not found');
+
+    const perguntasNivelAlreadyExists = await perguntasNivelRepository.getPerguntasNivelByNivel(perguntasNivel.getNivel());
+
+    if(perguntasNivelAlreadyExists != null) throw new BadRequestError('PerguntasNivel already exists');
+
+    const updatedPerguntasNivel = await perguntasNivelRepository.alterPerguntasNivel(id, perguntasNivel);
+
+    return new PerguntasNivelDTO(updatedPerguntasNivel);
+  }
+
 
 }

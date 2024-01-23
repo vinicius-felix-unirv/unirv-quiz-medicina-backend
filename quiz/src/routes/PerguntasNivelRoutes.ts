@@ -9,7 +9,7 @@ const perguntasNivelController = new PerguntasNivelController();
 perguntasNivelRoutes.get('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.getPerguntaNivelById);
 perguntasNivelRoutes.get('/perguntasNivel', isAuthenticated, perguntasNivelController.getAllPerguntaNivel);
 perguntasNivelRoutes.post('/perguntasNivel', isAuthenticated, perguntasNivelController.postPerguntasNivel);
-// perguntasNivelRoutes.put('/perguntas/:id', isAuthenticated, perguntasNivelController.putPergunta);
-// perguntasNivelRoutes.put('/perguntas/status/:id', isAuthenticated, perguntasNivelController.putStatusPergunta);
+perguntasNivelRoutes.put('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.putPerguntasNivel);
+
 
 export { perguntasNivelRoutes };
