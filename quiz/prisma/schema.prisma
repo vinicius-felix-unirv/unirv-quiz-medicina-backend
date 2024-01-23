@@ -62,6 +62,7 @@ model perguntasnivel {
   id           Int         @id @default(autoincrement())
   nivel        Int
   pontuacao    Int
+  tempo        Int
   perguntas    perguntas[]
 }
 

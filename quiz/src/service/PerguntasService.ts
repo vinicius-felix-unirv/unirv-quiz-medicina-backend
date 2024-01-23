@@ -2,13 +2,14 @@ import { Service } from 'typedi';
 import { PerguntaDTO } from '../model/PerguntaDTO';
 import perguntasRepository from '../repository/perguntasRepository';
 import { NotFoundError } from '../exception/NotFoundError';
+import { BadRequestError } from '../exception/BadRequestError';
 
 @Service()
 export class PerguntasService {
 
   async getPergunta(id: number): Promise<PerguntaDTO> {
 
-    const perguntaExists = await perguntasRepository.getPergunta(id);
+    const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
     if (perguntaExists == null) throw new NotFoundError('pergunta not found');
 
@@ -28,18 +29,24 @@ export class PerguntasService {
 
   async savePergunta(pergunta: PerguntaDTO): Promise<PerguntaDTO> {
 
-    const newPergunta = await perguntasRepository.createPergunta(pergunta);
+    const perguntaExist = await perguntasRepository.getPergunta(pergunta);
 
-    if (!newPergunta) throw new NotFoundError('pergunta not found');
+    if (perguntaExist) throw new BadRequestError('Pergunta already exists');
+
+    const newPergunta = await perguntasRepository.createPergunta(pergunta);
 
     return new PerguntaDTO(newPergunta);
   }
 
   async alterPergunta(id: number, pergunta: PerguntaDTO): Promise<PerguntaDTO> {
 
-    const perguntaExists = await perguntasRepository.getPergunta(id);
+    const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
     if (perguntaExists == null) throw new NotFoundError('pergunta not found');
+
+    const perguntaAlreadyExists = await perguntasRepository.getPergunta(pergunta);
+
+    if (perguntaAlreadyExists) throw new BadRequestError('Pergunta already exists');
 
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
@@ -48,7 +55,7 @@ export class PerguntasService {
 
   async alterStatusPergunta(id: number): Promise<PerguntaDTO> {
 
-    const perguntaExists = await perguntasRepository.getPergunta(id);
+    const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
     if (perguntaExists == null) throw new NotFoundError('pergunta not found');
 

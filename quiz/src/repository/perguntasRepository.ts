@@ -4,7 +4,19 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 
 export default {
 
-  async getPergunta(id: number): Promise<perguntas> {
+  async getPergunta(pergunta: PerguntaDTO): Promise<perguntas> {
+
+    const newPergunta = await prisma.perguntas.findFirst(
+      { where: { 
+        conteudo: pergunta.getConteudo(),
+        pathimage: pergunta.getPathImage(),
+        categoriasid: pergunta.getCategoriasId(),
+      } });
+
+    return newPergunta!;
+  },
+
+  async getPerguntaById(id: number): Promise<perguntas> {
 
     const pergunta = await prisma.perguntas.findUnique({ where: { id: id } });
 
