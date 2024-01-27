@@ -6,6 +6,7 @@ import { QuizService } from './QuizService';
 import { CampusService } from './CampusService';
 import { PerguntasNivelService } from './PerguntasNivelService';
 
+
 const categoriasService = Container.get(CategoriasService);
 const perguntaService = Container.get(PerguntasService);
 const usuarioService = Container.get(UsuarioService);
@@ -13,11 +14,14 @@ const quizService = Container.get(QuizService);
 const campusService = Container.get(CampusService);
 const perguntasNivelService = Container.get(PerguntasNivelService);
 
+
 export { 
   categoriasService,
   perguntaService,
   usuarioService,
   campusService,
   perguntasNivelService,
+  quizService,
+
 };
 
