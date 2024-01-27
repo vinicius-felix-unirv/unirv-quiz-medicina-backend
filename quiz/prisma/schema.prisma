@@ -35,7 +35,7 @@ model categorias {
 
 model logs {
   id         Int       @id @default(autoincrement())
-  datalogin  DateTime  @db.Date
+  datalogin  DateTime?  @db.Date @default(now())
   usuariosid Int?
   descricao  String    @db.VarChar(100)
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
