@@ -13,4 +13,13 @@ export class ProgressoPerguntasController{
 
     return res.status(200).json(progressoPerg);
   }
+
+  async getAllProgressoPergByUsuario(req: Request, res: Response): Promise<Response>{
+
+    const usuarioId = parseInt(req.params.id);
+
+    const progressoPerg = await progressoPerguntasService.getAllProgressoPergByUsuario(usuarioId);
+
+    return res.status(200).json(progressoPerg);
+  }
 }

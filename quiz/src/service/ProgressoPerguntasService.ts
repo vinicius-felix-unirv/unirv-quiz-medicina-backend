@@ -18,4 +18,11 @@ export class ProgressoPerguntasService{
 
     return new ProgressoPerguntasDTO(progressoPerg);
   }
+
+  async getAllProgressoPergByUsuario(usuarioId: number): Promise<ProgressoPerguntasDTO[]> {
+
+    const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(usuarioId);
+
+    return progressoPergByUsuario.map(p => new ProgressoPerguntasDTO(p));
+  }
 }
