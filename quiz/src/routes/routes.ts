@@ -5,6 +5,7 @@ import { usuariosRoutes } from './usuarioRoutes';
 import { authenticationRoutes } from './authenticationRoutes';
 import { campusRoutes } from './campusRoutes';
 import { perguntasNivelRoutes } from './PerguntasNivelRoutes';
+import { progressoPerguntasRoutes } from './progressoPerguntasRoutes';
 
 const routes = Router();
 
@@ -14,6 +15,7 @@ routes.use(usuariosRoutes);
 routes.use(authenticationRoutes);
 routes.use(campusRoutes);
 routes.use(perguntasNivelRoutes);
+routes.use(progressoPerguntasRoutes);
 
 
 export default routes;
