@@ -2,6 +2,7 @@ import { Service } from 'typedi';
 import { UsuarioDTO } from '../model/UsuariosDTO';
 import usuariosRepository from '../repository/usuariosRepository';
 import { hash } from 'bcryptjs';
+import { NotFoundError } from '../exception/NotFoundError';
 
 @Service()
 export class UsuarioService {
@@ -10,7 +11,7 @@ export class UsuarioService {
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-    if (usuarioExists == null) throw new Error('Pergunta does not exist');
+    if (usuarioExists == null) throw new NotFoundError('Usuario does not exist');
 
     return new UsuarioDTO(usuarioExists);
 
@@ -41,7 +42,7 @@ export class UsuarioService {
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-    if (usuarioExists == null) throw new Error('Pergunta not found');
+    if (usuarioExists == null) throw new NotFoundError('Usuario not found');
 
     const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 

@@ -22,18 +22,18 @@ export const isAuthenticated = (
     const decodeToken = verify(token, authConfig.jwt.secret) as JwtPayload;
 
     switch (decodeToken.role) {
-      case 1: {
+    case 1: {
+      return next();
+    }
+    case 2: {
+      if (req.path.includes('/categorias') || req.path.includes('/perguntas')) {
         return next();
       }
-      case 2: {
-        if (req.path.includes('/categorias') || req.path.includes('/perguntas')) {
-          return next();
-        }
-        break;
-      }
-      default: {
-        throw new UnauthorizedError('Unauthorized');
-      }
+      break;
+    }
+    default: {
+      throw new UnauthorizedError('Unauthorized');
+    }
     }
 
 

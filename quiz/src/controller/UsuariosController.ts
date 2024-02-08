@@ -7,17 +7,12 @@ export class UsuariosController {
 
   async getUsuarioById(req: Request, res: Response) {
 
-    try {
+    const id = parseInt(req.params.id);
 
-      const id = parseInt(req.params.id);
+    const usuario = await usuarioService.getUsuarioById(id);
 
-      const usuario = await usuarioService.getUsuarioById(id);
-
-      return res.status(200).json(usuario);
-
-    } catch (err) {
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
+    return res.status(200).json(usuario);
+  
   }
 
   async getAllUsuarios(req: Request, res: Response) {
@@ -33,25 +28,17 @@ export class UsuariosController {
 
     const usuarioResponse = await usuarioService.saveUsuario(new UsuarioDTO(usuarioRequest));
 
-
-
     return res.status(201).json(usuarioResponse);
   }
 
   async putUsuario(req: Request, res: Response) {
+    
+    const id = parseInt(req.params.id);
+    const usuarioRequest = req.body;
 
-    try {
+    const updatedUsuarioResponse = await usuarioService.alterUsuario(id, new UsuarioDTO(usuarioRequest));
 
-      const id = parseInt(req.params.id);
-      const usuarioRequest = req.body;
-
-      const updatedUsuarioResponse = await usuarioService.alterUsuario(id, new UsuarioDTO(usuarioRequest));
-
-      return res.status(200).json(updatedUsuarioResponse);
-
-    } catch (err) {
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
+    return res.status(200).json(updatedUsuarioResponse);
 
   }
 }
