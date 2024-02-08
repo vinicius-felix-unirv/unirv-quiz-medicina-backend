@@ -4,63 +4,63 @@ import { QuizDTO, IQuizDTO } from './../model/QuizDTO';
 
 export default {
 
-    async getQuizByTitulo(_titulo: string): Promise<quiz> {
+  async getQuizByTitulo(_titulo: string): Promise<quiz> {
 
-        const quiz = await prisma.quiz.findFirst({ where: { titulo: _titulo } });
+    const quiz = await prisma.quiz.findFirst({ where: { titulo: _titulo } });
 
-        return quiz!;
-    },
+    return quiz!;
+  },
 
-    async getQuizById(id: number): Promise<quiz> {
+  async getQuizById(id: number): Promise<quiz> {
 
-        const quiz = await prisma.quiz.findFirst({ where: { id: id } });
+    const quiz = await prisma.quiz.findFirst({ where: { id: id } });
 
-        return quiz!;
-    },
+    return quiz!;
+  },
 
-    async createQuiz(quiz: QuizDTO): Promise<quiz> {
+  async createQuiz(quiz: QuizDTO): Promise<quiz> {
 
-        const newQuiz = await prisma.quiz.create({ data: { titulo: quiz.getTitulo() } });
+    const newQuiz = await prisma.quiz.create({ data: { titulo: quiz.getTitulo() } });
 
-        return newQuiz;
-    },
+    return newQuiz;
+  },
 
-    async updateQuiz(id: number, quiz: QuizDTO): Promise<quiz> {
+  async updateQuiz(id: number, quiz: QuizDTO): Promise<quiz> {
 
-        const updatedQuiz = await prisma.quiz.update(
-            {
-                where: { id: id },
-                data: {
-                    titulo: quiz.getTitulo(),
+    const updatedQuiz = await prisma.quiz.update(
+      {
+        where: { id: id },
+        data: {
+          titulo: quiz.getTitulo(),
 
-                }
-            }
-        );
+        }
+      }
+    );
 
-        return updatedQuiz;
-    },
+    return updatedQuiz;
+  },
 
-    async getAllQuiz(): Promise<quiz[]> {
+  async getAllQuiz(): Promise<quiz[]> {
 
-        const quiz = await prisma.quiz.findMany();
+    const quiz = await prisma.quiz.findMany();
 
-        return quiz;
-    },
+    return quiz;
+  },
 
-    async getAllQuizWithQuestion(): Promise<quiz[]> {
+  async getAllQuizWithQuestion(): Promise<quiz[]> {
 
-        const quiz = await prisma.quiz.findMany();
+    const quiz = await prisma.quiz.findMany();
 
-        let quizDto: IQuizDTO;
+    let quizDto: IQuizDTO;
 
-        quiz.map(async x => {
-            const perguntas = await prisma.perguntas.findMany({ where: { id: x.id } });
-            quizDto = new IQuizDTO(x);
-            perguntas.map(perg => quizDto.setPerguntas(perg));
+    quiz.map(async x => {
+      const perguntas = await prisma.perguntas.findMany({ where: { id: x.id } });
+      quizDto = new IQuizDTO(x);
+      perguntas.map(perg => quizDto.setPerguntas(perg));
 
-        });
+    });
 
-        return quiz;
-    }
+    return quiz;
+  }
 
 };
