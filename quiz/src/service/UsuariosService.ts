@@ -29,6 +29,10 @@ export class UsuarioService {
 
   async saveUsuario(usuario: UsuarioDTO): Promise<UsuarioDTO> {
 
+    const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
+
+    if (emailExists != null) throw new NotFoundError('Usuario already exists');
+
     const hashedPassword = await hash(usuario.getSenha(), 10);
 
     usuario.setPasswordHashed(hashedPassword);
@@ -43,6 +47,10 @@ export class UsuarioService {
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
     if (usuarioExists == null) throw new NotFoundError('Usuario not found');
+
+    const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
+
+    if (emailExists != null) throw new NotFoundError('Usuario already exists');
 
     const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 
