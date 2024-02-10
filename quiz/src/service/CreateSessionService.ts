@@ -25,9 +25,8 @@ export class AuthenticationService {
 
     const token = sign({
       subject: user.id,
-      expiresIn: authConfig.jwt.expiresIn,
       role: user.role
-    }, authConfig.jwt.secret, { algorithm: 'HS256' },);
+    }, authConfig.jwt.secret, { expiresIn: '8h' });
 
     return new AuthResponseDTO(user, token);
   }
@@ -36,7 +35,7 @@ export class AuthenticationService {
 
 
 export interface IRequestAuth {
-    email: string;
-    senha: string;
+  email: string;
+  senha: string;
 }
 
