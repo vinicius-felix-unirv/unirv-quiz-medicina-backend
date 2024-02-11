@@ -23,7 +23,7 @@ export class PerguntasNivelDTO{
     this.tempo = perguntasNivel.tempo;
   }
 
-  getId(): number {  return this.id!;  }
+  getId(): number | undefined {  return this.id;  }
 
   getNivel(): number { return this.nivel; }
   

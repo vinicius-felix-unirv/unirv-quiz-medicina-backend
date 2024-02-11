@@ -10,14 +10,16 @@ import { quizRoutes } from './quizRoutes';
 
 const routes = Router();
 
-routes.use(categoriasRoutes);
-routes.use(perguntasRoutes);
-routes.use(usuariosRoutes);
-routes.use(authenticationRoutes);
-routes.use(campusRoutes);
-routes.use(perguntasNivelRoutes);
-routes.use(progressoPerguntasRoutes);
-routes.use(quizRoutes);
+routes.use(
+    categoriasRoutes,
+    perguntasRoutes,
+    usuariosRoutes,
+    authenticationRoutes,
+    campusRoutes, 
+    perguntasNivelRoutes, 
+    progressoPerguntasRoutes, 
+    quizRoutes
+);
 
 
 

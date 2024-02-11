@@ -21,7 +21,7 @@ export class ProgressoPerguntasDTO{
     this.perguntasid = data.perguntasid;
   }
 
-  getId(): number { return this.id!; }
+  getId(): number | undefined { return this.id; }
 
   getUsuariosId(): number | null { return this.usuariosid; }
 

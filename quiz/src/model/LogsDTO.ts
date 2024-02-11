@@ -22,7 +22,7 @@ export class LogsDTO{
 
   }
 
-  getId(): number { return this.id!; }
+  getId(): number | undefined { return this.id; }
 
   getUsuariosId(): number { return this.usuariosid!; }
 

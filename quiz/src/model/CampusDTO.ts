@@ -28,27 +28,27 @@ export class CampusDTO {
     this.usuariosid = data.usuariosid;
   }
 
-  getId(){
+  getId(): number | undefined {
     return this.id;
   }
 
-  getCurso(){
+  getCurso(): string | null{
     return this.curso;
   }
 
-  getTurma(){
+  getTurma(): string | null{
     return this.turma;
   }
 
-  getPeriodo(){
+  getPeriodo(): number | null{
     return this.periodo;
   }
 
-  getNome(){
+  getNome(): string | null{
     return this.nome;
   }
 
-  getUsuarioId(){
+  getUsuarioId(): number | null{
     return this.usuariosid;
   }
 
