@@ -26,5 +26,26 @@ export default {
         });
 
         return alternativasByPergunta;
+    },
+
+    async getAlternativaById(id: number): Promise<alternativas | null> {
+
+        const alternativa = await prisma.alternativas.findUnique({where: {id: id}});
+
+        return alternativa;
+    },
+
+    async updateAlternativa(alternativaId: number, alternativa: AlternativasDTO): Promise<alternativas> {
+
+        const updateAlternativa = await prisma.alternativas.update({
+            where: {id: alternativaId},
+            data: { 
+                resposta: alternativa.getResposta(),
+                pathimage: alternativa.getPathImage(),
+                correta: alternativa.getCorreta()
+            }
+        });
+
+        return updateAlternativa;
     }
 };

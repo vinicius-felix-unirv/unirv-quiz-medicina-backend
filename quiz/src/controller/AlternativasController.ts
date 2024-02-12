@@ -23,4 +23,14 @@ export class AlternativasController{
 
         return res.status(200).json(allAlternativas);
     }
+
+    async updateAlternativa(req: Request, res: Response): Promise<Response> {
+
+        const alternativaId = parseInt(req.params.id);
+        const body = req.body;
+
+        const updateAlternativa = await alternativasService.updateAlternativa(alternativaId, new AlternativasDTO(body));
+
+        return res.status(200).json(updateAlternativa);
+    }
 }
