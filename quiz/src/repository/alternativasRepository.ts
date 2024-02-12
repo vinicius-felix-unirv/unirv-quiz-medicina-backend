@@ -47,5 +47,11 @@ export default {
         });
 
         return updateAlternativa;
+    },
+
+    async deleteAlternativa(alternativaId: number): Promise<void> {
+
+        await prisma.alternativas.delete({where: {id: alternativaId}});
+        
     }
 };

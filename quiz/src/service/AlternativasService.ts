@@ -47,5 +47,14 @@ export class AlternativasService{
         return new AlternativasDTO(updateAlternativa);
     }
 
+    async deleteAlternativa(alternativaId: number): Promise<void> {
+
+        const alternativaExists = await alternativasRepository.getAlternativaById(alternativaId);
+
+        if (!alternativaExists) throw new NotFoundError('Alternativa not found');
+
+        await alternativasRepository.deleteAlternativa(alternativaId);
+    }
+
 
 }

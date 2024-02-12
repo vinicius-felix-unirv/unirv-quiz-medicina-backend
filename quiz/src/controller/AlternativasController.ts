@@ -33,4 +33,13 @@ export class AlternativasController{
 
         return res.status(200).json(updateAlternativa);
     }
+
+    async deleteAlternativa(req: Request, res: Response): Promise<Response> {
+
+        const alternativaId = parseInt(req.params.id);
+
+        await alternativasService.deleteAlternativa(alternativaId);
+
+        return res.status(200).json({message: 'Alternativa deleted successfully'});
+    }
 }
