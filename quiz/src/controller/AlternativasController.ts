@@ -14,4 +14,13 @@ export class AlternativasController{
 
         return res.status(201).json(alternativa);
     }
+
+    async getAllAlternativasByPerguntaId(req: Request, res: Response): Promise<Response>{
+
+        const perguntaId = parseInt(req.params.id);
+
+        const allAlternativas = await alternativasService.getAllAlternativasByPerguntaId(perguntaId);
+
+        return res.status(200).json(allAlternativas);
+    }
 }

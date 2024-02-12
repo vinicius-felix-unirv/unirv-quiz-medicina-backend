@@ -22,5 +22,12 @@ export class AlternativasService{
         return new AlternativasDTO(newAlternativa);
     }
 
+    async getAllAlternativasByPerguntaId(perguntaId: number): Promise<AlternativasDTO[]> {
+
+        const allAlternativasByPergunt = await alternativasRepository.gatAllAternativasByPerguntaId(perguntaId);
+
+        return allAlternativasByPergunt.map(alternativa => new AlternativasDTO(alternativa));
+    }
+
 
 }
