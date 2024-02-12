@@ -2,7 +2,7 @@ import { campus } from '@prisma/client';
 import { CampusDTO } from '../model/CampusDTO';
 import { prisma } from '../db/quizClientPrisma';
 
-export default{
+export default {
 
   async getAllCampusByUserId(id: number): Promise<campus[] | null>{
 
@@ -55,8 +55,5 @@ export default{
     await prisma.campus.delete({where: {id: id}});
 
   }
-
-  
-
 
 };
