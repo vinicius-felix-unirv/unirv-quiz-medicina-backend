@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { AlternativasDTO } from '../model/AlternativasDTO';
+import { AllAlternativasDTO, AlternativasDTO } from '../model/AlternativasDTO';
 import alternativasRepository from '../repository/alternativasRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
@@ -21,6 +21,19 @@ export class AlternativasService{
         const newAlternativa = await alternativasRepository.createAlternativa(alternativa);
 
         return new AlternativasDTO(newAlternativa);
+    }
+
+    async saveManyAlternativas(alternativas: AllAlternativasDTO): Promise<AlternativasDTO[]>{
+
+        const allAlternativas: AlternativasDTO[] = [];
+        for (let i = 0; i < alternativas.alternativas.length; i++){
+            
+            const alternativa =  await alternativasRepository.createAlternativa(alternativas.alternativas[i]);
+
+            allAlternativas.push(new AlternativasDTO(alternativa));
+        }
+
+        return allAlternativas;
     }
 
     async getAllAlternativasByPerguntaId(perguntaId: number): Promise<AlternativasDTO[]> {

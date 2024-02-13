@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { alternativasService } from '../service/containerConfig';
-import { AlternativasDTO } from '../model/AlternativasDTO';
+import {  AllAlternativasDTO, AlternativasDTO } from '../model/AlternativasDTO';
 
 
 export class AlternativasController{
@@ -11,6 +11,15 @@ export class AlternativasController{
         const body = req.body;
 
         const alternativa = await alternativasService.saveAlternativa(new AlternativasDTO(body));
+
+        return res.status(201).json(alternativa);
+    }
+
+    async postAllAlternativa(req: Request, res: Response): Promise<Response>{
+
+        const body = req.body;
+
+        const alternativa = await alternativasService.saveManyAlternativas(new AllAlternativasDTO(body));
 
         return res.status(201).json(alternativa);
     }

@@ -1,5 +1,9 @@
 import { alternativas } from '@prisma/client';
 
+export interface IAllAlternativasDTO{
+    
+    alternativas: IAlternativasDTO[];
+}
 export interface IAlternativasDTO{
 
     id?: number,
@@ -39,13 +43,14 @@ export class AlternativasDTO{
 }
 
 
-export class Alternativas4DTO{
+export class AllAlternativasDTO{
 
-    private alternativas: AlternativasDTO[] | IAlternativasDTO[];
+    public alternativas: AlternativasDTO[];
 
-    constructor(data: AlternativasDTO[] | IAlternativasDTO[] ){
+    constructor(data: IAllAlternativasDTO ){
 
-        this.alternativas = data;
+        this.alternativas = data.alternativas.map(alternativas => new AlternativasDTO(alternativas));
+
     }
 
 
