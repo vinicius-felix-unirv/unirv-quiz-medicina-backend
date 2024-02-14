@@ -25,12 +25,26 @@ export class AlternativasService{
 
     async saveManyAlternativas(alternativas: AllAlternativasDTO): Promise<AlternativasDTO[]>{
 
+        if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('The limit of alternatives must be greater than 2 and less than 5');
+
         const allAlternativas: AlternativasDTO[] = [];
+
         for (let i = 0; i < alternativas.alternativas.length; i++){
-            
+
+            const equasAlternativas = alternativas.alternativas[i].getResposta();
+
+            for(let j = i+1; j < alternativas.alternativas.length; j++){
+
+                if(alternativas.alternativas[j].getResposta() === equasAlternativas)
+                    throw new BadRequestError('the alternatives cannot be the same');
+            }
+
+        }
+
+        for (let i = 0; i < alternativas.alternativas.length; i++){
             const alternativa =  await alternativasRepository.createAlternativa(alternativas.alternativas[i]);
 
-            allAlternativas.push(new AlternativasDTO(alternativa));
+             allAlternativas.push(new AlternativasDTO(alternativa));
         }
 
         return allAlternativas;

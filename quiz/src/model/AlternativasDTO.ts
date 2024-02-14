@@ -1,9 +1,5 @@
 import { alternativas } from '@prisma/client';
 
-export interface IAllAlternativasDTO {
-
-    alternativas: IAlternativasDTO[];
-}
 export interface IAlternativasDTO {
 
     id?: number,
