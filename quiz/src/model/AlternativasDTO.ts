@@ -1,10 +1,10 @@
 import { alternativas } from '@prisma/client';
 
-export interface IAllAlternativasDTO{
-    
+export interface IAllAlternativasDTO {
+
     alternativas: IAlternativasDTO[];
 }
-export interface IAlternativasDTO{
+export interface IAlternativasDTO {
 
     id?: number,
     perguntasid: number,
@@ -14,15 +14,15 @@ export interface IAlternativasDTO{
 
 }
 
-export class AlternativasDTO{
+export class AlternativasDTO {
 
-    private id?: number;          
-    private perguntasid: number | null; 
-    private resposta: string | null;    
+    private id?: number;
+    private perguntasid: number | null;
+    private resposta: string | null;
     private pathimage: string | null;
-    private correta: boolean;  
+    private correta: boolean;
 
-    constructor(data: alternativas | IAlternativasDTO){
+    constructor(data: alternativas | IAlternativasDTO) {
 
         this.id = data.id;
         this.perguntasid = data.perguntasid;
@@ -43,15 +43,15 @@ export class AlternativasDTO{
 }
 
 
-export class AllAlternativasDTO{
+export class AllAlternativasDTO {
 
-    public alternativas: AlternativasDTO[];
-
-    constructor(data: IAllAlternativasDTO ){
-
-        this.alternativas = data.alternativas.map(alternativas => new AlternativasDTO(alternativas));
-
+    public alternativas: AlternativasDTO[] = [];
+    constructor(data: {
+        perguntasid: number,
+        resposta: string,
+        pathimage: string,
+        correta: boolean
+    }[]) {
+        this.alternativas = data.map(x => new AlternativasDTO(x));
     }
-
-
 }
