@@ -6,23 +6,30 @@ import { CategoriasDTO } from '../model/CategoriasDTO';
 
 export default {
 
-  async getCategoria(descricao: string): Promise<categorias> {
+  async getCategoria(descricao: string): Promise<categorias | null> {
     
     const categoria = await prisma.categorias.findFirst({where: {descricao: descricao}});
 
-    return categoria!;
+    return categoria;
   },
 
-  async getCategoriaId(id: number): Promise<categorias> {
+  async getCategoriaId(id: number): Promise<categorias | null> {
     
     const categoria = await prisma.categorias.findFirst({where: {id: id}});
 
-    return categoria!;
+    return categoria;
   },
 
   async createCategoria(categoria: CategoriasDTO): Promise<categorias>{
 
-    const newCategoria = await prisma.categorias.create({data: {descricao: categoria.getDescricao(), status: categoria.getStatus()}});
+    const newCategoria = await prisma.categorias.create(
+      {
+        data: 
+        {
+          descricao: categoria.getDescricao(), 
+          status: categoria.getStatus()
+        }
+      });
 
     return newCategoria;
   },

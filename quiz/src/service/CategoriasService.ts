@@ -10,7 +10,7 @@ export class CategoriasService{
 
   async saveCategoria(categoria: CategoriasDTO): Promise<CategoriasDTO> {
 
-    const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao() ?? '');
+    const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
 
     if(categoriaExist != null) throw new BadRequestError('Categoria already exists');
 
@@ -25,7 +25,7 @@ export class CategoriasService{
 
     if(categoriaExist == null) throw new NotFoundError('Categoria not found');
 
-    const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao() ?? '');
+    const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
 
     if(descricaoRegistered != null) throw new BadRequestError('Categoria already exists');
 

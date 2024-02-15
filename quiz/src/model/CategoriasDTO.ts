@@ -11,7 +11,7 @@ export interface IcategoriaDTO {
 export class CategoriasDTO{
 
   private id?: number;
-  private descricao: string | null;
+  private descricao: string;
   private status: boolean;
 
   constructor(data: IcategoriaDTO | categorias) {
@@ -22,7 +22,7 @@ export class CategoriasDTO{
 
   getId(): number | undefined { return this.id; }
 
-  getDescricao(): string | null{
+  getDescricao(): string {
     return this.descricao;
   }
 
