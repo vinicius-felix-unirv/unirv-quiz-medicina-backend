@@ -4,7 +4,7 @@ import { prisma } from '../db/quizClientPrisma';
 
 export default {
 
-  async getAllCampusByUserId(id: number): Promise<campus[] | null>{
+  async getAllCampusByUserId(id: number): Promise<campus[]>{
 
     const campusByUserId = await prisma.campus.findMany({ where: {usuariosid: id} });
 

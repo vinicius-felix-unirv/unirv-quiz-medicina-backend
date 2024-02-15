@@ -3,21 +3,21 @@ import { campus } from '@prisma/client';
 export interface ICampusDTO{
 
     id?: number;        
-    curso: string | null;
-    turma: string | null;
-    periodo: number | null;   
-    nome: string | null;
-    usuariosid: number | null;
+    curso: string;
+    turma: string;
+    periodo: number;   
+    nome: string;
+    usuariosid: number;
 }
 
 export class CampusDTO {
 
   private id?: number;        
-  private curso: string | null;
-  private turma: string | null;
-  private periodo: number | null;   
-  private nome: string | null;
-  private usuariosid: number | null;
+  private curso: string;
+  private turma: string;
+  private periodo: number;   
+  private nome: string;
+  private usuariosid: number;
 
   constructor(data: ICampusDTO | campus){
     this.id = data.id;
@@ -32,23 +32,23 @@ export class CampusDTO {
     return this.id;
   }
 
-  getCurso(): string | null{
+  getCurso(): string{
     return this.curso;
   }
 
-  getTurma(): string | null{
+  getTurma(): string{
     return this.turma;
   }
 
-  getPeriodo(): number | null{
+  getPeriodo(): number{
     return this.periodo;
   }
 
-  getNome(): string | null{
+  getNome(): string{
     return this.nome;
   }
 
-  getUsuarioId(): number | null{
+  getUsuarioId(): number{
     return this.usuariosid;
   }
 

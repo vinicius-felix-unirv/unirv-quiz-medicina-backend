@@ -4,7 +4,7 @@ import { CampusDTO } from '../model/CampusDTO';
 
 export class CampusController{
 
-  async postCampus(req: Request, res: Response){
+  async postCampus(req: Request, res: Response): Promise<Response> {
 
     const body = req.body;
 
@@ -14,7 +14,7 @@ export class CampusController{
         
   }
 
-  async getAllCampusByUserId(req: Request, res: Response){
+  async getAllCampusByUserId(req: Request, res: Response): Promise<Response> {
 
     const userId = parseInt(req.params.id);
 
@@ -24,7 +24,7 @@ export class CampusController{
 
   }
 
-  async getCampusByUserId(req: Request, res: Response){
+  async getCampusByUserId(req: Request, res: Response): Promise<Response> {
 
     const Id = parseInt(req.params.id);
 
@@ -34,7 +34,7 @@ export class CampusController{
 
   }
 
-  async putCampus(req: Request, res: Response){
+  async putCampus(req: Request, res: Response): Promise<Response> {
 
     const id = parseInt(req.params.id);
     const body = req.body;
@@ -45,7 +45,7 @@ export class CampusController{
 
   }
 
-  async deleteCampus(req: Request, res: Response){
+  async deleteCampus(req: Request, res: Response): Promise<Response> {
 
     const id = parseInt(req.params.id);
 

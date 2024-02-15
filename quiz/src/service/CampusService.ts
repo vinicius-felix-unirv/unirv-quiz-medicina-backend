@@ -9,9 +9,9 @@ export class CampusService{
 
   async createCampus(data: CampusDTO): Promise<CampusDTO>{
         
-    const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId()!);
+    const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
-    const campusExist = campusList?.filter(campus => campus.curso === data.getCurso());
+    const campusExist = campusList.filter(campus => campus.curso === data.getCurso());
 
     if(campusExist?.length != 0) throw new BadRequestError('Campus already exists');
 
@@ -21,11 +21,11 @@ export class CampusService{
 
   }
 
-  async getAllCampusByUserId(id: number): Promise<CampusDTO[] | undefined> {
+  async getAllCampusByUserId(id: number): Promise<CampusDTO[]> {
 
     const campusByUserId = await campusRepository.getAllCampusByUserId(id);
 
-    return campusByUserId?.map(campus => new CampusDTO(campus));
+    return campusByUserId.map(campus => new CampusDTO(campus));
   }
 
   async getCampusByUserId(id: number): Promise<CampusDTO> {
@@ -43,11 +43,11 @@ export class CampusService{
 
     if(campusExist === null)  throw new NotFoundError('Campus not found');
 
-    const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId()!);
+    const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
 
-    const campusAlreadyExists = campusList?.filter(c => c.curso === campus.getCurso());
+    const campusAlreadyExists = campusList.filter(c => c.curso === campus.getCurso());
 
-    if(campusAlreadyExists?.length != 0) throw new BadRequestError('Campus already exists');
+    if(campusAlreadyExists.length != 0) throw new BadRequestError('Campus already exists');
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
