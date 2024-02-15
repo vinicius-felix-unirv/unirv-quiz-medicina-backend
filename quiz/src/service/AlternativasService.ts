@@ -10,7 +10,7 @@ export class AlternativasService{
 
     async saveAlternativa(alternativa: AlternativasDTO): Promise<AlternativasDTO>{
 
-        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId()!);
+        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         if (alternativasByPergunta.length >= 5) throw new BadRequestError('limit of alternativa exceeded');
 
@@ -63,7 +63,7 @@ export class AlternativasService{
 
         if(!alternativaExists) throw new NotFoundError('Alternativa not found');
 
-        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId()!);
+        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         const alternativaAleadyExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
 

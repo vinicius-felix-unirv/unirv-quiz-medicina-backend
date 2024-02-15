@@ -13,7 +13,7 @@ export interface IAlternativasDTO {
 export class AlternativasDTO {
 
     private id?: number;
-    private perguntasid: number | null;
+    private perguntasid: number;
     private resposta: string | null;
     private pathimage: string | null;
     private correta: boolean;
@@ -29,7 +29,7 @@ export class AlternativasDTO {
 
     getId(): number | undefined { return this.id; }
 
-    getPerguntasId(): number | null { return this.perguntasid; }
+    getPerguntasId(): number { return this.perguntasid; }
 
     getResposta(): string | null { return this.resposta; }
 
