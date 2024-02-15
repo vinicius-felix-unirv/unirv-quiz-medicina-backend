@@ -9,7 +9,7 @@ datasource db {
 
 model alternativas {
   id          Int        @id @default(autoincrement())
-  perguntasid Int?
+  perguntasid Int
   resposta    String?    @db.VarChar
   pathimage   String?
   correta     Boolean    @default(false)
@@ -18,17 +18,17 @@ model alternativas {
 
 model campus {
   id         Int       @id @default(autoincrement())
-  curso      String?   @db.VarChar(255)
-  turma      String?   @db.VarChar(255)
-  periodo    Int?
-  nome       String?   @db.VarChar(100)
-  usuariosid Int?
+  curso      String   @db.VarChar(255)
+  turma      String   @db.VarChar(255)
+  periodo    Int
+  nome       String   @db.VarChar(100)
+  usuariosid Int
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model categorias {
   id             Int              @id @default(autoincrement())
-  descricao      String?          @db.VarChar(25)
+  descricao      String          @db.VarChar(25)
   status         Boolean          @default(true)
   perguntas perguntas[]
 }
@@ -36,7 +36,7 @@ model categorias {
 model logs {
   id         Int       @id @default(autoincrement())
   datalogin  DateTime?  @db.Date @default(now())
-  usuariosid Int?
+  usuariosid Int
   descricao  String    @db.VarChar(100)
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -49,7 +49,7 @@ model perguntas {
   pathimage          String?
   status             Boolean               @default(true)
   categoriasid       Int?
-  quizid             Int?
+  quizid             Int
   categorias   categorias? @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntasnivel   perguntasnivel? @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   quiz  quiz? @relation(fields: [quizid], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -68,8 +68,8 @@ model perguntasnivel {
 
 model progressoperguntas {
   id          Int        @id @default(autoincrement())
-  usuariosid  Int?
-  perguntasid Int?
+  usuariosid  Int
+  perguntasid Int
   perguntas   perguntas? @relation(fields: [perguntasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios    usuarios?  @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
