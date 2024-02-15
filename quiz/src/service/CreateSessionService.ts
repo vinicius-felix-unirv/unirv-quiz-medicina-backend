@@ -5,6 +5,8 @@ import { ApiError } from '../exception/ApiError';
 import { sign } from 'jsonwebtoken';
 import { AuthResponse } from '../model/AuthResponse';
 import authConfig from '../authentication/auth';
+import logsRepository from '../repository/logsRepository';
+import { LogsDTO } from '../model/LogsDTO';
 
 @Service()
 export class AuthenticationService {
@@ -23,6 +25,9 @@ export class AuthenticationService {
       name: user.nome,
       role: user.role
     }, authConfig.jwt.secret, { expiresIn: '10s' });
+
+    await logsRepository.createLogs(new LogsDTO({usuariosid: user.id,
+      descricao: 'Login successfully'}));
 
     return { token: token };
   }
