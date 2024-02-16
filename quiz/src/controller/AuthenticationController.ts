@@ -3,7 +3,7 @@ import { AuthenticationService } from '../service/CreateSessionService';
 
 export class AuthenticationController {
 
-  async createSession(req: Request, res: Response) {
+  async createSession(req: Request, res: Response): Promise<Response> {
 
     const { email, senha } = req.body;
 

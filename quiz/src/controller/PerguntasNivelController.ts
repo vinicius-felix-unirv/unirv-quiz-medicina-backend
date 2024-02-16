@@ -5,7 +5,7 @@ import { PerguntasNivelDTO } from '../model/PerguntasNivelDTO';
 
 export class PerguntasNivelController{
 
-  async postPerguntasNivel(req: Request, res: Response){
+  async postPerguntasNivel(req: Request, res: Response): Promise<Response>{
         
     const body = req.body;
 
@@ -14,7 +14,7 @@ export class PerguntasNivelController{
     return res.status(201).json(perguntaNivel);
   }
 
-  async getPerguntaNivelById(req: Request, res: Response){
+  async getPerguntaNivelById(req: Request, res: Response): Promise<Response>{
 
     const id = parseInt(req.params.id);
 
@@ -23,14 +23,14 @@ export class PerguntasNivelController{
     return res.status(200).json(perguntaNivel);
   }
 
-  async getAllPerguntaNivel(req: Request, res: Response){
+  async getAllPerguntaNivel(req: Request, res: Response): Promise<Response>{
 
     const perguntaNivel = await perguntasNivelService.getAllPerguntasNivel();
 
     return res.status(200).json(perguntaNivel);
   }
 
-  async putPerguntasNivel(req: Request, res: Response){
+  async putPerguntasNivel(req: Request, res: Response): Promise<Response>{
 
     const id = parseInt(req.params.id);
     const body = req.body;
@@ -40,7 +40,7 @@ export class PerguntasNivelController{
     return res.status(200).json(updatedPerguntasNivel);
   }
 
-  async deletePerguntasNivel(req: Request, res: Response){
+  async deletePerguntasNivel(req: Request, res: Response): Promise<Response>{
 
     const id = parseInt(req.params.id);
 

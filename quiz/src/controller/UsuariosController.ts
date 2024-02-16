@@ -5,7 +5,7 @@ import { UsuarioDTO } from '../model/UsuariosDTO';
 
 export class UsuariosController {
 
-  async getUsuarioById(req: Request, res: Response) {
+  async getUsuarioById(req: Request, res: Response): Promise<Response> {
 
     const id = parseInt(req.params.id);
 
@@ -15,14 +15,14 @@ export class UsuariosController {
   
   }
 
-  async getAllUsuarios(req: Request, res: Response) {
+  async getAllUsuarios(req: Request, res: Response): Promise<Response> {
 
     const usuarios = await usuarioService.getAllUsuarios();
 
     return res.status(200).json(usuarios);
   }
 
-  async postUsuario(req: Request, res: Response) {
+  async postUsuario(req: Request, res: Response): Promise<Response> {
 
     const usuarioRequest = req.body;
 
@@ -31,7 +31,7 @@ export class UsuariosController {
     return res.status(201).json(usuarioResponse);
   }
 
-  async putUsuario(req: Request, res: Response) {
+  async putUsuario(req: Request, res: Response): Promise<Response> {
     
     const id = parseInt(req.params.id);
     const usuarioRequest = req.body;
