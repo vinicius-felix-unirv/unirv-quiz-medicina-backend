@@ -90,11 +90,10 @@ model usuarios {
   datanascimento     DateTime             @db.Date
   role               Int
   uf                 String               @db.VarChar(2)
-  campus             Int?
   foto               String               @db.VarChar(255)
   pontuacao          Int
   status             Boolean              @default(true)
-  campuslist             campus[]
+  campus             campus[]
   logs               logs[]
   progressoperguntas progressoperguntas[]
 }
