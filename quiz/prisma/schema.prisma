@@ -35,7 +35,7 @@ model categorias {
 
 model logs {
   id         Int       @id @default(autoincrement())
-  datalogin  DateTime?  @db.Date @default(now())
+  datalogin  DateTime  @db.Date @default(now())
   usuariosid Int
   descricao  String    @db.VarChar(100)
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -48,7 +48,7 @@ model perguntas {
   tempo              Int
   pathimage          String?
   status             Boolean               @default(true)
-  categoriasid       Int?
+  categoriasid       Int
   quizid             Int
   categorias   categorias? @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntasnivel   perguntasnivel? @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
