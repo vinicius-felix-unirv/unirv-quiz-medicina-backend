@@ -29,7 +29,6 @@ export class UsuarioDTO {
   private datanascimento: Date;
   private role: number;
   private uf: string;
-  private campus: number | null;
   private foto: string;
   private pontuacao: number;
   private status: boolean;
@@ -44,7 +43,6 @@ export class UsuarioDTO {
     this.datanascimento = data.datanascimento;
     this.role = data.role;
     this.uf = data.uf;
-    this.campus = data.campus;
     this.foto = data.foto;
     this.pontuacao = data.pontuacao;
     this.status = data.status;
@@ -60,7 +58,6 @@ export class UsuarioDTO {
   getSexo(): number { return this.sexo; }
   getRole(): number { return this.role; }
   getUf(): string { return this.uf; }
-  getCampus(): number | null { return this.campus; }
   getFoto(): string { return this.foto; }
   getPontuacao(): number { return this.pontuacao; }
   getStatus(): boolean { return this.status; }

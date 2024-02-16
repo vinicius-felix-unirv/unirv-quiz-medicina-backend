@@ -4,18 +4,18 @@ import { prisma } from '../db/quizClientPrisma';
 
 export default {
 
-  async getUsuarioByEmail(email: string): Promise<usuarios> {
+  async getUsuarioByEmail(email: string): Promise<usuarios | null> {
 
     const usuario = await prisma.usuarios.findFirst({ where: { email: email } });
 
-    return usuario!;
+    return usuario;
   },
 
-  async getUsuarioById(id: number): Promise<usuarios> {
+  async getUsuarioById(id: number): Promise<usuarios | null> {
 
     const usuario = await prisma.usuarios.findUnique({ where: { id: id } });
 
-    return usuario!;
+    return usuario;
   },
 
   async getAllUsuarios(): Promise<usuarios[]> {
@@ -31,7 +31,6 @@ export default {
       {
         data:
                     {
-                      // id: usuario.getId(),
                       nome: usuario.getNome(),
                       email: usuario.getEmail(),
                       senha: usuario.getSenha(),
@@ -40,7 +39,6 @@ export default {
                       datanascimento: usuario.getDataNascimento(),
                       role: usuario.getRole(),
                       uf: usuario.getUf(),
-                      campus: usuario.getCampus(),
                       foto: usuario.getFoto(),
                       pontuacao: usuario.getPontuacao(),
                       status: usuario.getStatus()
@@ -59,7 +57,6 @@ export default {
         where: { id: id },
         data:
                 {
-                  // id: usuario.getId(),
                   nome: usuario.getNome(),
                   email: usuario.getEmail(),
                   senha: usuario.getSenha(),
@@ -68,7 +65,6 @@ export default {
                   datanascimento: usuario.getDataNascimento(),
                   role: usuario.getRole(),
                   uf: usuario.getUf(),
-                  campus: usuario.getCampus(),
                   foto: usuario.getFoto(),
                   pontuacao: usuario.getPontuacao(),
                   status: usuario.getStatus()
