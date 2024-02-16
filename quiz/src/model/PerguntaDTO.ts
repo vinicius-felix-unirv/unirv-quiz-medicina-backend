@@ -18,8 +18,8 @@ export class PerguntaDTO {
   private tempo: number;
   private pathimage: string | null;
   private status: boolean;
-  private categoriasid: number | null;
-  private quizid: number | null;
+  private categoriasid: number;
+  private quizid: number;
 
   constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
@@ -56,11 +56,11 @@ export class PerguntaDTO {
     return this.status;
   }
 
-  getCategoriasId(): number | null {
+  getCategoriasId(): number {
     return this.categoriasid;
   }
 
-  getQuizId(): number | null {
+  getQuizId(): number {
     return this.quizid;
   }
 

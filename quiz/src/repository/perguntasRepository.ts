@@ -4,7 +4,7 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 
 export default {
 
-  async getPergunta(pergunta: PerguntaDTO): Promise<perguntas> {
+  async getPergunta(pergunta: PerguntaDTO): Promise<perguntas | null> {
 
     const newPergunta = await prisma.perguntas.findFirst(
       { where: { 
@@ -13,14 +13,14 @@ export default {
         categoriasid: pergunta.getCategoriasId(),
       } });
 
-    return newPergunta!;
+    return newPergunta;
   },
 
-  async getPerguntaById(id: number): Promise<perguntas> {
+  async getPerguntaById(id: number): Promise<perguntas | null> {
 
     const pergunta = await prisma.perguntas.findUnique({ where: { id: id } });
 
-    return pergunta!;
+    return pergunta;
   },
 
   async getAllPerguntas(): Promise<perguntas[]> {
