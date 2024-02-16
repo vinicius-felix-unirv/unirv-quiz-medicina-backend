@@ -10,7 +10,7 @@ export interface ILogsDTO{
 export class LogsDTO{
 
   private id?: number;
-  private usuariosid: number | null;
+  private usuariosid: number;
   private descricao: string;
 
 
@@ -24,7 +24,7 @@ export class LogsDTO{
 
   getId(): number | undefined { return this.id; }
 
-  getUsuariosId(): number { return this.usuariosid!; }
+  getUsuariosId(): number { return this.usuariosid; }
 
   getDescricao(): string { return this.descricao; }
  
