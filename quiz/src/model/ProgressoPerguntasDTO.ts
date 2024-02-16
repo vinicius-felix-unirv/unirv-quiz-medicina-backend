@@ -3,16 +3,16 @@ import { progressoperguntas } from '@prisma/client';
 export interface IProgressoPerguntasDTO{
 
    id?: number;
-   usuariosid: number | null;
-   perguntasid: number | null;
+   usuariosid: number;
+   perguntasid: number;
 
 }
 
 export class ProgressoPerguntasDTO{
 
   private id?: number;
-  private usuariosid: number | null;
-  private perguntasid: number | null;
+  private usuariosid: number;
+  private perguntasid: number;
 
   constructor(data: IProgressoPerguntasDTO | progressoperguntas){
 
@@ -23,8 +23,8 @@ export class ProgressoPerguntasDTO{
 
   getId(): number | undefined { return this.id; }
 
-  getUsuariosId(): number | null { return this.usuariosid; }
+  getUsuariosId(): number { return this.usuariosid; }
 
-  getPerguntasId(): number | null { return this.perguntasid; }
+  getPerguntasId(): number { return this.perguntasid; }
 
 }
