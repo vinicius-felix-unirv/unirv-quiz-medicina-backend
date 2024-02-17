@@ -65,9 +65,9 @@ export class AlternativasService{
 
         const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
-        const alternativaAleadyExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
+        const alternativaAleadyExists = alternativasByPergunta.filter(a => a.resposta === alternativa.getResposta());
 
-        if(alternativaAleadyExists) throw new BadRequestError('Alternativa already exists');
+        if(alternativaAleadyExists.length != 0 && alternativaAleadyExists[0].id != alternativaId) throw new BadRequestError('Alternativa already exists');
 
         const updateAlternativa = await alternativasRepository.updateAlternativa(alternativaId, alternativa);
 
