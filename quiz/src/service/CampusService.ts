@@ -3,17 +3,22 @@ import { CampusDTO } from '../model/CampusDTO';
 import campusRepository from '../repository/campusRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
+import usuariosRepository from '../repository/usuariosRepository';
 
 @Service()
 export class CampusService{
 
   async createCampus(data: CampusDTO): Promise<CampusDTO>{
+
+    const usuariosidExists = await usuariosRepository.getUsuarioById(data.getUsuarioId());
+
+    if(!usuariosidExists) throw new NotFoundError('usuarios not found');
         
     const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
     const campusExist = campusList.filter(campus => campus.curso === data.getCurso());
 
-    if(campusExist?.length != 0) throw new BadRequestError('Campus already exists');
+    if(campusExist.length != 0) throw new BadRequestError('Campus already exists');
 
     const newCampus = await campusRepository.createCampus(data);
 
@@ -47,7 +52,7 @@ export class CampusService{
 
     const campusAlreadyExists = campusList.filter(c => c.curso === campus.getCurso());
 
-    if(campusAlreadyExists.length != 0) throw new BadRequestError('Campus already exists');
+    if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus already exists');
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
