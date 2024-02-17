@@ -59,7 +59,6 @@ export default {
                 {
                   nome: usuario.getNome(),
                   email: usuario.getEmail(),
-                  senha: usuario.getSenha(),
                   telefone: usuario.getTelefone(),
                   sexo: usuario.getSexo(),
                   datanascimento: usuario.getDataNascimento(),

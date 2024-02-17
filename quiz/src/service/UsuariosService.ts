@@ -50,7 +50,7 @@ export class UsuarioService {
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
-    if (emailExists != null) throw new NotFoundError('Usuario already exists');
+    if (!(emailExists?.id === id)) throw new NotFoundError('Usuario already exists');
 
     const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 
