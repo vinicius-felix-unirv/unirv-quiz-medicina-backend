@@ -42,7 +42,7 @@ export class PerguntasNivelService{
 
     const perguntasNivelAlreadyExists = await perguntasNivelRepository.getPerguntasNivelByNivel(perguntasNivel.getNivel());
 
-    if(!(perguntasNivelAlreadyExists?.id === id)) throw new BadRequestError('PerguntasNivel already exists');
+    if(perguntasNivelAlreadyExists != null && perguntasNivelAlreadyExists?.id != id) throw new BadRequestError('PerguntasNivel already exists');
 
     const updatedPerguntasNivel = await perguntasNivelRepository.alterPerguntasNivel(id, perguntasNivel);
 
