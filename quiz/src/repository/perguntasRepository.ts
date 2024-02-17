@@ -40,7 +40,6 @@ export default {
           perguntasnivelid: pergunta.getPerguntasNivelId(),
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
-          status: pergunta.getStatus(),
           categoriasid: pergunta.getCategoriasId(),
           quizid: pergunta.getQuizId()
         }
