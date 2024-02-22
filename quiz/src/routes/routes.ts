@@ -8,6 +8,7 @@ import { perguntasNivelRoutes } from './PerguntasNivelRoutes';
 import { progressoPerguntasRoutes } from './progressoPerguntasRoutes';
 import { quizRoutes } from './quizRoutes';
 import { alternativasRoutes } from './alternativasRoutes';
+import { sendEmailRoutes } from './sendEmailRoutes';
 
 const routes = Router();
 
@@ -20,7 +21,8 @@ routes.use(
     perguntasNivelRoutes, 
     progressoPerguntasRoutes, 
     quizRoutes,
-    alternativasRoutes
+    alternativasRoutes,
+    sendEmailRoutes
 );
 
 
