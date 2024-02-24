@@ -41,4 +41,14 @@ export class UsuariosController {
     return res.status(200).json(updatedUsuarioResponse);
 
   }
+
+  async putSenha(req: Request, res: Response): Promise<Response> {
+
+    const userId = parseInt(req.params.id);
+    const {senha} = req.body;
+
+    await usuarioService.alterPassword(userId, senha);
+
+    return res.status(200).json({message: 'success'});
+  }
 }

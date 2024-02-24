@@ -57,5 +57,21 @@ export class UsuarioService {
     return new UsuarioDTO(updatedUsuario);
   }
 
+  async alterPassword(userId: number, password: string): Promise<void>{
+
+    const userExists = await usuariosRepository.getUsuarioById(userId);
+    
+    if(!userExists) throw new NotFoundError('Usuario does not exist');
+    
+    const user = new UsuarioDTO(userExists);
+
+    const hashedPassword = await hash(password, 10);
+    
+    user.setPasswordHashed(hashedPassword);
+    
+    await usuariosRepository.updateSenhaUsuario(userId, user);
+    
+  }
+
 }
 
