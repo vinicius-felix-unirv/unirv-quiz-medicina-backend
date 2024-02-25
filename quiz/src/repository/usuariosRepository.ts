@@ -72,5 +72,21 @@ export default {
     );
 
     return updatedUsuario;
+  },
+
+  async updateSenhaUsuario(id: number, usuario: UsuarioDTO): Promise<usuarios> {
+
+    const updateSenha = await prisma.usuarios.update(
+
+      {
+        where: { id: id },
+        data:
+                {
+                  senha: usuario.getSenha()
+                }
+      }
+    );
+
+    return updateSenha;
   }
 };

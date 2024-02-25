@@ -9,5 +9,6 @@ usuariosRoutes.get('/usuarios/:id', isAuthenticated, usuariosController.getUsuar
 usuariosRoutes.get('/usuarios', isAuthenticated, usuariosController.getAllUsuarios);
 usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
 usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
+usuariosRoutes.put('/usuarios/trocar-senha/:id', isAuthenticated, usuariosController.putSenha);
 
 export { usuariosRoutes };
