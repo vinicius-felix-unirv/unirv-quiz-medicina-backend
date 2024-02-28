@@ -97,3 +97,9 @@ model usuarios {
   logs               logs[]
   progressoperguntas progressoperguntas[]
 }
+
+model menu{
+  id              Int             @id @default(autoincrement())
+  urlMenu         String          @unique @db.VarChar(255)
+  role            Int 
+}
