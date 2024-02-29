@@ -6,11 +6,20 @@ import { errorMiddleware } from './middlewares/error';
 import swaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import swaggerDocument from './swagger-config/swagger.json';
+import cors from 'cors';
+import { NextFunction, Request, Response } from 'express';
 // import { isAuthenticated } from './middlewares/isAuthenticated';
 
 dotenv.config();
 
 const app = Express();
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    next();
+}, cors({
+    maxAge: 84600,
+    origin: '*'
+}));
 
 app.use(Express.json());
 
