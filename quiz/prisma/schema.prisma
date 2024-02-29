@@ -100,6 +100,7 @@ model usuarios {
 
 model menu{
   id              Int             @id @default(autoincrement())
-  urlMenu         String          @unique @db.VarChar(255)
+  urlMenu         String          @db.VarChar(255)
+  iconMenu        String          @db.VarChar(255)
   role            Int 
 }
