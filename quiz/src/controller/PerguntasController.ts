@@ -38,7 +38,6 @@ export class PerguntasController {
     const updatedPergunta = await perguntaService.alterPergunta(id, new PerguntaDTO(body));
 
     return res.status(200).json(updatedPergunta);
-
   }
 
   async putStatusPergunta(req: Request, res: Response): Promise<Response> {
@@ -48,6 +47,5 @@ export class PerguntasController {
     const updatedPergunta = await perguntaService.alterStatusPergunta(id);
 
     return res.status(200).json(updatedPergunta);
-
   }
 }
