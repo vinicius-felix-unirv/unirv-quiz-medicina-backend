@@ -16,8 +16,8 @@ export class AuthenticationService {
 
     const user = await usuariosRepository.getUsuarioByEmail(usuario.email);
 
-    if(!user) throw new NotFoundError('User not found');
-    
+    if (!user) throw new NotFoundError('User not found');
+
     const passwordConfirmed = await compare(usuario.senha, user!.senha);
 
     if (!user || !passwordConfirmed) {
@@ -30,10 +30,12 @@ export class AuthenticationService {
       role: user.role
     }, authConfig.jwt.secret, { expiresIn: '8h' });
 
-    await logsRepository.createLogs(new LogsDTO({usuariosid: user.id,
-      descricao: 'Login successfully'}));
+    await logsRepository.createLogs(new LogsDTO({
+      usuariosid: user.id,
+      descricao: 'Login successfully'
+    }));
 
-    return { token: token };
+    return { token: token, id: user.id, role: user.role };
   }
 }
 
