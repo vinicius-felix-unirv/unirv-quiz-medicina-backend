@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { ProgressoPerguntasDTO } from '../model/ProgressoPerguntasDTO';
+import { AllProgressoPerguntasDTO, ProgressoPerguntasDTO } from '../model/ProgressoPerguntasDTO';
 import progressoPerguntasRepository from '../repository/progressoPerguntasRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import usuariosRepository from '../repository/usuariosRepository';
@@ -29,6 +29,39 @@ export class ProgressoPerguntasService{
     const progressoPerg = await progressoPerguntasRepository.createProgressoPergunta(progressoPergunta);
 
     return new ProgressoPerguntasDTO(progressoPerg);
+  }
+
+  async createManyProgressoPergunta(data: AllProgressoPerguntasDTO): Promise<ProgressoPerguntasDTO[]> {
+
+    const usuariosExists = await usuariosRepository.getUsuarioById(data.progressoPerguntas[0].getUsuariosId());
+
+    if (!usuariosExists) throw new NotFoundError('Usuario not found');
+
+    const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(data.progressoPerguntas[0].getUsuariosId());
+    
+    for(const progressoPerguntas of data.progressoPerguntas){
+
+      const perguntaIdExists = await perguntasRepository.getPerguntaById(progressoPerguntas.getPerguntasId());
+
+      if(!perguntaIdExists) throw new NotFoundError('Pergunta not found');
+
+      const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === perguntaIdExists.id);
+
+      if(progressoExist) throw new BadRequestError('ProgressoPergunta already exists');
+
+    }
+
+    const allProgressoPerguntasDTO: ProgressoPerguntasDTO[] = [];
+
+    for(const progressoPerguntas of data.progressoPerguntas){
+
+      const progressoPergSaved = await progressoPerguntasRepository.createProgressoPergunta(progressoPerguntas);
+
+      allProgressoPerguntasDTO.push(new ProgressoPerguntasDTO(progressoPergSaved));
+    }
+   
+    return allProgressoPerguntasDTO;
+
   }
 
   async getAllProgressoPergByUsuario(usuarioId: number): Promise<ProgressoPerguntasDTO[]> {
