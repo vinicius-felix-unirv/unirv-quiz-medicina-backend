@@ -3,6 +3,7 @@ import { AllAlternativasDTO, AlternativasDTO } from '../model/AlternativasDTO';
 import alternativasRepository from '../repository/alternativasRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
+import perguntasRepository from '../repository/perguntasRepository';
 
 
 @Service()
@@ -24,6 +25,10 @@ export class AlternativasService{
     }
 
     async saveManyAlternativas(alternativas: AllAlternativasDTO): Promise<AlternativasDTO[]>{
+
+        const perguntaExists = await perguntasRepository.getPerguntaById(alternativas.alternativas[0].getPerguntasId());
+
+        if (!perguntaExists) throw new NotFoundError('Pergunta not found');
 
         if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('The limit of alternatives must be greater than 2 and less than 5');
 
