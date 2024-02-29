@@ -27,8 +27,6 @@ export class AlternativasService{
 
         if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('The limit of alternatives must be greater than 2 and less than 5');
 
-        const allAlternativas: AlternativasDTO[] = [];
-
         for (let i = 0; i < alternativas.alternativas.length; i++){
 
             const equasAlternativas = alternativas.alternativas[i].getResposta();
@@ -41,10 +39,12 @@ export class AlternativasService{
 
         }
 
-        for (let i = 0; i < alternativas.alternativas.length; i++){
-            const alternativa =  await alternativasRepository.createAlternativa(alternativas.alternativas[i]);
+        const allAlternativas: AlternativasDTO[] = [];
 
-             allAlternativas.push(new AlternativasDTO(alternativa));
+        for (const alternativa of alternativas.alternativas){
+            const alternativaSaved =  await alternativasRepository.createAlternativa(alternativa);
+
+             allAlternativas.push(new AlternativasDTO(alternativaSaved));
         }
 
         return allAlternativas;

@@ -39,24 +39,27 @@ export class ProgressoPerguntasService{
 
     const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(data.progressoPerguntas[0].getUsuariosId());
     
-    const allProgressoPerguntasDTO: ProgressoPerguntasDTO[] = [];
-    
-    for(let i = 0; i < data.progressoPerguntas.length; i++){
+    for(const progressoPerguntas of data.progressoPerguntas){
 
-      const perguntaIdExists = await perguntasRepository.getPerguntaById(data.progressoPerguntas[i].getPerguntasId());
+      const perguntaIdExists = await perguntasRepository.getPerguntaById(progressoPerguntas.getPerguntasId());
 
       if(!perguntaIdExists) throw new NotFoundError('Pergunta not found');
 
-      const progressoExist = progressoPergByUsuario.filter( p => p.perguntasid === perguntaIdExists.id);
+      const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === perguntaIdExists.id);
 
-      if(progressoExist.length != 0) throw new BadRequestError('ProgressoPergunta already exists');
- 
-      const progressoPerg = await progressoPerguntasRepository.createProgressoPergunta(data.progressoPerguntas[i]);
-
-      allProgressoPerguntasDTO.push(new ProgressoPerguntasDTO(progressoPerg));
+      if(progressoExist) throw new BadRequestError('ProgressoPergunta already exists');
 
     }
 
+    const allProgressoPerguntasDTO: ProgressoPerguntasDTO[] = [];
+
+    for(const progressoPerguntas of data.progressoPerguntas){
+
+      const progressoPergSaved = await progressoPerguntasRepository.createProgressoPergunta(progressoPerguntas);
+
+      allProgressoPerguntasDTO.push(new ProgressoPerguntasDTO(progressoPergSaved));
+    }
+   
     return allProgressoPerguntasDTO;
 
   }
