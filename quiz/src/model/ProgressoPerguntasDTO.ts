@@ -21,10 +21,25 @@ export class ProgressoPerguntasDTO{
     this.perguntasid = data.perguntasid;
   }
 
+
+
   getId(): number | undefined { return this.id; }
 
   getUsuariosId(): number { return this.usuariosid; }
 
   getPerguntasId(): number { return this.perguntasid; }
 
+}
+
+export class AllProgressoPerguntasDTO{
+
+  public progressoPerguntas: ProgressoPerguntasDTO[] = [];
+
+  constructor(data: {
+          usuariosid: number,
+          perguntasid: number,
+      }[]){
+
+        this.progressoPerguntas = data.map(x => new ProgressoPerguntasDTO(x));
+  }
 }
