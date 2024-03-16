@@ -9,16 +9,32 @@ import perguntasRepository from '../repository/perguntasRepository';
 @Service()
 export class AlternativasService{
 
+    async alternativasCanBePersistent(alternativas: AllAlternativasDTO): Promise<void>{
+
+        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativas.alternativas[0].getPerguntasId());
+
+        const limitOfAlternativas = alternativasByPergunta.length + alternativas.alternativas.length;
+
+        if (limitOfAlternativas > 5) throw new BadRequestError('limit of alternativa exceeded');
+
+        for(const alternativa of alternativas.alternativas){
+            const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
+
+            if(alternativaExists) throw new BadRequestError('Alternativa already exists');
+        }
+
+    }
+
     async saveAlternativa(alternativa: AlternativasDTO): Promise<AlternativasDTO>{
 
         const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         if (alternativasByPergunta.length >= 5) throw new BadRequestError('limit of alternativa exceeded');
 
-        const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
+        const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta() && a.resposta != null);
 
         if(alternativaExists) throw new BadRequestError('Alternativa already exists');
-
+        
         const newAlternativa = await alternativasRepository.createAlternativa(alternativa);
 
         return new AlternativasDTO(newAlternativa);
@@ -38,18 +54,20 @@ export class AlternativasService{
 
             for(let j = i+1; j < alternativas.alternativas.length; j++){
 
-                if(alternativas.alternativas[j].getResposta() === equasAlternativas)
+                if(alternativas.alternativas[j].getResposta() === equasAlternativas && alternativas.alternativas[j].getResposta() != null)
                     throw new BadRequestError('the alternatives cannot be the same');
             }
 
         }
+
+        await this.alternativasCanBePersistent(alternativas);
 
         const allAlternativas: AlternativasDTO[] = [];
 
         for (const alternativa of alternativas.alternativas){
             const alternativaSaved =  await alternativasRepository.createAlternativa(alternativa);
 
-             allAlternativas.push(new AlternativasDTO(alternativaSaved));
+            allAlternativas.push(new AlternativasDTO(alternativaSaved));
         }
 
         return allAlternativas;
