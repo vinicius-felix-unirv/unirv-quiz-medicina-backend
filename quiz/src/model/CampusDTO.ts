@@ -1,4 +1,5 @@
 import { campus } from '@prisma/client';
+import { containsNull, objectContainsAllAttributes } from './objectUtils';
 
 export interface ICampusDTO{
 
@@ -20,6 +21,13 @@ export class CampusDTO {
   private usuariosid: number;
 
   constructor(data: ICampusDTO | campus){
+
+    const requiredAttributes = ['curso', 'turma', 'periodo', 'nome', 'usuariosid'];
+
+    if (!objectContainsAllAttributes(data, requiredAttributes) || containsNull(data)) {
+      throw new Error('Todos os atributos devem ser fornecidos e não podem ser nulos');
+    }
+    
     this.id = data.id;
     this.curso = data.curso;
     this.turma = data.turma;
