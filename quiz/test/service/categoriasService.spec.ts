@@ -63,3 +63,27 @@ describe('testando a função getCategoriaId', () => {
 
 });
 
+describe('testando a função getAllCategorias', () => {
+
+    it('deve retornar uma lista de CategoriasDTO', async () => {
+
+        categoriasRepository.getAllCategorias = jest.fn().mockResolvedValueOnce([categoriaMock]);
+
+        const categoriasList = await categoriasService.getAllCategorias();
+
+        expect(categoriasList).toEqual([categoriaMock]);
+        expect(categoriasList[0]).toBeInstanceOf(CategoriasDTO);
+        expect(categoriasList).toHaveLength(1);
+    });
+
+    it('deve retornar uma lista vazia', async () => {
+
+        categoriasRepository.getAllCategorias = jest.fn().mockResolvedValueOnce([]);
+
+        const categoriasList = await categoriasService.getAllCategorias();
+
+        expect(categoriasList).toEqual([]);
+        expect(categoriasList[0]).not.toBeInstanceOf(CategoriasDTO);
+        expect(categoriasList).toHaveLength(0);
+    });
+});
