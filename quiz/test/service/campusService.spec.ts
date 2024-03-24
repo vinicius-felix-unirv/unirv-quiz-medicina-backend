@@ -48,6 +48,7 @@ describe('testando a função getAllCampusByUserId', () => {
         const campusList = await campusService.getAllCampusByUserId(3);
 
         expect(campusList).toEqual([campusMock, campusMock]);
+        expect(campusList[0]).toBeInstanceOf(CampusDTO);
         expect(campusList).toHaveLength(2);
     });
 
@@ -58,6 +59,7 @@ describe('testando a função getAllCampusByUserId', () => {
         const campusList = await campusService.getAllCampusByUserId(3);
 
         expect(campusList).toEqual([]);
+        expect(campusList[0]).not.toBeInstanceOf(CampusDTO);
         expect(campusList).toHaveLength(0);
     });
 
