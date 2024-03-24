@@ -63,7 +63,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if (categoriaExist == null) throw new NotFoundError('Categoria not found');
+    if (!categoriaExist) throw new NotFoundError('Categoria not found');
 
     return new CategoriasDTO(categoriaExist);
   }
