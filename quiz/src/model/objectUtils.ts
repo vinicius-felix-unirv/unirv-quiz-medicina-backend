@@ -12,7 +12,8 @@ export function objectContainsAllAttributes(object: any, attributes: string[]): 
   return true;
 }
 
-export function containsNull(data: ICampusDTO): boolean {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function containsNull(data: any): boolean {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key) && data[key as keyof ICampusDTO] === null) {
         return true;

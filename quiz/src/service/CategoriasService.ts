@@ -12,7 +12,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
 
-    if (categoriaExist != null) throw new BadRequestError('Categoria already exists');
+    if (categoriaExist) throw new BadRequestError('Categoria already exists');
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
@@ -63,7 +63,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if (categoriaExist == null) throw new NotFoundError('Categoria not found');
+    if (!categoriaExist) throw new NotFoundError('Categoria not found');
 
     return new CategoriasDTO(categoriaExist);
   }
