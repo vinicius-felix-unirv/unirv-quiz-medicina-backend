@@ -1,18 +1,21 @@
 
+import { BadRequestError } from '../../src/exception/BadRequestError';
 import { NotFoundError } from '../../src/exception/NotFoundError';
 import { CampusDTO } from '../../src/model/CampusDTO';
 import campusRepository from '../../src/repository/campusRepository';
+import usuariosRepository from '../../src/repository/usuariosRepository';
 import { CampusService } from '../../src/service/CampusService';
 
 jest.mock('../../src/repository/campusRepository');
+jest.mock('../../src/repository/usuariosRepository');
 
 const campusMock = {
     id: 1,
-    curso: 'string',
-    turma: 'string',
-    periodo: 3,
-    nome: 'Pedro',
-    usuariosid: 3
+    curso: 'Veterinaria',
+    turma: '4C',
+    periodo: 6,
+    nome: 'Laura',
+    usuariosid: 2
 };
 
 const campusService = new CampusService();
@@ -40,7 +43,6 @@ describe('testando função getCampusByUserId', () => {
 });
 
 describe('testando a função getAllCampusByUserId', () => {
-
     it('deve retornar uma lista de campusDTO', async () => {
 
         campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock, campusMock]);
@@ -62,4 +64,67 @@ describe('testando a função getAllCampusByUserId', () => {
     });
 
 
+});
+
+describe('testando a função createCampus', () => {
+    
+    const campusMock02 = {
+        id: 1,
+        curso: 'Medicina',
+        turma: '3A',
+        periodo: 3,
+        nome: 'Admilson',
+        usuariosid: 9
+    };
+
+    const user = {
+        id: 1,
+        nome: 'string',
+        email: 'string',
+        senha: 'string',
+        telefone: 'string',
+        sexo: 2,
+        datanascimento: '28/02/2003',
+        role: 4,
+        uf: 'string',
+        campus: 3,
+        foto: 'string',
+        pontuacao: 67,
+        status: true,
+    };
+
+    it('deve criar um novo campus e retornar uma instancia de CampusDTO', async () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
+
+        campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock]);
+
+        campusRepository.createCampus = jest.fn().mockResolvedValueOnce(campusMock02);
+
+        const createdCampus = await campusService.createCampus(new CampusDTO(campusMock02));
+
+        expect(createdCampus).toBeInstanceOf(CampusDTO);
+        expect(createdCampus).toEqual(campusMock02);
+
+    });
+
+    it('deve retornar um NotFoundError', () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(null);
+
+        expect(async () => { await campusService.createCampus(new CampusDTO(campusMock02));
+        }).rejects.toThrow(NotFoundError);
+
+    });
+
+    it('deve retornar um BadRequestError', () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
+
+        campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock, campusMock02]);
+
+        expect(async () => { await campusService.createCampus(new CampusDTO(campusMock02));
+        }).rejects.toThrow(BadRequestError);
+
+    });
 });
