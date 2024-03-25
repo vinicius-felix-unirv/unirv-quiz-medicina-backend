@@ -87,3 +87,30 @@ describe('testando a função getAllCategorias', () => {
         expect(categoriasList).toHaveLength(0);
     });
 });
+
+describe('testando a função alterStatusCategoria', () => {
+    it('deve retornar uma instancia de CategoriasDTO com o status alterado', async () => {
+
+        categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(categoriaMock);
+
+        categoriaMock.status = !categoriaMock.status;
+        categoriasRepository.updateCategoria = jest.fn().mockResolvedValueOnce(categoriaMock);
+
+        const updatedCategoria = await categoriasService.alterCategoria(2, new CategoriasDTO(categoriaMock));
+        
+        expect(updatedCategoria).toBeInstanceOf(CategoriasDTO);
+        expect(updatedCategoria.getStatus()).not.toEqual(!categoriaMock.status);
+        expect(updatedCategoria).toEqual(categoriaMock);
+
+    });
+
+    it('deve retornar um NotFoundError', () => {
+
+        categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(null);
+
+        expect(async () => {
+            await categoriasService.alterCategoria(2, new CategoriasDTO(categoriaMock));
+        }).rejects.toThrow(NotFoundError);
+
+    });
+});
