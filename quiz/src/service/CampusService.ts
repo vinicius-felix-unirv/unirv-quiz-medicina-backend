@@ -16,9 +16,9 @@ export class CampusService{
         
     const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
-    const campusExist = campusList.filter(campus => campus.curso === data.getCurso());
+    const campusExist = campusList.some(campus => campus.curso === data.getCurso());
 
-    if(campusExist.length != 0) throw new BadRequestError('Campus already exists');
+    if(campusExist) throw new BadRequestError('Campus already exists');
 
     const newCampus = await campusRepository.createCampus(data);
 

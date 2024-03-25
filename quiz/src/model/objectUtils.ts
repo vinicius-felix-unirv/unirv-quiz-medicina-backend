@@ -2,11 +2,14 @@ import { ICampusDTO } from './CampusDTO';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function objectContainsAllAttributes(object: any, attributes: string[]): boolean {
-    for(const attribute of attributes){
-        if(!(attribute in object)) return false;
-    }
 
-    return true;
+  // if(object === undefined) return false;
+
+  for(const attribute of attributes){
+      if(!(attribute in object)) return false;
+  }
+
+  return true;
 }
 
 export function containsNull(data: ICampusDTO): boolean {
