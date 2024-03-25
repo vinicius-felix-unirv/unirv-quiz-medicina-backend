@@ -128,3 +128,42 @@ describe('testando a função createCampus', () => {
 
     });
 });
+
+describe('testando a função updatedCampus', () => {
+
+    it('deve retornar uma instancia de CampusDTO alterada', async () => {
+
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
+        
+        campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([]);
+        
+        campusMock.curso = 'Odonto';
+        campusRepository.putCampus = jest.fn().mockResolvedValueOnce(campusMock);
+
+        const updatedCampus = await campusService.updatedCampus(1, new CampusDTO(campusMock));
+
+        expect(updatedCampus).toBeInstanceOf(CampusDTO);
+        expect(updatedCampus).toEqual(campusMock);
+
+    });
+
+    it('deve retornar um NotFoundError', () => {
+
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(null);
+        
+        expect(async () => {
+            await campusService.updatedCampus(2, new CampusDTO(campusMock));
+        }).rejects.toThrow(NotFoundError);
+    });
+
+    it('deve retornar um BadRequestError', () => {
+
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
+
+        campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock]);
+        
+        expect(async () => {
+            await campusService.updatedCampus(2, new CampusDTO(campusMock));
+        }).rejects.toThrow(BadRequestError);
+    });
+});
