@@ -167,3 +167,26 @@ describe('testando a função updatedCampus', () => {
         }).rejects.toThrow(BadRequestError);
     });
 });
+
+describe('testando a função deleteCampus', () => {
+
+    it('deve retornar um NotFoundError', () => {
+
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(null);
+
+        expect(async () => {
+            await campusService.deleteCampus(4);
+        }).rejects.toThrow(NotFoundError);
+    });
+
+    it('deve executar uma vez a função deleteCampus', async () => {
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
+
+        campusRepository.deleteCampus = jest.fn();
+
+        await campusService.deleteCampus(7);
+
+        expect(campusRepository.deleteCampus).toHaveBeenCalled();
+        expect(campusRepository.deleteCampus).toHaveBeenCalledTimes(1);
+    });
+});
