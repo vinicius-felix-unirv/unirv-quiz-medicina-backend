@@ -37,16 +37,16 @@ export class CampusService{
 
     const campusByUserId = await campusRepository.getCampusByUserId(id);
 
-    if(campusByUserId === null)  throw new NotFoundError('Campus not found');
+    if(!campusByUserId)  throw new NotFoundError('Campus not found');
 
-    return new CampusDTO(campusByUserId!);
+    return new CampusDTO(campusByUserId);
   }
 
   async updatedCampus(id: number, campus: CampusDTO): Promise<CampusDTO>{
 
     const campusExist = await campusRepository.getCampusByUserId(id);
 
-    if(campusExist === null)  throw new NotFoundError('Campus not found');
+    if(!campusExist)  throw new NotFoundError('Campus not found');
 
     const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
 
