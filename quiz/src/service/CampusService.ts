@@ -63,9 +63,10 @@ export class CampusService{
 
     const campusExist = await campusRepository.getCampusByUserId(id);
 
-    if(campusExist === null)  throw new NotFoundError('Campus not found');
+    if(!campusExist)  throw new NotFoundError('Campus not found');
 
     await campusRepository.deleteCampus(id);
+    
   }
 
 
