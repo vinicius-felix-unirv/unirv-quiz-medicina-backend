@@ -75,6 +75,10 @@ export class AlternativasService{
 
     async getAllAlternativasByPerguntaId(perguntaId: number): Promise<AlternativasDTO[]> {
 
+        const perguntaExists = await perguntasRepository.getPerguntaById(perguntaId);
+
+        if(!perguntaExists) throw new NotFoundError('Pergunta not found');
+
         const allAlternativasByPergunt = await alternativasRepository.gatAllAternativasByPerguntaId(perguntaId);
 
         return allAlternativasByPergunt.map(alternativa => new AlternativasDTO(alternativa));
