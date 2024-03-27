@@ -14,6 +14,14 @@ const alternativaMock = {
     correta: false,
 };
 
+const alternativaMock02 = {
+    id: 38,
+    perguntasid: 2,
+    resposta: 'teu pai',
+    pathimage: 'test',
+    correta: true,
+};
+
 const perguntaMock = {
     id: 5,
     conteudo: 'string',
@@ -96,14 +104,6 @@ describe('testando a função saveAlternativa', () => {
 });
 
 describe('testando a função saveManyAlternativas', () => {
-    const alternativaMock02 = {
-        id: 38,
-        perguntasid: 2,
-        resposta: 'teu pai',
-        pathimage: 'test',
-        correta: true,
-    };
-
     const alternativasMockList = [
         alternativaMock,
         alternativaMock,
@@ -192,6 +192,47 @@ describe('testando a função getAllAlternativasByPerguntaId', () => {
         await expect(alternativasService.getAllAlternativasByPerguntaId(3)).rejects.toMatchObject({
             constructor: NotFoundError,
             message: 'Pergunta not found'
+        });
+    });
+});
+
+describe('testando a função updateAlternativa', () => {
+
+    it('deve retornar uma instancia de AlternativasDTO alterada', async () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(alternativaMock);
+
+        alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([ alternativaMock02]);
+
+        alternativaMock.resposta = 'blablabla';
+        alternativasRepository.updateAlternativa = jest.fn().mockResolvedValueOnce(alternativaMock);
+
+        const upedatedAlternativa = await alternativasService.updateAlternativa(4, new AlternativasDTO(alternativaMock));
+        
+        expect(upedatedAlternativa).toBeInstanceOf(AlternativasDTO);
+        expect(upedatedAlternativa).toEqual(alternativaMock);
+    });
+
+    it('deve retornar um NotFoundError com a mensagem: Alternativa not found', async () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(null);
+
+        await expect(alternativasService.updateAlternativa(2, new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Alternativa not found'
+        });
+    });
+
+    it('deve retornar um BadRequestError com a mensagem: Alternativa already exists', async () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(alternativaMock);
+
+        alternativaMock02.resposta = 'string';
+        alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock, alternativaMock02]);
+
+        await expect(alternativasService.updateAlternativa(2, new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'Alternativa already exists'
         });
     });
 });
