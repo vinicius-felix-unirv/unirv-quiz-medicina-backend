@@ -236,3 +236,37 @@ describe('testando a função updateAlternativa', () => {
         });
     });
 });
+
+describe('testando a função deleteAlternativa', () => {
+
+    it('não deve retornar uma exceção', () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(alternativaMock);
+
+        alternativasRepository.deleteAlternativa = jest.fn();
+
+        expect( async () => await alternativasService.deleteAlternativa(3)).not.toThrow();
+    });
+
+    it('a função alternativasRepository.deleteAlternativas deve ser chamada apenas 1 vez', async () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(alternativaMock);
+
+        alternativasRepository.deleteAlternativa = jest.fn();
+
+        await alternativasService.deleteAlternativa(3);
+
+        expect(alternativasRepository.deleteAlternativa).toHaveBeenCalled();
+        expect(alternativasRepository.deleteAlternativa).toHaveBeenCalledTimes(1);
+    });
+
+    it('deve retornar um NotFoundError com a mensagem: Alternativa not found', () => {
+
+        alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(null);
+
+        expect( async () => await alternativasService.deleteAlternativa(3)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Alternativa not found'
+        });
+    });
+});
