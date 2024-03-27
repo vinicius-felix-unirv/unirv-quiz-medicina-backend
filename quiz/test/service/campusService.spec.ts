@@ -181,7 +181,7 @@ describe('testando a função deleteCampus', () => {
         }).rejects.toThrow(NotFoundError);
     });
 
-    it('deve executar uma vez a função deleteCampus', async () => {
+    it('deve executar uma vez a função campusRepository.deleteCampus', async () => {
         campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
 
         campusRepository.deleteCampus = jest.fn();
@@ -190,5 +190,13 @@ describe('testando a função deleteCampus', () => {
 
         expect(campusRepository.deleteCampus).toHaveBeenCalled();
         expect(campusRepository.deleteCampus).toHaveBeenCalledTimes(1);
+    });
+
+    it('não deve retornar uma exceção', async () => {
+        campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
+
+        campusRepository.deleteCampus = jest.fn();
+
+        expect(async () => await campusService.deleteCampus(7)).not.toThrow();
     });
 });
