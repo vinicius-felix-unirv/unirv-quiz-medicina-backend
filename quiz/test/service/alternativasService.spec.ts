@@ -14,6 +14,17 @@ const alternativaMock = {
     correta: false,
 };
 
+const perguntaMock = {
+    id: 5,
+    conteudo: 'string',
+    perguntasnivelid: 2,
+    tempo: 34,
+    pathimage: 'string',
+    status: true,
+    categoriasid: 3,
+    quizid: 1
+};
+
 describe('testando a função alternativasCanBePersistent', () => {
 
     it('não deve retornar uma exeção', () => {
@@ -85,18 +96,6 @@ describe('testando a função saveAlternativa', () => {
 });
 
 describe('testando a função saveManyAlternativas', () => {
-
-    const perguntaMock = {
-        id: 5,
-        conteudo: 'string',
-        perguntasnivelid: 2,
-        tempo: 34,
-        pathimage: 'string',
-        status: true,
-        categoriasid: 3,
-        quizid: 1
-    };
-
     const alternativaMock02 = {
         id: 38,
         perguntasid: 2,
@@ -169,5 +168,30 @@ describe('testando a função saveManyAlternativas', () => {
             message: 'the alternatives cannot be the same'
         });
 
+    });
+});
+
+describe('testando a função getAllAlternativasByPerguntaId', () => {
+
+    it('deve retornar uma lista de AlternativasDTO', async () => {
+
+        perguntasRepository.getPerguntaById = jest.fn().mockResolvedValueOnce(perguntaMock);
+        alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock]);
+
+        const alternativaList = await alternativasService.getAllAlternativasByPerguntaId(3);
+
+        expect(alternativaList).toHaveLength(1);
+        expect(alternativaList[0]).toEqual(alternativaMock);
+        expect(alternativaList.every(alternativa => alternativa instanceof AlternativasDTO)).toBeTruthy();
+    });
+
+    it('deve retornar um NotFoundError com a mensagem: Pergunta not found', async () => {
+
+        perguntasRepository.getPerguntaById = jest.fn().mockResolvedValueOnce(null);
+
+        await expect(alternativasService.getAllAlternativasByPerguntaId(3)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Pergunta not found'
+        });
     });
 });
