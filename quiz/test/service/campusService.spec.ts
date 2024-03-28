@@ -6,9 +6,6 @@ import campusRepository from '../../src/repository/campusRepository';
 import usuariosRepository from '../../src/repository/usuariosRepository';
 import { CampusService } from '../../src/service/CampusService';
 
-jest.mock('../../src/repository/campusRepository');
-jest.mock('../../src/repository/usuariosRepository');
-
 const campusMock = {
     id: 1,
     curso: 'Veterinaria',
@@ -32,11 +29,14 @@ describe('testando função getCampusByUserId', () => {
         expect(result).toEqual(campusMock);
     });
 
-    it('deve retornar um NotFoundError',  () => {
+    it('deve retornar um NotFoundError com a mensagem: Campus nao encontrado', async () => {
 
         campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => campusService.getCampusByUserId(1)).rejects.toThrow(NotFoundError);        
+        await expect(campusService.getCampusByUserId(1)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Campus nao encontrado'
+        });
 
     });
 
@@ -110,23 +110,28 @@ describe('testando a função createCampus', () => {
 
     });
 
-    it('deve retornar um NotFoundError', () => {
+    it('deve retornar um NotFoundError com a mensagem: Usuarios nao encontrados', async () => {
 
         usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => { await campusService.createCampus(new CampusDTO(campusMock02));
-        }).rejects.toThrow(NotFoundError);
+        await expect(campusService.createCampus(new CampusDTO(campusMock02))).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Usuarios nao encontrados' 
+        });
 
     });
 
-    it('deve retornar um BadRequestError', () => {
+    it('deve retornar um BadRequestError com a mensagem: Campus ja existe', async () => {
 
         usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
 
         campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock, campusMock02]);
 
-        expect(async () => { await campusService.createCampus(new CampusDTO(campusMock02));
-        }).rejects.toThrow(BadRequestError);
+        await expect(campusService.createCampus(new CampusDTO(campusMock02))
+        ).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'Campus ja existe'
+        });
 
     });
 });
@@ -149,36 +154,39 @@ describe('testando a função updatedCampus', () => {
 
     });
 
-    it('deve retornar um NotFoundError', () => {
+    it('deve retornar um NotFoundError com a mensagem: Campus nao encontrado', async () => {
 
         campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(null);
         
-        expect(async () => {
-            await campusService.updatedCampus(2, new CampusDTO(campusMock));
-        }).rejects.toThrow(NotFoundError);
+        await expect(campusService.updatedCampus(2, new CampusDTO(campusMock))).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Campus nao encontrado'
+        });
     });
 
-    it('deve retornar um BadRequestError', () => {
+    it('deve retornar um BadRequestError com a mensagem: Campus ja existe', async () => {
 
         campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(campusMock);
 
         campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([campusMock]);
         
-        expect(async () => {
-            await campusService.updatedCampus(2, new CampusDTO(campusMock));
-        }).rejects.toThrow(BadRequestError);
+        await expect(campusService.updatedCampus(2, new CampusDTO(campusMock))).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'Campus ja existe'
+        });
     });
 });
 
 describe('testando a função deleteCampus', () => {
 
-    it('deve retornar um NotFoundError', () => {
+    it('deve retornar um NotFoundError com a mensagem: Campus nao encontrado', async () => {
 
         campusRepository.getCampusByUserId = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => {
-            await campusService.deleteCampus(4);
-        }).rejects.toThrow(NotFoundError);
+        await expect(campusService.deleteCampus(4)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Campus nao encontrado'
+        });
     });
 
     it('deve executar uma vez a função campusRepository.deleteCampus', async () => {
