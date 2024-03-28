@@ -11,7 +11,6 @@ export interface IUsuarioDTO {
     datanascimento: Date;
     role: number;
     uf: string;
-    campus: number | null;
     foto: string;
     pontuacao: number;
     status: boolean;

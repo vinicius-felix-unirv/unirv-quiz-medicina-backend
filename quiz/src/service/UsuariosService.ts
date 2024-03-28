@@ -3,6 +3,7 @@ import { UsuarioDTO } from '../model/UsuariosDTO';
 import usuariosRepository from '../repository/usuariosRepository';
 import { hash } from 'bcryptjs';
 import { NotFoundError } from '../exception/NotFoundError';
+import { BadRequestError } from '../exception/BadRequestError';
 
 @Service()
 export class UsuarioService {
@@ -11,7 +12,7 @@ export class UsuarioService {
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-    if (usuarioExists == null) throw new NotFoundError('Usuario does not exist');
+    if (usuarioExists == null) throw new NotFoundError('Usuario nao encontrado');
 
     return new UsuarioDTO(usuarioExists);
 
@@ -31,7 +32,7 @@ export class UsuarioService {
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
-    if (emailExists != null) throw new NotFoundError('Usuario already exists');
+    if (emailExists) throw new BadRequestError('Usuario ja existe');
 
     const hashedPassword = await hash(usuario.getSenha(), 10);
 

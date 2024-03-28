@@ -55,7 +55,7 @@ describe('testando a função alternativasCanBePersistent', () => {
           });
     });
 
-    it('deve retornar um BadRequestError com a mensagem: Alternativa already exists', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Alternativa ja existe', async () => {
 
         alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock]);      
         
