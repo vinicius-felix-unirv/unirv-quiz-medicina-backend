@@ -45,13 +45,13 @@ describe('testando a função alternativasCanBePersistent', () => {
 
     });
 
-    it('deve retornar um BadRequestError com a mensagem: limit of alternativa exceeded', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Limite de alternativas excedido', async () => {
 
         alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock, alternativaMock, alternativaMock, alternativaMock, alternativaMock]);
 
         await expect(alternativasService.alternativasCanBePersistent(new AllAlternativasDTO([alternativaMock]))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'limit of alternativa exceeded'
+            message: 'Limite de alternativas excedido'
           });
     });
 
@@ -61,7 +61,7 @@ describe('testando a função alternativasCanBePersistent', () => {
         
         await expect(alternativasService.alternativasCanBePersistent(new AllAlternativasDTO([alternativaMock]))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'Alternativa already exists'
+            message: 'Alternativa ja existe'
           });
     });
 });
@@ -80,24 +80,24 @@ describe('testando a função saveAlternativa', () => {
         expect(newAlternativa).toEqual(alternativaMock);
     });
 
-    it('deve retornar um BadRequestError com a mensagem: limit of alternativa exceeded', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Limite de alternativas excedido', async () => {
 
         alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock, alternativaMock, alternativaMock, alternativaMock, alternativaMock]);
 
         await expect(alternativasService.saveAlternativa(new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'limit of alternativa exceeded'
+            message: 'Limite de alternativas excedido'
         });
 
     });
 
-    it('deve retornar um BadRequestError com a mensagem: Alternativa already exists', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Alternativa ja existe', async () => {
 
         alternativasRepository.gatAllAternativasByPerguntaId = jest.fn().mockResolvedValueOnce([alternativaMock]);
 
         await expect(alternativasService.saveAlternativa(new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'Alternativa already exists'
+            message: 'Alternativa ja existe'
         });
 
     });
@@ -134,38 +134,38 @@ describe('testando a função saveManyAlternativas', () => {
         expect(newAlternativasList.every( alternativa => alternativa instanceof AlternativasDTO)).toBeTruthy();
     });
 
-    it('deve retornar um NotFoundError com a mensagem: Pergunta not found', async () => {
+    it('deve retornar um NotFoundError com a mensagem: Pergunta nao encontrada', async () => {
 
         perguntasRepository.getPerguntaById = jest.fn().mockResolvedValueOnce(null);
 
         await expect(alternativasService.saveManyAlternativas(new AllAlternativasDTO([alternativaMock, alternativaMock02]))).rejects.toMatchObject({
             constructor: NotFoundError,
-            message: 'Pergunta not found'
+            message: 'Pergunta nao encontrada'
         });
     });
 
-    it('deve retornar um BadRequestError com a mensagem: The limit of alternatives must be greater than 2 and less than 5', async () => {
+    it('deve retornar um BadRequestError com a mensagem: O limite de alternativas minimo 2 e maximo 5', async () => {
 
         perguntasRepository.getPerguntaById = jest.fn().mockResolvedValue(perguntaMock);
 
         await expect(alternativasService.saveManyAlternativas(new AllAlternativasDTO(alternativasMockList))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'The limit of alternatives must be greater than 2 and less than 5'
+            message: 'O limite de alternativas minimo 2 e maximo 5'
         });
 
         await expect(alternativasService.saveManyAlternativas(new AllAlternativasDTO([alternativaMock]))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'The limit of alternatives must be greater than 2 and less than 5'
+            message: 'O limite de alternativas minimo 2 e maximo 5'
         });
     });
 
-    it('deve retornar um BadRequestError com a mensagem: the alternatives cannot be the same', async () => {
+    it('deve retornar um BadRequestError com a mensagem: As alternativas não podem ser iguais', async () => {
 
         perguntasRepository.getPerguntaById = jest.fn().mockResolvedValue(perguntaMock);
 
         await expect(alternativasService.saveManyAlternativas(new AllAlternativasDTO([alternativaMock, alternativaMock]))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'the alternatives cannot be the same'
+            message: 'As alternativas não podem ser iguais'
         });
 
     });
@@ -185,13 +185,13 @@ describe('testando a função getAllAlternativasByPerguntaId', () => {
         expect(alternativaList.every(alternativa => alternativa instanceof AlternativasDTO)).toBeTruthy();
     });
 
-    it('deve retornar um NotFoundError com a mensagem: Pergunta not found', async () => {
+    it('deve retornar um NotFoundError com a mensagem: Pergunta nao encontrada', async () => {
 
         perguntasRepository.getPerguntaById = jest.fn().mockResolvedValueOnce(null);
 
         await expect(alternativasService.getAllAlternativasByPerguntaId(3)).rejects.toMatchObject({
             constructor: NotFoundError,
-            message: 'Pergunta not found'
+            message: 'Pergunta nao encontrada'
         });
     });
 });
@@ -213,17 +213,17 @@ describe('testando a função updateAlternativa', () => {
         expect(upedatedAlternativa).toEqual(alternativaMock);
     });
 
-    it('deve retornar um NotFoundError com a mensagem: Alternativa not found', async () => {
+    it('deve retornar um NotFoundError com a mensagem: Alternativa nao encontrada', async () => {
 
         alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(null);
 
         await expect(alternativasService.updateAlternativa(2, new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
             constructor: NotFoundError,
-            message: 'Alternativa not found'
+            message: 'Alternativa nao encontrada'
         });
     });
 
-    it('deve retornar um BadRequestError com a mensagem: Alternativa already exists', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Alternativa ja existe', async () => {
 
         alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(alternativaMock);
 
@@ -232,7 +232,7 @@ describe('testando a função updateAlternativa', () => {
 
         await expect(alternativasService.updateAlternativa(2, new AlternativasDTO(alternativaMock))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'Alternativa already exists'
+            message: 'Alternativa ja existe'
         });
     });
 });
@@ -260,13 +260,13 @@ describe('testando a função deleteAlternativa', () => {
         expect(alternativasRepository.deleteAlternativa).toHaveBeenCalledTimes(1);
     });
 
-    it('deve retornar um NotFoundError com a mensagem: Alternativa not found', () => {
+    it('deve retornar um NotFoundError com a mensagem: Alternativa nao encontrada', () => {
 
         alternativasRepository.getAlternativaById = jest.fn().mockResolvedValueOnce(null);
 
         expect( async () => await alternativasService.deleteAlternativa(3)).rejects.toMatchObject({
             constructor: NotFoundError,
-            message: 'Alternativa not found'
+            message: 'Alternativa nao encontrada'
         });
     });
 });
