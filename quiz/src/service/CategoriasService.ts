@@ -12,7 +12,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
 
-    if (categoriaExist) throw new BadRequestError('Categoria already exists');
+    if (categoriaExist) throw new BadRequestError('Categoria ja existe');
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
@@ -23,11 +23,11 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if (!categoriaExist) throw new NotFoundError('Categoria not found');
+    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
     const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
 
-    if (descricaoRegistered) throw new BadRequestError('Categoria already exists');
+    if (descricaoRegistered) throw new BadRequestError('Categoria ja existe');
 
     const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
 
@@ -38,7 +38,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if (!categoriaExist) throw new NotFoundError('Categoria not found');
+    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
     const categoria = new CategoriasDTO(categoriaExist);
 
@@ -63,7 +63,7 @@ export class CategoriasService {
 
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
-    if (!categoriaExist) throw new NotFoundError('Categoria not found');
+    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
     return new CategoriasDTO(categoriaExist);
   }

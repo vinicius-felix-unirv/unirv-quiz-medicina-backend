@@ -15,12 +15,12 @@ export class AlternativasService{
 
         const limitOfAlternativas = alternativasByPergunta.length + alternativas.alternativas.length;
 
-        if (limitOfAlternativas > 5) throw new BadRequestError('limit of alternativa exceeded');
+        if (limitOfAlternativas > 5) throw new BadRequestError('Limite de alternativas excedido');
 
         for(const alternativa of alternativas.alternativas){
             const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
 
-            if(alternativaExists) throw new BadRequestError('Alternativa already exists');
+            if(alternativaExists) throw new BadRequestError('Alternativa ja existe');
         }
 
     }
@@ -29,11 +29,11 @@ export class AlternativasService{
 
         const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
-        if (alternativasByPergunta.length >= 5) throw new BadRequestError('limit of alternativa exceeded');
+        if (alternativasByPergunta.length >= 5) throw new BadRequestError('Limite de alternativas excedido');
 
         const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta() && a.resposta != null);
 
-        if(alternativaExists) throw new BadRequestError('Alternativa already exists');
+        if(alternativaExists) throw new BadRequestError('Alternativa ja existe');
         
         const newAlternativa = await alternativasRepository.createAlternativa(alternativa);
 
@@ -44,9 +44,9 @@ export class AlternativasService{
 
         const perguntaExists = await perguntasRepository.getPerguntaById(alternativas.alternativas[0].getPerguntasId());
 
-        if (!perguntaExists) throw new NotFoundError('Pergunta not found');
+        if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
-        if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('The limit of alternatives must be greater than 2 and less than 5');
+        if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('O limite de alternativas minimo 2 e maximo 5');
 
         for (let i = 0; i < alternativas.alternativas.length; i++){
 
@@ -55,7 +55,7 @@ export class AlternativasService{
             for(let j = i+1; j < alternativas.alternativas.length; j++){
 
                 if(alternativas.alternativas[j].getResposta() === equasAlternativas && alternativas.alternativas[j].getResposta() != null)
-                    throw new BadRequestError('the alternatives cannot be the same');
+                    throw new BadRequestError('As alternativas não podem ser iguais');
             }
 
         }
@@ -77,7 +77,7 @@ export class AlternativasService{
 
         const perguntaExists = await perguntasRepository.getPerguntaById(perguntaId);
 
-        if(!perguntaExists) throw new NotFoundError('Pergunta not found');
+        if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
         const allAlternativasByPergunt = await alternativasRepository.gatAllAternativasByPerguntaId(perguntaId);
 
@@ -88,13 +88,13 @@ export class AlternativasService{
 
         const alternativaExists = await alternativasRepository.getAlternativaById(alternativaId);
 
-        if(!alternativaExists) throw new NotFoundError('Alternativa not found');
+        if(!alternativaExists) throw new NotFoundError('Alternativa nao encontrada');
 
         const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         const alternativaAleadyExists = alternativasByPergunta.filter(a => a.resposta === alternativa.getResposta());
 
-        if(alternativaAleadyExists.length != 0 && alternativaAleadyExists[0].id != alternativaId) throw new BadRequestError('Alternativa already exists');
+        if(alternativaAleadyExists.length != 0 && alternativaAleadyExists[0].id != alternativaId) throw new BadRequestError('Alternativa ja existe');
 
         const updateAlternativa = await alternativasRepository.updateAlternativa(alternativaId, alternativa);
 
@@ -105,7 +105,7 @@ export class AlternativasService{
 
         const alternativaExists = await alternativasRepository.getAlternativaById(alternativaId);
 
-        if (!alternativaExists) throw new NotFoundError('Alternativa not found');
+        if (!alternativaExists) throw new NotFoundError('Alternativa nao encontrada');
 
         await alternativasRepository.deleteAlternativa(alternativaId);
     }

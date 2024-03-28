@@ -4,8 +4,6 @@ import { CategoriasDTO } from '../../src/model/CategoriasDTO';
 import categoriasRepository from '../../src/repository/categoriasRepository';
 import { CategoriasService } from '../../src/service/CategoriasService';
 
-jest.mock('../../src/repository/categoriasRepository');
-
 const categoriasService = new CategoriasService();
 
 const categoriaMock = {
@@ -27,14 +25,15 @@ describe('testando a função saveCategoria', () => {
         expect(newCategoria).toEqual(categoriaMock);
     });
 
-    it('deve retornar um BadRequestError', () => {
+    it('deve retornar um BadRequestError com a mensagem: Categoria ja existe', async () => {
 
         categoriasRepository.getCategoria = jest.fn().mockResolvedValueOnce(categoriaMock);
         categoriasRepository.createCategoria = jest.fn().mockResolvedValueOnce(categoriaMock);
 
-        expect(async () => {
-            await categoriasService.saveCategoria(new CategoriasDTO(categoriaMock));
-        }).rejects.toThrow(BadRequestError);
+        await expect(categoriasService.saveCategoria(new CategoriasDTO(categoriaMock))).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'Categoria ja existe'
+        });
     });
 });
 
@@ -51,13 +50,14 @@ describe('testando a função getCategoriaId', () => {
         
     });
 
-    it('deve retornar um NotFoundError',  () => {
+    it('deve retornar um NotFoundError com a mensagem: Categoria nao encontrada', async () => {
 
         categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => {
-            await categoriasService.getCategoriaId(3);
-        }).rejects.toThrow(NotFoundError);
+        await expect(categoriasService.getCategoriaId(3)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Categoria nao encontrada'
+        });
         
     });
 
@@ -104,13 +104,14 @@ describe('testando a função alterStatusCategoria', () => {
 
     });
 
-    it('deve retornar um NotFoundError', () => {
+    it('deve retornar um NotFoundError com a mensagem: Categoria nao encontrada', async () => {
 
         categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => {
-            await categoriasService.alterCategoria(2, new CategoriasDTO(categoriaMock));
-        }).rejects.toThrow(NotFoundError);
+        expect(categoriasService.alterCategoria(2, new CategoriasDTO(categoriaMock))).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Categoria nao encontrada'
+        });
 
     });
 });
@@ -132,24 +133,26 @@ describe('testando a função alterCategoria', () => {
 
     });
 
-    it('deve retornar um NotFoundError', () => {
+    it('deve retornar um NotFoundError com a mensagem: Categoria nao encontrada', async () => {
 
         categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(null);
 
-        expect(async () => {
-            await categoriasService.alterCategoria(4, new CategoriasDTO(categoriaMock));
-        }).rejects.toThrow(NotFoundError);
+        await expect(categoriasService.alterCategoria(4, new CategoriasDTO(categoriaMock))).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Categoria nao encontrada'
+        });
     });
 
-    it('deve retornar um BadRequestError', () => {
+    it('deve retornar um BadRequestError com a mensagem: Categoria ja existe', () => {
 
         categoriasRepository.getCategoriaId = jest.fn().mockResolvedValueOnce(categoriaMock);
 
         categoriasRepository.getCategoria = jest.fn().mockResolvedValueOnce(categoriaMock);
 
-        expect(async () => {
-            await categoriasService.alterCategoria(4, new CategoriasDTO(categoriaMock));
-        }).rejects.toThrow(BadRequestError);
+        expect(categoriasService.alterCategoria(4, new CategoriasDTO(categoriaMock))).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'Categoria ja existe'
+        });
     });
 
     

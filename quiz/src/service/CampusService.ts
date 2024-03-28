@@ -12,13 +12,13 @@ export class CampusService{
 
     const usuariosidExists = await usuariosRepository.getUsuarioById(data.getUsuarioId());
 
-    if(!usuariosidExists) throw new NotFoundError('usuarios not found');
+    if(!usuariosidExists) throw new NotFoundError('Usuarios nao encontrados');
         
     const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
     const campusExist = campusList.some(campus => campus.curso === data.getCurso());
 
-    if(campusExist) throw new BadRequestError('Campus already exists');
+    if(campusExist) throw new BadRequestError('Campus ja existe');
 
     const newCampus = await campusRepository.createCampus(data);
 
@@ -37,7 +37,7 @@ export class CampusService{
 
     const campusByUserId = await campusRepository.getCampusByUserId(id);
 
-    if(!campusByUserId)  throw new NotFoundError('Campus not found');
+    if(!campusByUserId)  throw new NotFoundError('Campus nao encontrado');
 
     return new CampusDTO(campusByUserId);
   }
@@ -46,13 +46,13 @@ export class CampusService{
 
     const campusExist = await campusRepository.getCampusByUserId(id);
 
-    if(!campusExist)  throw new NotFoundError('Campus not found');
+    if(!campusExist)  throw new NotFoundError('Campus nao encontrado');
 
     const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
 
     const campusAlreadyExists = campusList.filter(c => c.curso === campus.getCurso());
 
-    if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus already exists');
+    if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus ja existe');
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
@@ -63,7 +63,7 @@ export class CampusService{
 
     const campusExist = await campusRepository.getCampusByUserId(id);
 
-    if(!campusExist)  throw new NotFoundError('Campus not found');
+    if(!campusExist)  throw new NotFoundError('Campus nao encontrado');
 
     await campusRepository.deleteCampus(id);
     
