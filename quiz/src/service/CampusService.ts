@@ -16,7 +16,7 @@ export class CampusService{
         
     const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
-    const campusExist = campusList.some(campus => campus.curso === data.getCurso());
+    const campusExist = campusList.some(campus => campus.cursoid === data.getCursoId());
 
     if(campusExist) throw new BadRequestError('Campus ja existe');
 
@@ -50,7 +50,7 @@ export class CampusService{
 
     const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
 
-    const campusAlreadyExists = campusList.filter(c => c.curso === campus.getCurso());
+    const campusAlreadyExists = campusList.filter(c => c.cursoid === campus.getCursoId());
 
     if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus ja existe');
 

@@ -8,7 +8,7 @@ import { CampusService } from '../../src/service/CampusService';
 
 const campusMock = {
     id: 1,
-    curso: 'Veterinaria',
+    cursoid: 9,
     turma: '4C',
     periodo: 6,
     nome: 'Laura',
@@ -72,7 +72,7 @@ describe('testando a função createCampus', () => {
     
     const campusMock02 = {
         id: 1,
-        curso: 'Medicina',
+        cursoid: 2,
         turma: '3A',
         periodo: 3,
         nome: 'Admilson',
@@ -144,7 +144,7 @@ describe('testando a função updatedCampus', () => {
         
         campusRepository.getAllCampusByUserId = jest.fn().mockResolvedValueOnce([]);
         
-        campusMock.curso = 'Odonto';
+        campusMock.cursoid = 8;
         campusRepository.putCampus = jest.fn().mockResolvedValueOnce(campusMock);
 
         const updatedCampus = await campusService.updatedCampus(1, new CampusDTO(campusMock));

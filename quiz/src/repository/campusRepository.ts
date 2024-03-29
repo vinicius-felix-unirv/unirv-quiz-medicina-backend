@@ -23,7 +23,7 @@ export default {
     const newCampus = await prisma.campus.create({
 
       data: {       
-        curso: campus.getCurso(),
+        cursoid: campus.getCursoId(),
         turma: campus.getTurma(),
         periodo: campus.getPeriodo(),
         nome: campus.getNome(),
@@ -39,7 +39,7 @@ export default {
     const updatedCampus = await prisma.campus.update({
       where: { id: id },
       data: {
-        curso: campus.getCurso(),
+        cursoid: campus.getCursoId(),
         turma: campus.getTurma(),
         periodo: campus.getPeriodo(),
         nome: campus.getNome(),
