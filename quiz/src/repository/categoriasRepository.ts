@@ -27,7 +27,9 @@ export default {
         data: 
         {
           descricao: categoria.getDescricao(), 
-          status: categoria.getStatus()
+          status: categoria.getStatus(),
+          imagem: categoria.getImagem(),
+          cursoId: categoria.getCursoId()
         }
       });
 
@@ -40,7 +42,9 @@ export default {
       { where: {id: id}, 
         data: {
           descricao: categoria.getDescricao(),
-          status: categoria.getStatus()
+          status: categoria.getStatus(),
+          imagem: categoria.getImagem(),
+          cursoId: categoria.getCursoId()
         }
       }
     );

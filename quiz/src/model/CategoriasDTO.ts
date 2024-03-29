@@ -1,11 +1,12 @@
 import { categorias } from '@prisma/client';
-import { containsNull, objectContainsAllAttributes } from './objectUtils';
 
 export interface IcategoriaDTO {
 
     id?: number;
     descricao: string;
     status: boolean;
+    imagem: string;
+    cursoId: number;
 }
 
 
@@ -14,18 +15,16 @@ export class CategoriasDTO{
   private id?: number;
   private descricao: string;
   private status: boolean;
+  private imagem: string;
+  private cursoId: number;
 
   constructor(data: IcategoriaDTO | categorias) {
-
-    const requiredAttributes = ['descricao', 'status'];
-
-    if (!objectContainsAllAttributes(data, requiredAttributes) || containsNull(data)) {
-      throw new Error('Todos os atributos devem ser fornecidos e não podem ser nulos');
-    }
 
     this.id = data.id;
     this.descricao = data.descricao;
     this.status = data.status;
+    this.imagem = data.imagem;
+    this.cursoId = data.cursoId;
   }
 
   getId(): number | undefined { return this.id; }
@@ -36,6 +35,14 @@ export class CategoriasDTO{
 
   getStatus(): boolean {
     return this.status;
+  }
+
+  getImagem(): string {
+    return this.imagem;
+  }
+
+  getCursoId(): number {
+    return this.cursoId;
   }
 
   setStatus(status: boolean): void {

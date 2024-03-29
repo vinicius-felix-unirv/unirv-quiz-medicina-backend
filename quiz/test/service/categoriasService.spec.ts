@@ -10,6 +10,8 @@ const categoriaMock = {
     id: 3,
     descricao: 'string',
     status: true,
+    imagem: '/teste',
+    cursoId: 2
 };
 
 describe('testando a função saveCategoria', () => {
