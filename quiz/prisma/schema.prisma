@@ -18,11 +18,12 @@ model alternativas {
 
 model campus {
   id         Int       @id @default(autoincrement())
-  curso      String   @db.VarChar(255)
+  cursoId      Int 
   turma      String   @db.VarChar(255)
   periodo    Int
   nome       String   @db.VarChar(100)
   usuariosid Int
+  curso   curso? @relation(fields: [cursoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
@@ -30,7 +31,18 @@ model categorias {
   id             Int              @id @default(autoincrement())
   descricao      String          @db.VarChar(25)
   status         Boolean          @default(true)
+  imagem         String           @db.VarChar(255)
+  cursoId        Int       
+  curso   curso? @relation(fields: [cursoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntas perguntas[]
+}
+
+model curso {
+  id            Int                 @id @default(autoincrement())
+  nome          String              @db.VarChar(255)
+  imagem        String              @db.VarChar(255)
+  categorias categorias[]
+  campus campus[]
 }
 
 model logs {
