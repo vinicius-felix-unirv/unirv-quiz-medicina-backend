@@ -42,8 +42,7 @@ export default {
         cursoid: campus.getCursoId(),
         turma: campus.getTurma(),
         periodo: campus.getPeriodo(),
-        nome: campus.getNome(),
-        usuariosid: campus.getUsuarioId()
+        nome: campus.getNome()
       }
     });
 
