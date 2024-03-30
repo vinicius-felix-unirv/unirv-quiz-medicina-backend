@@ -57,6 +57,15 @@ export default {
     const categorias = await prisma.categorias.findMany();
 
     return categorias;
+  },
+
+  async getAllCategoriasByCursoId(cursoId: number): Promise<categorias[]> {
+
+    const allCategoriasByCurso = await prisma.categorias.findMany({
+      where: { cursoId: cursoId}
+    });
+
+    return allCategoriasByCurso;
   }
 
 };

@@ -50,4 +50,13 @@ export class CategoriasController {
 
     return res.status(200).json(categoria);
   }
+
+  async getAllCategoriaByCursoId(req: Request, res: Response): Promise<Response> { 
+
+    const cursoId = parseInt(req.params.cursoId);
+
+    const allCategoriasByCurso = await categoriasService.getAllCategoriasByCursoId(cursoId);
+
+    return res.status(200).json(allCategoriasByCurso);
+  }
 }

@@ -76,4 +76,16 @@ export class CategoriasService {
 
     return new CategoriasDTO(categoriaExist);
   }
+
+  async getAllCategoriasByCursoId(cursoId: number): Promise<CategoriasDTO[]> {
+
+    const cursoExist = await cursoRepository.getCursoById(cursoId);
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
+
+    const allCategoriasByCurso = await categoriasRepository.getAllCategoriasByCursoId(cursoId);
+
+    return allCategoriasByCurso.map(categorias => new CategoriasDTO(categorias));
+
+  }
 }
