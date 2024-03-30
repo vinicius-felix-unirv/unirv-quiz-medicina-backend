@@ -4,6 +4,7 @@ import { NotFoundError } from '../exception/NotFoundError';
 import { CategoriasDTO } from '../model/CategoriasDTO';
 import categoriasRepository from '../repository/categoriasRepository';
 import { Service } from 'typedi';
+import cursoRepository from '../repository/cursoRepository';
 
 @Service()
 export class CategoriasService {
@@ -13,6 +14,10 @@ export class CategoriasService {
     const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
 
     if (categoriaExist) throw new BadRequestError('Categoria ja existe');
+
+    const cursoExist = await cursoRepository.getCursoById(categoria.getCursoId());
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
@@ -24,6 +29,10 @@ export class CategoriasService {
     const categoriaExist = await categoriasRepository.getCategoriaId(id);
 
     if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
+
+    const cursoExist = await cursoRepository.getCursoById(categoria.getCursoId());
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
 
     const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
 
@@ -66,5 +75,17 @@ export class CategoriasService {
     if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
     return new CategoriasDTO(categoriaExist);
+  }
+
+  async getAllCategoriasByCursoId(cursoId: number): Promise<CategoriasDTO[]> {
+
+    const cursoExist = await cursoRepository.getCursoById(cursoId);
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
+
+    const allCategoriasByCurso = await categoriasRepository.getAllCategoriasByCursoId(cursoId);
+
+    return allCategoriasByCurso.map(categorias => new CategoriasDTO(categorias));
+
   }
 }

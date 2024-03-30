@@ -27,7 +27,9 @@ export default {
         data: 
         {
           descricao: categoria.getDescricao(), 
-          status: categoria.getStatus()
+          status: categoria.getStatus(),
+          imagem: categoria.getImagem(),
+          cursoId: categoria.getCursoId()
         }
       });
 
@@ -40,7 +42,9 @@ export default {
       { where: {id: id}, 
         data: {
           descricao: categoria.getDescricao(),
-          status: categoria.getStatus()
+          status: categoria.getStatus(),
+          imagem: categoria.getImagem(),
+          cursoId: categoria.getCursoId()
         }
       }
     );
@@ -53,6 +57,15 @@ export default {
     const categorias = await prisma.categorias.findMany();
 
     return categorias;
+  },
+
+  async getAllCategoriasByCursoId(cursoId: number): Promise<categorias[]> {
+
+    const allCategoriasByCurso = await prisma.categorias.findMany({
+      where: { cursoId: cursoId}
+    });
+
+    return allCategoriasByCurso;
   }
 
 };

@@ -4,23 +4,28 @@ import campusRepository from '../repository/campusRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
 import usuariosRepository from '../repository/usuariosRepository';
+import cursoRepository from '../repository/cursoRepository';
 
 @Service()
 export class CampusService{
 
-  async createCampus(data: CampusDTO): Promise<CampusDTO>{
+  async createCampus(campus: CampusDTO): Promise<CampusDTO>{
 
-    const usuariosidExists = await usuariosRepository.getUsuarioById(data.getUsuarioId());
+    const usuariosidExists = await usuariosRepository.getUsuarioById(campus.getUsuarioId());
 
     if(!usuariosidExists) throw new NotFoundError('Usuarios nao encontrados');
-        
-    const campusList = await campusRepository.getAllCampusByUserId(data.getUsuarioId());
 
-    const campusExist = campusList.some(campus => campus.curso === data.getCurso());
+    const cursoExist = await cursoRepository.getCursoById(campus.getCursoId());
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrados');
+        
+    const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
+
+    const campusExist = campusList.some(c => c.cursoid === campus.getCursoId());
 
     if(campusExist) throw new BadRequestError('Campus ja existe');
 
-    const newCampus = await campusRepository.createCampus(data);
+    const newCampus = await campusRepository.createCampus(campus);
 
     return new CampusDTO(newCampus);
 
@@ -48,9 +53,13 @@ export class CampusService{
 
     if(!campusExist)  throw new NotFoundError('Campus nao encontrado');
 
+    const cursoExist = await cursoRepository.getCursoById(campus.getCursoId());
+
+    if(!cursoExist) throw new NotFoundError('Curso nao encontrados');
+
     const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
 
-    const campusAlreadyExists = campusList.filter(c => c.curso === campus.getCurso());
+    const campusAlreadyExists = campusList.filter(c => c.cursoid === campus.getCursoId());
 
     if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus ja existe');
 
