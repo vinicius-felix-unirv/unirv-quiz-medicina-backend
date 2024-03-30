@@ -9,6 +9,7 @@ import { progressoPerguntasRoutes } from './progressoPerguntasRoutes';
 import { quizRoutes } from './quizRoutes';
 import { alternativasRoutes } from './alternativasRoutes';
 import { sendEmailRoutes } from './sendEmailRoutes';
+import { cursoRoutes } from './CursoRoutes';
 
 const routes = Router();
 
@@ -22,7 +23,8 @@ routes.use(
     progressoPerguntasRoutes, 
     quizRoutes,
     alternativasRoutes,
-    sendEmailRoutes
+    sendEmailRoutes, 
+    cursoRoutes
 );
 
 

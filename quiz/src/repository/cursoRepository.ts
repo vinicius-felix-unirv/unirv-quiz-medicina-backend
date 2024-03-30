@@ -10,5 +10,14 @@ export default {
         });
 
         return curso;
+    },
+
+    async getAllCurso(): Promise<curso[]>{
+
+        const cursoList = await prisma.curso.findMany();
+
+        return cursoList;
     }
+
+
 };
