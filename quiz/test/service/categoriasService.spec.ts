@@ -192,3 +192,30 @@ describe('testando a função alterCategoria', () => {
 
     
 });
+
+describe('testando a função getAllCategoriasByCursoId', () => {
+
+    it('deve retornar uma lista de CategoriasDTO', async () => {
+
+        cursoRepository.getCursoById = jest.fn().mockResolvedValueOnce(cursoMock);
+
+        categoriasRepository.getAllCategoriasByCursoId = jest.fn().mockResolvedValueOnce([categoriaMock]);
+
+        const categoriasList = await categoriasService.getAllCategoriasByCursoId(4);
+
+        expect(categoriasList).toHaveLength(1);
+        expect(categoriasList[0]).toEqual(categoriaMock);
+        expect(categoriasList.every(categoria => categoria instanceof CategoriasDTO)).toBeTruthy();
+
+    });
+
+    it('deve retornar um NotFoundError com a mensagem: Curso nao encontrado', async () => {
+
+        cursoRepository.getCursoById = jest.fn().mockResolvedValueOnce(null);
+
+        await expect(categoriasService.getAllCategoriasByCursoId(6)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Curso nao encontrado'
+        });
+    });
+});
