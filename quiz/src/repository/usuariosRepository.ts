@@ -40,8 +40,7 @@ export default {
                       role: usuario.getRole(),
                       uf: usuario.getUf(),
                       foto: usuario.getFoto(),
-                      pontuacao: usuario.getPontuacao(),
-                      status: usuario.getStatus()
+                      pontuacao: usuario.getPontuacao()
                     } as usuarios
       }
     );
@@ -65,8 +64,6 @@ export default {
                   role: usuario.getRole(),
                   uf: usuario.getUf(),
                   foto: usuario.getFoto(),
-                  pontuacao: usuario.getPontuacao(),
-                  status: usuario.getStatus()
                 }
       }
     );

@@ -47,11 +47,11 @@ export class UsuarioService {
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-    if (usuarioExists == null) throw new NotFoundError('Usuario not found');
+    if (!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
-    if (emailExists != null && emailExists.id != id) throw new NotFoundError('Usuario already exists');
+    if (emailExists != null && emailExists.id != id) throw new BadRequestError('Usuario ja existe');
 
     const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 
@@ -62,7 +62,7 @@ export class UsuarioService {
 
     const userExists = await usuariosRepository.getUsuarioById(userId);
     
-    if(!userExists) throw new NotFoundError('Usuario does not exist');
+    if(!userExists) throw new NotFoundError('Usuario nao encontrado');
     
     const user = new UsuarioDTO(userExists);
 
