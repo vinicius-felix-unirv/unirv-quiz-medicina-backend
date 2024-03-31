@@ -140,9 +140,7 @@ describe('testando a função alterPassword', () => {
     it('deve executar a função usuariosRepository.updateSenhaUsuario apenas uma vez', async () => {
 
         usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
-        usuariosRepository.updateSenhaUsuario = jest.fn().mockImplementation(() => {
-            console.log('updateSenhaUsuario foi chamado');
-        });
+        usuariosRepository.updateSenhaUsuario = jest.fn();
 
         await usuarioService.alterPassword(2, 'ueueueu');
 
