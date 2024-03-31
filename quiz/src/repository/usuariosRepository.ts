@@ -85,5 +85,15 @@ export default {
     );
 
     return updateSenha;
+  },
+
+  async addPontuacao(userId: number, pontuacao: number): Promise<usuarios> {
+
+    const addedPontuacao = await prisma.usuarios.update({
+      where: {id: userId},
+      data: {pontuacao: pontuacao}
+    });
+
+    return addedPontuacao;
   }
 };

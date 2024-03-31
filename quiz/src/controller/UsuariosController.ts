@@ -51,4 +51,14 @@ export class UsuariosController {
 
     return res.status(200).json({message: 'success'});
   }
+
+  async putPontuacao(req: Request, res: Response): Promise<Response> {
+
+    const userId = parseInt(req.params.id);
+    const pontuacao = req.body.pontuacao;
+
+    const user = await usuarioService.addPontuacao(userId, pontuacao);
+
+    return res.status(200).json(user);
+  }
 }

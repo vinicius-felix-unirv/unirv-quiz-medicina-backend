@@ -74,5 +74,20 @@ export class UsuarioService {
     
   }
 
+  async addPontuacao(userId: number, pontuacao: number): Promise<UsuarioDTO> {
+
+    const userExists = await usuariosRepository.getUsuarioById(userId);
+
+    if (!userExists) throw new NotFoundError('Usuario nao encontrado');
+
+    if(pontuacao < 0) throw new BadRequestError('A pontuacao nao pode ser negativa');
+
+    const newPontuacao = userExists.pontuacao + pontuacao;
+
+    const addedPontuacao = await usuariosRepository.addPontuacao(userId, newPontuacao);
+
+    return new UsuarioDTO(addedPontuacao);
+  }
+
 }
 

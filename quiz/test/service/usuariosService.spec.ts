@@ -15,7 +15,7 @@ const user = {
     role: 4,
     uf: 'string',
     foto: 'string',
-    pontuacao: 67,
+    pontuacao: 0,
     status: true,
 };
 
@@ -158,5 +158,40 @@ describe('testando a função alterPassword', () => {
 
     });
 
-    
+});
+
+describe('testando a função addPontuacao', () => {
+
+    it('deve retornar uma instancia UsuarioDTO', async () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
+        
+        user.pontuacao = 54;
+        usuariosRepository.addPontuacao = jest.fn().mockResolvedValueOnce(user);
+
+        const addedPontuacao = await usuarioService.addPontuacao(3, 54);
+
+        expect(addedPontuacao.getPontuacao()).toEqual(54);
+        expect(addedPontuacao).toBeInstanceOf(UsuarioDTO);
+    });
+
+    it('deve retornar um NotFoundError com a mensagem: Usuario nao encontrado', async () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(null);
+
+        await expect(usuarioService.addPontuacao(3, 54)).rejects.toMatchObject({
+            constructor: NotFoundError,
+            message: 'Usuario nao encontrado'
+        });
+    });
+
+    it('deve retornar um BadRequestError com a mensagem: A pontuacao nao pode ser negativa', async () => {
+
+        usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
+
+        await expect(usuarioService.addPontuacao(3, -54)).rejects.toMatchObject({
+            constructor: BadRequestError,
+            message: 'A pontuacao nao pode ser negativa'
+        });
+    });
 });

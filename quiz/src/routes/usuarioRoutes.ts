@@ -5,10 +5,12 @@ import { isAuthenticated } from '../middlewares/isAuthenticated';
 const usuariosRoutes = Router();
 const usuariosController = new UsuariosController();
 
-usuariosRoutes.get('/usuarios/:id', isAuthenticated, usuariosController.getUsuarioById);
+usuariosRoutes.get('/usuario/:id', isAuthenticated, usuariosController.getUsuarioById);
 usuariosRoutes.get('/usuarios', isAuthenticated, usuariosController.getAllUsuarios);
-usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
-usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
+usuariosRoutes.post('/usuario', usuariosController.postUsuario);
+usuariosRoutes.put('/usuario/:id', isAuthenticated, usuariosController.putUsuario);
+usuariosRoutes.put('/usuario/pontuacao/:id', isAuthenticated, usuariosController.putPontuacao);
 usuariosRoutes.put('/usuarios/trocar-senha/:id', isAuthenticated, usuariosController.putSenha);
+
 
 export { usuariosRoutes };
