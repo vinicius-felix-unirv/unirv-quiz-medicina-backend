@@ -71,13 +71,13 @@ describe('testando a função saveUsuario', () => {
         expect(newUser).toEqual(user);
     });
 
-    it('deve retornar um BadRequestError com a mensagem: Usuario ja existe', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Email ja cadastrado', async () => {
 
         usuariosRepository.getUsuarioByEmail = jest.fn().mockResolvedValueOnce(user);
 
         await expect(usuarioService.saveUsuario(new UsuarioDTO(user))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'Usuario ja existe'
+            message: 'Email ja cadastrado'
         });
 
     });
@@ -109,7 +109,7 @@ describe('testando a função alterUsuario', () => {
         });
     });
 
-    it('deve retornar um BadRequestError com a mensagem: Usuario ja existe', async () => {
+    it('deve retornar um BadRequestError com a mensagem: Email ja cadastrado', async () => {
 
         usuariosRepository.getUsuarioById = jest.fn().mockResolvedValueOnce(user);
 
@@ -117,7 +117,7 @@ describe('testando a função alterUsuario', () => {
 
         await expect(usuarioService.alterUsuario(3, new UsuarioDTO(user))).rejects.toMatchObject({
             constructor: BadRequestError,
-            message: 'Usuario ja existe'
+            message: 'Email ja cadastrado'
         });
     });
 });

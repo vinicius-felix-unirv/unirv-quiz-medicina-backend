@@ -32,7 +32,7 @@ export class UsuarioService {
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
-    if (emailExists) throw new BadRequestError('Usuario ja existe');
+    if (emailExists) throw new BadRequestError('Email ja cadastrado');
 
     const hashedPassword = await hash(usuario.getSenha(), 10);
 
@@ -51,7 +51,7 @@ export class UsuarioService {
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
-    if (emailExists != null && emailExists.id != id) throw new BadRequestError('Usuario ja existe');
+    if (emailExists != null && emailExists.id != id) throw new BadRequestError('Email ja cadastrado');
 
     const updatedUsuario = await usuariosRepository.updateusuario(id, usuario);
 
@@ -94,7 +94,7 @@ export class UsuarioService {
     const ranking = await usuariosRepository.getTopTenPontuacao();
 
     return ranking.map(usuario => new UsuarioDTO(usuario));
-    
+
   }
 
 }
