@@ -61,4 +61,11 @@ export class UsuariosController {
 
     return res.status(200).json(user);
   }
+
+  async getRanking(req: Request, res: Response): Promise<Response> {
+
+    const ranking = await usuarioService.getRanking();
+
+    return res.status(200).json(ranking);
+  }
 }

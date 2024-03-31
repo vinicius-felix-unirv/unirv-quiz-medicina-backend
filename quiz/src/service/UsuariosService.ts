@@ -89,5 +89,13 @@ export class UsuarioService {
     return new UsuarioDTO(addedPontuacao);
   }
 
+  async getRanking(): Promise<UsuarioDTO[]> {
+
+    const ranking = await usuariosRepository.getTopTenPontuacao();
+
+    return ranking.map(usuario => new UsuarioDTO(usuario));
+    
+  }
+
 }
 

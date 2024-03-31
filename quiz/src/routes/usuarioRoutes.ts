@@ -7,6 +7,7 @@ const usuariosController = new UsuariosController();
 
 usuariosRoutes.get('/usuario/:id', isAuthenticated, usuariosController.getUsuarioById);
 usuariosRoutes.get('/usuarios', isAuthenticated, usuariosController.getAllUsuarios);
+usuariosRoutes.get('/usuarios/ranking', isAuthenticated, usuariosController.getRanking);
 usuariosRoutes.post('/usuario', usuariosController.postUsuario);
 usuariosRoutes.put('/usuario/:id', isAuthenticated, usuariosController.putUsuario);
 usuariosRoutes.put('/usuario/pontuacao/:id', isAuthenticated, usuariosController.putPontuacao);

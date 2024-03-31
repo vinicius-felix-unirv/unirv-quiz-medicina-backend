@@ -195,3 +195,16 @@ describe('testando a função addPontuacao', () => {
         });
     });
 });
+
+describe('testando a função getRanking', () => {
+
+    it('deve retornar uma lista de instancias de UsuarioDTO', async () => {
+
+        usuariosRepository.getTopTenPontuacao = jest.fn().mockResolvedValueOnce([user]);
+
+        const ranking = await usuarioService.getRanking();
+
+        expect(ranking.every( user => user instanceof UsuarioDTO)).toBeTruthy();
+        expect(ranking[0]).toEqual(user);
+    });
+});

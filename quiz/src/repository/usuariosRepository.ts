@@ -95,5 +95,16 @@ export default {
     });
 
     return addedPontuacao;
+  },
+
+  async getTopTenPontuacao(): Promise<usuarios[]> {
+
+    const topTen = await prisma.usuarios.findMany({
+      take: 10,
+      orderBy: {pontuacao: 'desc'}
+    });
+
+    return topTen;
+    
   }
 };
