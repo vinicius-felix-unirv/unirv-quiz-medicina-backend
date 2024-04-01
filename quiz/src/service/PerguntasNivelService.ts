@@ -11,18 +11,18 @@ export class PerguntasNivelService{
 
     const perguntasNivelExists = await perguntasNivelRepository.getPerguntasNivelByNivel(perguntaNivel.getNivel());
 
-    if(perguntasNivelExists != null ) throw new BadRequestError('PerguntasNivel already exists');
+    if(!perguntasNivelExists) throw new BadRequestError('PerguntasNivel ja existe');
         
     const newPerguntasNivel = await perguntasNivelRepository.createPerguntasNivel(perguntaNivel);
 
     return new PerguntasNivelDTO(newPerguntasNivel);
   }
 
-  async getPerguntasNivelById(id: number): Promise<PerguntasNivelDTO | null>{
+  async getPerguntasNivelById(id: number): Promise<PerguntasNivelDTO>{
 
     const perguntaNivelExists = await perguntasNivelRepository.getPerguntasNivelById(id);
 
-    if(perguntaNivelExists === null) throw new NotFoundError('PerguntaNivel not found');
+    if(!perguntaNivelExists) throw new NotFoundError('PerguntaNivel nao encontrda');
 
     return new PerguntasNivelDTO(perguntaNivelExists);
   }
@@ -38,11 +38,11 @@ export class PerguntasNivelService{
 
     const perguntasNivelExists = await perguntasNivelRepository.getPerguntasNivelById(id);
 
-    if(perguntasNivelExists === null) throw new NotFoundError('PerguntasNivel not found');
+    if(!perguntasNivelExists) throw new NotFoundError('PerguntasNivel nao encontrada');
 
     const perguntasNivelAlreadyExists = await perguntasNivelRepository.getPerguntasNivelByNivel(perguntasNivel.getNivel());
 
-    if(perguntasNivelAlreadyExists != null && perguntasNivelAlreadyExists?.id != id) throw new BadRequestError('PerguntasNivel already exists');
+    if(perguntasNivelAlreadyExists != null && perguntasNivelAlreadyExists.id != id) throw new BadRequestError('PerguntasNivel ja existe');
 
     const updatedPerguntasNivel = await perguntasNivelRepository.alterPerguntasNivel(id, perguntasNivel);
 
@@ -53,7 +53,7 @@ export class PerguntasNivelService{
 
     const perguntasNivelExists = await perguntasNivelRepository.getPerguntasNivelById(id);
 
-    if (perguntasNivelExists === null) throw new NotFoundError('PerguntasNivel not found');
+    if (!perguntasNivelExists) throw new NotFoundError('PerguntasNivel nao encontrada');
 
     await perguntasNivelRepository.deletePerguntasNivel(id);
     
