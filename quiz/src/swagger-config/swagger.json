@@ -1,7 +1,7 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "API Quiz Medicina",
+        "title": "API Quiz",
         "description": "Quiz Medicina",
         "version": "1.0.0"
     },
