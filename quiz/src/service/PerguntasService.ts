@@ -7,11 +7,11 @@ import { BadRequestError } from '../exception/BadRequestError';
 @Service()
 export class PerguntasService {
 
-  async getPergunta(id: number): Promise<PerguntaDTO> {
+  async getPerguntaById(id: number): Promise<PerguntaDTO> {
 
     const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
-    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
+    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
     return new PerguntaDTO(perguntaExists);
 
@@ -31,7 +31,7 @@ export class PerguntasService {
 
     const perguntaExist = await perguntasRepository.getPergunta(pergunta);
 
-    if (perguntaExist) throw new BadRequestError('Pergunta already exists');
+    if (perguntaExist) throw new BadRequestError('Pergunta ja existe');
 
     const newPergunta = await perguntasRepository.createPergunta(pergunta);
 
@@ -42,11 +42,11 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
-    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
+    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
     const perguntaAlreadyExists = await perguntasRepository.getPergunta(pergunta);
 
-    if (perguntaAlreadyExists) throw new BadRequestError('Pergunta already exists');
+    if (perguntaAlreadyExists) throw new BadRequestError('Pergunta ja existe');
 
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
@@ -57,7 +57,7 @@ export class PerguntasService {
 
     const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
-    if (perguntaExists == null) throw new NotFoundError('pergunta not found');
+    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
     const pergunta = new PerguntaDTO(perguntaExists);
 

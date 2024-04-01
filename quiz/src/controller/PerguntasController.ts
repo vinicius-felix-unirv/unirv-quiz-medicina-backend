@@ -8,7 +8,7 @@ export class PerguntasController {
 
     const id = parseInt(req.params.id);
 
-    const pergunta = await perguntaService.getPergunta(id);
+    const pergunta = await perguntaService.getPerguntaById(id);
 
     return res.status(200).json(pergunta);
 
