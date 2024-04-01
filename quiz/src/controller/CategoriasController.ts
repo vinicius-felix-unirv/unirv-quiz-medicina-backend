@@ -53,7 +53,7 @@ export class CategoriasController {
 
   async getAllCategoriaByCursoId(req: Request, res: Response): Promise<Response> { 
 
-    const cursoId = parseInt(req.params.cursoId);
+    const cursoId = parseInt(req.params.cursoid);
 
     const allCategoriasByCurso = await categoriasService.getAllCategoriasByCursoId(cursoId);
 

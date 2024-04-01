@@ -6,11 +6,11 @@ import { PerguntasNivelController } from '../controller/PerguntasNivelController
 const perguntasNivelRoutes = Router();
 const perguntasNivelController = new PerguntasNivelController();
 
-perguntasNivelRoutes.get('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.getPerguntaNivelById);
-perguntasNivelRoutes.get('/perguntasNivel', isAuthenticated, perguntasNivelController.getAllPerguntaNivel);
-perguntasNivelRoutes.post('/perguntasNivel', isAuthenticated, perguntasNivelController.postPerguntasNivel);
-perguntasNivelRoutes.put('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.putPerguntasNivel);
-perguntasNivelRoutes.delete('/perguntasNivel/:id', isAuthenticated, perguntasNivelController.deletePerguntasNivel);
+perguntasNivelRoutes.get('/perguntas-nivel/:id', isAuthenticated, perguntasNivelController.getPerguntaNivelById);
+perguntasNivelRoutes.get('/perguntas-nivel', isAuthenticated, perguntasNivelController.getAllPerguntaNivel);
+perguntasNivelRoutes.post('/perguntas-nivel', isAuthenticated, perguntasNivelController.postPerguntasNivel);
+perguntasNivelRoutes.put('/perguntas-nivel/:id', isAuthenticated, perguntasNivelController.putPerguntasNivel);
+perguntasNivelRoutes.delete('/perguntas-nivel/:id', isAuthenticated, perguntasNivelController.deletePerguntasNivel);
 
 
 export { perguntasNivelRoutes };
