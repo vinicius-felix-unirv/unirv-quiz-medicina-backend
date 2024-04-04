@@ -34,6 +34,17 @@ export class QuizController {
     return res.status(200).json(quizDTOs);
   }
 
+  async getAllquizByCursoId(req: Request, res: Response): Promise<Response> {
+
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const cursoId = parseInt(req.params.id);
+
+    const quizDTOs = await quizService.getAllQuizByCurosId(skip, take, cursoId);
+
+    return res.status(200).json(quizDTOs);
+  }
+
   async getQuizId(req: Request, res: Response): Promise<Response> {
 
     const id = parseInt(req.params.id);

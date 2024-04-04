@@ -20,7 +20,11 @@ export default {
 
   async createQuiz(quiz: QuizDTO): Promise<quiz> {
 
-    const newQuiz = await prisma.quiz.create({ data: { titulo: quiz.getTitulo() } });
+    const newQuiz = await prisma.quiz.create({ 
+      data: { 
+        titulo: quiz.getTitulo(),
+        cursoid: quiz.getCursoId() 
+      } });
 
     return newQuiz;
   },
@@ -45,6 +49,19 @@ export default {
     const quiz = await prisma.quiz.findMany({
       skip: skip,
       take: take
+    });
+
+    return quiz;
+  },
+
+  async getAllQuizByCursoId(skip: number, take: number, cursoId: number): Promise<quiz[]> {
+
+    const quiz = await prisma.quiz.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        cursoid: cursoId
+      }
     });
 
     return quiz;

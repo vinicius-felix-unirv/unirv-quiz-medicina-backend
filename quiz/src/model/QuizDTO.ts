@@ -4,11 +4,13 @@ export class IQuizDTO {
 
   id: number = 0;
   titulo: string = '';
+  cursoid: number = 0;
   perguntas: perguntaObject[] = [];
 
   constructor(data: quiz) {
     this.id = data.id;
     this.titulo = data.titulo;
+    this.cursoid = data.cursoid;
   }
 
   setId(_id: number) {
@@ -50,10 +52,12 @@ export class QuizDTO {
 
   private id?: number;
   private titulo!: string;
+  private cursoid: number;
 
   constructor(data: IQuizDTO | quiz) {
     this.id = data.id;
     this.titulo = data.titulo;
+    this.cursoid = data.cursoid;
   }
 
   getId(): number | undefined { return this.id; }
@@ -61,4 +65,6 @@ export class QuizDTO {
   getTitulo(): string {
     return this.titulo;
   }
+
+  getCursoId(): number { return this.cursoid; }
 }
