@@ -34,12 +34,11 @@ export class QuizService {
     return new QuizDTO(updatedquiz);
   }
 
-  async getAllQuiz(): Promise<QuizDTO[]> {
+  async getAllQuiz(skip: number, take: number): Promise<QuizDTO[]> {
 
-    const quizs = await quizRepository.getAllQuiz();
+    const quizs = await quizRepository.getAllQuiz(skip, take);
 
     const quizsDTOs = quizs.map((quiz) => new QuizDTO(quiz));
-
 
     return quizsDTOs;
   }

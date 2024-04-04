@@ -40,9 +40,12 @@ export default {
     return updatedQuiz;
   },
 
-  async getAllQuiz(): Promise<quiz[]> {
+  async getAllQuiz(skip: number, take: number): Promise<quiz[]> {
 
-    const quiz = await prisma.quiz.findMany();
+    const quiz = await prisma.quiz.findMany({
+      skip: skip,
+      take: take
+    });
 
     return quiz;
   },
