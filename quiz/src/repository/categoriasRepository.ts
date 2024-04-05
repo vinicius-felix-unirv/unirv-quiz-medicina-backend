@@ -42,7 +42,6 @@ export default {
       { where: {id: id}, 
         data: {
           descricao: categoria.getDescricao(),
-          status: categoria.getStatus(),
           imagem: categoria.getImagem(),
           cursoId: categoria.getCursoId()
         }
@@ -52,13 +51,6 @@ export default {
     return updatedCategory;
   },
 
-  async getAllCategorias(): Promise<categorias[]> {
-
-    const categorias = await prisma.categorias.findMany();
-
-    return categorias;
-  },
-
   async getAllCategoriasByCursoId(cursoId: number): Promise<categorias[]> {
 
     const allCategoriasByCurso = await prisma.categorias.findMany({
@@ -66,6 +58,16 @@ export default {
     });
 
     return allCategoriasByCurso;
+  },
+
+  async updateStatusCategorias(id: number, categoria: CategoriasDTO): Promise<categorias> {
+
+    const statusUpdatet = await prisma.categorias.update({
+      where: {id: id},
+      data: { status: categoria.getStatus()}
+    });
+
+    return statusUpdatet;
   }
 
 };

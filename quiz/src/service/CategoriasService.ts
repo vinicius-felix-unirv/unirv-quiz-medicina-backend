@@ -53,19 +53,9 @@ export class CategoriasService {
 
     categoria.setStatus(!categoria.getStatus());
 
-    const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
+    const updatedCategoria = await categoriasRepository.updateStatusCategorias(id, categoria);
 
     return new CategoriasDTO(updatedCategoria);
-  }
-
-  async getAllCategorias(): Promise<CategoriasDTO[]> {
-
-    const categorias = await categoriasRepository.getAllCategorias();
-
-    const categoriasDTOs = categorias.map((categoria) => new CategoriasDTO(categoria));
-
-
-    return categoriasDTOs;
   }
 
   async getCategoriaId(id: number): Promise<CategoriasDTO> {

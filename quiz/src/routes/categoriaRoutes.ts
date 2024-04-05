@@ -9,7 +9,6 @@ categoriasRoutes.post('/categorias', isAuthenticated, categoriasController.postC
 categoriasRoutes.put('/categorias/:id', isAuthenticated, categoriasController.putCategoria);
 categoriasRoutes.put('/categorias/status/:id', isAuthenticated, categoriasController.putStatusCategoria);
 categoriasRoutes.get('/categorias/:id', isAuthenticated, categoriasController.getCategoriaId);
-categoriasRoutes.get('/categorias/:cursoid', isAuthenticated, categoriasController.getAllCategoriaByCursoId);
-categoriasRoutes.get('/categorias', isAuthenticated, categoriasController.getAllCategorias);
+categoriasRoutes.get('/curso/categorias/:id', isAuthenticated, categoriasController.getAllCategoriaByCursoId);
 
 export { categoriasRoutes };
