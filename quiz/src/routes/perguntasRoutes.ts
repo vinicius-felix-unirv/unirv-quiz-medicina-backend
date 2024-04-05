@@ -7,7 +7,7 @@ const perguntasRoutes = Router();
 const perguntasController = new PerguntasController();
 
 perguntasRoutes.get('/perguntas/:id', isAuthenticated, perguntasController.getPergunta);
-perguntasRoutes.get('/perguntas', isAuthenticated, perguntasController.getAllPergunta);
+perguntasRoutes.get('/quiz/:id/perguntas/:skip/:take', isAuthenticated, perguntasController.getAllPerguntasByQuizId);
 perguntasRoutes.post('/perguntas', isAuthenticated, perguntasController.postPergunta);
 perguntasRoutes.put('/perguntas/:id', isAuthenticated, perguntasController.putPergunta);
 perguntasRoutes.put('/perguntas/status/:id', isAuthenticated, perguntasController.putStatusPergunta);

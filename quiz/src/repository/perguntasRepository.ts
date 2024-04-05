@@ -23,9 +23,12 @@ export default {
     return pergunta;
   },
 
-  async getAllPerguntas(): Promise<perguntas[]> {
-
-    const perguntas = await prisma.perguntas.findMany();
+  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number): Promise<perguntas[]> {
+    const perguntas = await prisma.perguntas.findMany({
+      skip: skip,
+      take: take,
+      where: {quizid: quizId}
+    });
 
     return perguntas;
   },
@@ -61,14 +64,22 @@ export default {
           perguntasnivelid: pergunta.getPerguntasNivelId(),
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
-          status: pergunta.getStatus(),
-          categoriasid: pergunta.getCategoriasId(),
-          quizid: pergunta.getQuizId()
+          categoriasid: pergunta.getCategoriasId()
         }
       }
     );
 
     return updatedPergunta;
+  },
+
+  async updateStatusPergunta(id: number, pergunta: PerguntaDTO): Promise<perguntas> {
+
+    const statusUpdatet = await prisma.perguntas.update({
+      where: { id: id},
+      data: { status: pergunta.getStatus()}
+    });
+
+    return statusUpdatet;
   }
 
 

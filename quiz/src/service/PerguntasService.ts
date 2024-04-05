@@ -3,6 +3,9 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 import perguntasRepository from '../repository/perguntasRepository';
 import { NotFoundError } from '../exception/NotFoundError';
 import { BadRequestError } from '../exception/BadRequestError';
+import quizRepository from '../repository/quizRepository';
+import perguntasNivelRepository from '../repository/perguntasNivelRepository';
+import categoriasRepository from '../repository/categoriasRepository';
 
 @Service()
 export class PerguntasService {
@@ -17,9 +20,12 @@ export class PerguntasService {
 
   }
 
-  async getAllPerguntas(): Promise<PerguntaDTO[]> {
+  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number): Promise<PerguntaDTO[]> {
+    const quizExists = await quizRepository.getQuizById(quizId);
 
-    const perguntas = await perguntasRepository.getAllPerguntas();
+    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
+
+    const perguntas = await perguntasRepository.getAllPerguntasByQuizId(skip, take, quizId);
 
     const perguntasDTOs = perguntas.map((pergunta) => new PerguntaDTO(pergunta));
 
@@ -32,6 +38,18 @@ export class PerguntasService {
     const perguntaExist = await perguntasRepository.getPergunta(pergunta);
 
     if (perguntaExist) throw new BadRequestError('Pergunta ja existe');
+
+    const nivelExists = await perguntasNivelRepository.getPerguntasNivelById(pergunta.getPerguntasNivelId());
+
+    if(!nivelExists) throw new NotFoundError('Nivel nao encontrado');
+
+    const categoriasExists = await categoriasRepository.getCategoriaId(pergunta.getCategoriasId());
+
+    if(!categoriasExists) throw new NotFoundError('Categoria nao encontrada');
+
+    const quizExists = await quizRepository.getQuizById(pergunta.getQuizId());
+
+    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
 
     const newPergunta = await perguntasRepository.createPergunta(pergunta);
 
@@ -48,6 +66,14 @@ export class PerguntasService {
 
     if (perguntaAlreadyExists) throw new BadRequestError('Pergunta ja existe');
 
+    const nivelExists = await perguntasNivelRepository.getPerguntasNivelById(pergunta.getPerguntasNivelId());
+
+    if(!nivelExists) throw new NotFoundError('Nivel nao encontrado');
+
+    const categoriasExists = await categoriasRepository.getCategoriaId(pergunta.getCategoriasId());
+
+    if(!categoriasExists) throw new NotFoundError('Categoria nao encontrada');
+
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
     return new PerguntaDTO(updatedPergunta);
@@ -63,7 +89,7 @@ export class PerguntasService {
 
     pergunta.setStatus(!pergunta.getStatus());
 
-    const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
+    const updatedPergunta = await perguntasRepository.updateStatusPergunta(id, pergunta);
 
     return new PerguntaDTO(updatedPergunta);
   }

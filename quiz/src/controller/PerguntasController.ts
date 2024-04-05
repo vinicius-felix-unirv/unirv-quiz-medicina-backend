@@ -14,9 +14,12 @@ export class PerguntasController {
 
   }
 
-  async getAllPergunta(req: Request, res: Response): Promise<Response> {
+  async getAllPerguntasByQuizId(req: Request, res: Response): Promise<Response> {
 
-    const perguntas = await perguntaService.getAllPerguntas();
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const quizId = parseInt(req.params.id);
+    const perguntas = await perguntaService.getAllPerguntasByQuizId(skip, take, quizId);
 
     return res.status(200).json(perguntas);
   }
