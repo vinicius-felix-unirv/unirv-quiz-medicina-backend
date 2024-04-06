@@ -23,11 +23,18 @@ export default {
     return pergunta;
   },
 
-  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number): Promise<perguntas[]> {
+  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number, userId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
       skip: skip,
       take: take,
-      where: {quizid: quizId}
+      where: {
+        quizid: quizId,
+        progressoperguntas: {
+          none: {
+            usuariosid: userId
+          }
+        }
+      }
     });
 
     return perguntas;

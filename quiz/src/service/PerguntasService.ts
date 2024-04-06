@@ -6,6 +6,7 @@ import { BadRequestError } from '../exception/BadRequestError';
 import quizRepository from '../repository/quizRepository';
 import perguntasNivelRepository from '../repository/perguntasNivelRepository';
 import categoriasRepository from '../repository/categoriasRepository';
+import usuariosRepository from '../repository/usuariosRepository';
 
 @Service()
 export class PerguntasService {
@@ -20,12 +21,16 @@ export class PerguntasService {
 
   }
 
-  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number): Promise<PerguntaDTO[]> {
+  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number, userId: number): Promise<PerguntaDTO[]> {
     const quizExists = await quizRepository.getQuizById(quizId);
 
     if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
 
-    const perguntas = await perguntasRepository.getAllPerguntasByQuizId(skip, take, quizId);
+    const userExists = await usuariosRepository.getUsuarioById(userId);
+
+    if(!userExists) throw new NotFoundError('Usuario nao encontrado');
+
+    const perguntas = await perguntasRepository.getAllPerguntasByQuizId(skip, take, quizId, userId);
 
     const perguntasDTOs = perguntas.map((pergunta) => new PerguntaDTO(pergunta));
 

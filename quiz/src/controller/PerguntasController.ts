@@ -19,7 +19,8 @@ export class PerguntasController {
     const skip = parseInt(req.params.skip);
     const take = parseInt(req.params.take);
     const quizId = parseInt(req.params.id);
-    const perguntas = await perguntaService.getAllPerguntasByQuizId(skip, take, quizId);
+    const userId = parseInt(req.params.usuariosid);
+    const perguntas = await perguntaService.getAllPerguntasByQuizId(skip, take, quizId, userId);
 
     return res.status(200).json(perguntas);
   }
