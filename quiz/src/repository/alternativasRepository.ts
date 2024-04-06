@@ -20,7 +20,7 @@ export default {
     },
 
    
-    async gatAllAternativasByPerguntaId(perguntaId: number): Promise<alternativas[]>{
+    async getAllAternativasByPerguntaId(perguntaId: number): Promise<alternativas[]>{
 
         const alternativasByPergunta = await prisma.alternativas.findMany({
             where: { perguntasid: perguntaId}

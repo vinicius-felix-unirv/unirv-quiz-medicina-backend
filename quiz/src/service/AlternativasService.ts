@@ -11,7 +11,7 @@ export class AlternativasService{
 
     async alternativasCanBePersistent(alternativas: AllAlternativasDTO): Promise<void>{
 
-        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativas.alternativas[0].getPerguntasId());
+        const alternativasByPergunta = await alternativasRepository.getAllAternativasByPerguntaId(alternativas.alternativas[0].getPerguntasId());
 
         const limitOfAlternativas = alternativasByPergunta.length + alternativas.alternativas.length;
 
@@ -27,7 +27,11 @@ export class AlternativasService{
 
     async saveAlternativa(alternativa: AlternativasDTO): Promise<AlternativasDTO>{
 
-        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
+        const perguntaExists = await perguntasRepository.getPerguntaById(alternativa.getPerguntasId());
+
+        if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+
+        const alternativasByPergunta = await alternativasRepository.getAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         if (alternativasByPergunta.length >= 5) throw new BadRequestError('Limite de alternativas excedido');
 
@@ -42,9 +46,17 @@ export class AlternativasService{
 
     async saveManyAlternativas(alternativas: AllAlternativasDTO): Promise<AlternativasDTO[]>{
 
-        const perguntaExists = await perguntasRepository.getPerguntaById(alternativas.alternativas[0].getPerguntasId());
+        let perguntaId = alternativas.alternativas[0].getPerguntasId();
+        for(const alternativa of alternativas.alternativas){
 
-        if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+            const perguntaExists = await perguntasRepository.getPerguntaById(alternativa.getPerguntasId());
+
+            if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+
+            if(perguntaId != alternativa.getPerguntasId()) throw new BadRequestError('Nao pode ter mais de uma pergunta');
+            perguntaId = alternativa.getPerguntasId();
+        }
+
 
         if(alternativas.alternativas.length > 5 || alternativas.alternativas.length < 2 ) throw new BadRequestError('O limite de alternativas minimo 2 e maximo 5');
 
@@ -79,7 +91,7 @@ export class AlternativasService{
 
         if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
-        const allAlternativasByPergunt = await alternativasRepository.gatAllAternativasByPerguntaId(perguntaId);
+        const allAlternativasByPergunt = await alternativasRepository.getAllAternativasByPerguntaId(perguntaId);
 
         return allAlternativasByPergunt.map(alternativa => new AlternativasDTO(alternativa));
     }
@@ -90,7 +102,7 @@ export class AlternativasService{
 
         if(!alternativaExists) throw new NotFoundError('Alternativa nao encontrada');
 
-        const alternativasByPergunta = await alternativasRepository.gatAllAternativasByPerguntaId(alternativa.getPerguntasId());
+        const alternativasByPergunta = await alternativasRepository.getAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
         const alternativaAleadyExists = alternativasByPergunta.filter(a => a.resposta === alternativa.getResposta());
 
