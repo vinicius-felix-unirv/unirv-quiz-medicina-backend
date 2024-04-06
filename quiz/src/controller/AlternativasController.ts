@@ -49,6 +49,6 @@ export class AlternativasController{
 
         await alternativasService.deleteAlternativa(alternativaId);
 
-        return res.status(200).json({message: 'Alternativa deleted successfully'});
+        return res.status(204).json();
     }
 }

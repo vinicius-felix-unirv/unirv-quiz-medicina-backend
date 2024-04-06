@@ -46,6 +46,6 @@ export class PerguntasNivelController{
 
     await perguntasNivelService.deletePerguntasNivel(id);
 
-    return res.status(200).json({ message: 'PerguntasNivel deleted successfully'});
+    return res.status(204).json();
   }
 }
