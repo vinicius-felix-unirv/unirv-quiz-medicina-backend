@@ -30,10 +30,6 @@ export class CategoriasService {
 
     if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
-    const cursoExist = await cursoRepository.getCursoById(categoria.getCursoId());
-
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
-
     const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
 
     if (descricaoRegistered) throw new BadRequestError('Categoria ja existe');

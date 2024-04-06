@@ -42,8 +42,7 @@ export default {
       { where: {id: id}, 
         data: {
           descricao: categoria.getDescricao(),
-          imagem: categoria.getImagem(),
-          cursoId: categoria.getCursoId()
+          imagem: categoria.getImagem()
         }
       }
     );
