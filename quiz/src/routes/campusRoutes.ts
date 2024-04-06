@@ -7,8 +7,8 @@ const campusRoutes = Router();
 const campusController = new CampusController();
 
 campusRoutes.post('/campus', isAuthenticated, campusController.postCampus);
-campusRoutes.get('/campus/all/:id', isAuthenticated, campusController.getAllCampusByUserId);
-campusRoutes.get('/campus/:id', isAuthenticated, campusController.getCampusByUserId);
+campusRoutes.get('/usuarios/:id/campus', isAuthenticated, campusController.getAllCampusByUserId);
+campusRoutes.get('/campus/:id', isAuthenticated, campusController.getCampusById);
 campusRoutes.put('/campus/:id', isAuthenticated, campusController.putCampus);
 campusRoutes.delete('/campus/:id', isAuthenticated, campusController.deleteCampus);
 

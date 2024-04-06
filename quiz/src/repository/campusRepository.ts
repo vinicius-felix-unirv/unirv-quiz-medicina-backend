@@ -11,7 +11,7 @@ export default {
     return campusByUserId;
   },
 
-  async getCampusByUserId(id: number): Promise<campus | null>{
+  async getCampusById(id: number): Promise<campus | null>{
 
     const campusByUserId = await prisma.campus.findFirst({ where: {id: id} });
 
