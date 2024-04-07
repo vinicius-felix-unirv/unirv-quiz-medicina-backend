@@ -20,7 +20,7 @@ model campus {
   id         Int       @id @default(autoincrement())
   turma      String   @db.VarChar(255)
   periodo    Int
-  nome       String   @db.VarChar(100)
+  nomecampus       String   @db.VarChar(100)
   cursoid    Int 
   curso   curso? @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuariosid Int
@@ -103,7 +103,7 @@ model usuarios {
   telefone           String               @db.VarChar(15)
   sexo               Int
   datanascimento     DateTime             @db.Date
-  role               Int
+  role               Int                  @default(2)
   uf                 String               @db.VarChar(2)
   foto               String               @db.VarChar(255)
   pontuacao          Int                  @default(0)
