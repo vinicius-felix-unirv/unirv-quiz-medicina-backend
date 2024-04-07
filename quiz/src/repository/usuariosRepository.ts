@@ -18,9 +18,17 @@ export default {
     return usuario;
   },
 
-  async getAllUsuarios(): Promise<usuarios[]> {
+  async getAllUsuariosByCursoId(skip: number, take: number, cursoId: number): Promise<usuarios[]> {
 
-    const usuarios = await prisma.usuarios.findMany();
+    const usuarios = await prisma.usuarios.findMany({
+      skip: skip,
+      take: take,
+      where: { 
+        campus: {
+          some: {cursoid: cursoId}
+        }
+      }
+    });
 
     return usuarios;
   },
@@ -61,7 +69,6 @@ export default {
                   telefone: usuario.getTelefone(),
                   sexo: usuario.getSexo(),
                   datanascimento: usuario.getDataNascimento(),
-                  role: usuario.getRole(),
                   uf: usuario.getUf(),
                   foto: usuario.getFoto(),
                 }
@@ -97,10 +104,17 @@ export default {
     return addedPontuacao;
   },
 
-  async getTopTenPontuacao(): Promise<usuarios[]> {
+  async getTopTenPontuacao(cursoId: number): Promise<usuarios[]> {
 
     const topTen = await prisma.usuarios.findMany({
       take: 10,
+      where: {
+        campus: {
+          some: {
+            cursoid: cursoId
+          }
+        }
+      },
       orderBy: {pontuacao: 'desc'}
     });
 

@@ -17,7 +17,11 @@ export class UsuariosController {
 
   async getAllUsuarios(req: Request, res: Response): Promise<Response> {
 
-    const usuarios = await usuarioService.getAllUsuarios();
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const cursoId = parseInt(req.params.id);
+
+    const usuarios = await usuarioService.getAllUsuariosByCursoId(skip, take, cursoId);
 
     return res.status(200).json(usuarios);
   }
@@ -62,9 +66,11 @@ export class UsuariosController {
     return res.status(200).json(user);
   }
 
-  async getRanking(req: Request, res: Response): Promise<Response> {
+  async getRankingByCursoId(req: Request, res: Response): Promise<Response> {
 
-    const ranking = await usuarioService.getRanking();
+    const cursoId = parseInt(req.params.id);
+
+    const ranking = await usuarioService.getRankingByCursoId(cursoId);
 
     return res.status(200).json(ranking);
   }

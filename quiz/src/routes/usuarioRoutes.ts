@@ -6,12 +6,12 @@ const usuariosRoutes = Router();
 const usuariosController = new UsuariosController();
 
 usuariosRoutes.get('/usuarios/:id', isAuthenticated, usuariosController.getUsuarioById);
-usuariosRoutes.get('/usuarios', isAuthenticated, usuariosController.getAllUsuarios);
-usuariosRoutes.get('/usuarios/ranking', isAuthenticated, usuariosController.getRanking);
+usuariosRoutes.get('/cursos/:id/usuarios/:skip/:take', isAuthenticated, usuariosController.getAllUsuarios);
+usuariosRoutes.get('/cursos/:id/usuarios/ranking', isAuthenticated, usuariosController.getRankingByCursoId);
 usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
 usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
-usuariosRoutes.put('/usuarios/pontuacao/:id', isAuthenticated, usuariosController.putPontuacao);
-usuariosRoutes.put('/usuarios/trocar-senha/:id', isAuthenticated, usuariosController.putSenha);
+usuariosRoutes.put('/usuarios/:id/pontuacao', isAuthenticated, usuariosController.putPontuacao);
+usuariosRoutes.put('/usuarios/:id/trocar-senha', isAuthenticated, usuariosController.putSenha);
 
 
 export { usuariosRoutes };
