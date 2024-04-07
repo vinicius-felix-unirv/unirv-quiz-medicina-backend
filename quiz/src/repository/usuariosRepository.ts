@@ -45,10 +45,8 @@ export default {
                       telefone: usuario.getTelefone(),
                       sexo: usuario.getSexo(),
                       datanascimento: usuario.getDataNascimento(),
-                      role: usuario.getRole(),
                       uf: usuario.getUf(),
-                      foto: usuario.getFoto(),
-                      pontuacao: usuario.getPontuacao()
+                      foto: usuario.getFoto()
                     } as usuarios
       }
     );

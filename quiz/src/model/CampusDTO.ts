@@ -6,7 +6,7 @@ export interface ICampusDTO{
     cursoid: number;
     turma: string;
     periodo: number;   
-    nome: string;
+    nomecampus: string;
     usuariosid: number;
 }
 
@@ -16,7 +16,7 @@ export class CampusDTO {
   private cursoid: number;
   private turma: string;
   private periodo: number;   
-  private nome: string;
+  private nomecampus: string;
   private usuariosid: number;
 
   constructor(data: ICampusDTO | campus){
@@ -25,7 +25,7 @@ export class CampusDTO {
     this.cursoid = data.cursoid;
     this.turma = data.turma;
     this.periodo = data.periodo;
-    this.nome = data.nome;
+    this.nomecampus = data.nomecampus;
     this.usuariosid = data.usuariosid;
   }
 
@@ -45,8 +45,8 @@ export class CampusDTO {
     return this.periodo;
   }
 
-  getNome(): string{
-    return this.nome;
+  getNomeCampus(): string{
+    return this.nomecampus;
   }
 
   getUsuarioId(): number{

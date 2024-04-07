@@ -26,7 +26,7 @@ export default {
         cursoid: campus.getCursoId(),
         turma: campus.getTurma(),
         periodo: campus.getPeriodo(),
-        nome: campus.getNome(),
+        nomecampus: campus.getNomeCampus(),
         usuariosid: campus.getUsuarioId()
       }
     });
@@ -42,7 +42,7 @@ export default {
         cursoid: campus.getCursoId(),
         turma: campus.getTurma(),
         periodo: campus.getPeriodo(),
-        nome: campus.getNome()
+        nomecampus: campus.getNomeCampus()
       }
     });
 
