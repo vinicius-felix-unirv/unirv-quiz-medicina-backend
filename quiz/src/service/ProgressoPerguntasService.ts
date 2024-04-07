@@ -18,13 +18,13 @@ export class ProgressoPerguntasService{
       ]
     );
     
-    if(!usuariosIdExists || !perguntaIdExists) throw new NotFoundError('Usuario or Pergunta not found');
+    if(!usuariosIdExists || !perguntaIdExists) throw new NotFoundError('Usuario ou pergunta nao encontrados');
 
     const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(progressoPergunta.getUsuariosId());
 
-    const progressoExist = progressoPergByUsuario.filter( p => p.perguntasid === progressoPergunta.getPerguntasId());
+    const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === progressoPergunta.getPerguntasId());
      
-    if(progressoExist.length != 0) throw new BadRequestError('ProgressoPergunta already exists');
+    if(progressoExist) throw new BadRequestError('Progresso-Pergunta ja existe');
 
     const progressoPerg = await progressoPerguntasRepository.createProgressoPergunta(progressoPergunta);
 
@@ -35,7 +35,7 @@ export class ProgressoPerguntasService{
 
     const usuariosExists = await usuariosRepository.getUsuarioById(data.progressoPerguntas[0].getUsuariosId());
 
-    if (!usuariosExists) throw new NotFoundError('Usuario not found');
+    if (!usuariosExists) throw new NotFoundError('Usuario nao encontrado');
 
     const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(data.progressoPerguntas[0].getUsuariosId());
     
@@ -43,11 +43,17 @@ export class ProgressoPerguntasService{
 
       const perguntaIdExists = await perguntasRepository.getPerguntaById(progressoPerguntas.getPerguntasId());
 
-      if(!perguntaIdExists) throw new NotFoundError('Pergunta not found');
+      if(!perguntaIdExists) throw new NotFoundError('Pergunta nao encontrada');
 
       const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === perguntaIdExists.id);
 
-      if(progressoExist) throw new BadRequestError('ProgressoPergunta already exists');
+      if(progressoExist) throw new BadRequestError('Progresso-Pergunta ja existe');
+      
+      const perguntasRepeated = new Set<number>();
+      
+      data.progressoPerguntas.forEach(p => perguntasRepeated.add(p.getPerguntasId()));
+
+      if(perguntasRepeated.size != data.progressoPerguntas.length) throw new BadRequestError('As perguntas não podem se repetir');
 
     }
 

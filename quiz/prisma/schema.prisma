@@ -43,6 +43,7 @@ model curso {
   imagem        String              @db.VarChar(255)
   categorias categorias[]
   campus campus[]
+  quiz quiz[]
 }
 
 model logs {
@@ -89,6 +90,8 @@ model progressoperguntas {
 model quiz {
   id         Int        @id @default(autoincrement())
   titulo     String     @db.VarChar(150)
+  cursoid    Int 
+  curso     curso?  @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntas  perguntas[]
 }
 
@@ -103,7 +106,7 @@ model usuarios {
   role               Int
   uf                 String               @db.VarChar(2)
   foto               String               @db.VarChar(255)
-  pontuacao          Int
+  pontuacao          Int                  @default(0)
   status             Boolean              @default(true)
   campus             campus[]
   logs               logs[]

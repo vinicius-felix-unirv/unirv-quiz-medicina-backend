@@ -6,7 +6,7 @@ import { SendEmailController } from '../controller/SendEmailController';
 const sendEmailRoutes = Router();
 const sendEmailController = new SendEmailController();
 
-sendEmailRoutes.post('/sendEmail', isAuthenticated, sendEmailController.postSendEmail);
+sendEmailRoutes.post('/send-email', isAuthenticated, sendEmailController.postSendEmail);
 
 
 export { sendEmailRoutes };

@@ -7,9 +7,9 @@ import { ProgressoPerguntasController } from '../controller/ProgressoPerguntasCo
 const progressoPerguntasRoutes = Router();
 const progressoPerguntasController = new ProgressoPerguntasController();
 
-progressoPerguntasRoutes.get('/progressoPerguntas/:id', isAuthenticated, progressoPerguntasController.getAllProgressoPergByUsuario);
-progressoPerguntasRoutes.post('/progressoPerguntas', isAuthenticated, progressoPerguntasController.postProgressoPerg);
-progressoPerguntasRoutes.post('/progressoPerguntas/many', isAuthenticated, progressoPerguntasController.postManyProgressoPerguntas);
+progressoPerguntasRoutes.get('/usuarios/:id/progresso-perguntas', isAuthenticated, progressoPerguntasController.getAllProgressoPergByUsuario); // apenas para testes
+progressoPerguntasRoutes.post('/progresso-perguntas', isAuthenticated, progressoPerguntasController.postProgressoPerg);
+progressoPerguntasRoutes.post('/progresso-perguntas/many', isAuthenticated, progressoPerguntasController.postManyProgressoPerguntas);
 
 
 export { progressoPerguntasRoutes };

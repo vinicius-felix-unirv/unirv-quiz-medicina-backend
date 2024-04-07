@@ -30,10 +30,6 @@ export class CategoriasService {
 
     if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
 
-    const cursoExist = await cursoRepository.getCursoById(categoria.getCursoId());
-
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
-
     const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
 
     if (descricaoRegistered) throw new BadRequestError('Categoria ja existe');
@@ -53,19 +49,9 @@ export class CategoriasService {
 
     categoria.setStatus(!categoria.getStatus());
 
-    const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
+    const updatedCategoria = await categoriasRepository.updateStatusCategorias(id, categoria);
 
     return new CategoriasDTO(updatedCategoria);
-  }
-
-  async getAllCategorias(): Promise<CategoriasDTO[]> {
-
-    const categorias = await categoriasRepository.getAllCategorias();
-
-    const categoriasDTOs = categorias.map((categoria) => new CategoriasDTO(categoria));
-
-
-    return categoriasDTOs;
   }
 
   async getCategoriaId(id: number): Promise<CategoriasDTO> {

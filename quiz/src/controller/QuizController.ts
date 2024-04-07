@@ -22,12 +22,25 @@ export class QuizController {
     const updatedQuiz = await quizService.updateQuiz(id, new QuizDTO(body));
 
     return res.status(200).json(updatedQuiz);
-
   }
 
   async getAllquiz(req: Request, res: Response): Promise<Response> {
 
-    const quizDTOs = await quizService.getAllQuiz();
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+
+    const quizDTOs = await quizService.getAllQuiz(skip, take);
+
+    return res.status(200).json(quizDTOs);
+  }
+
+  async getAllquizByCursoId(req: Request, res: Response): Promise<Response> {
+
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const cursoId = parseInt(req.params.id);
+
+    const quizDTOs = await quizService.getAllQuizByCurosId(skip, take, cursoId);
 
     return res.status(200).json(quizDTOs);
   }

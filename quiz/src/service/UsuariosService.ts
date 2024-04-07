@@ -4,6 +4,7 @@ import usuariosRepository from '../repository/usuariosRepository';
 import { hash } from 'bcryptjs';
 import { NotFoundError } from '../exception/NotFoundError';
 import { BadRequestError } from '../exception/BadRequestError';
+import cursoRepository from '../repository/cursoRepository';
 
 @Service()
 export class UsuarioService {
@@ -12,15 +13,19 @@ export class UsuarioService {
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
-    if (usuarioExists == null) throw new NotFoundError('Usuario nao encontrado');
+    if (!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
 
     return new UsuarioDTO(usuarioExists);
 
   }
 
-  async getAllUsuarios(): Promise<UsuarioDTO[]> {
+  async getAllUsuariosByCursoId(skip: number, take: number, cursoId: number): Promise<UsuarioDTO[]> {
 
-    const usuarios = await usuariosRepository.getAllUsuarios();
+    const cursoExists = await cursoRepository.getCursoById(cursoId);
+
+    if (!cursoExists) throw new NotFoundError('Curso nao encontrado');
+
+    const usuarios = await usuariosRepository.getAllUsuariosByCursoId(skip, take, cursoId);
 
     const allUsuarios = usuarios.map((usuarios) => new UsuarioDTO(usuarios));
 
@@ -89,9 +94,13 @@ export class UsuarioService {
     return new UsuarioDTO(addedPontuacao);
   }
 
-  async getRanking(): Promise<UsuarioDTO[]> {
+  async getRankingByCursoId(cursoId: number): Promise<UsuarioDTO[]> {
 
-    const ranking = await usuariosRepository.getTopTenPontuacao();
+    const cursoExists = await cursoRepository.getCursoById(cursoId);
+
+    if(!cursoExists) throw new NotFoundError('Curso nao encontrado');
+
+    const ranking = await usuariosRepository.getTopTenPontuacao(cursoId);
 
     return ranking.map(usuario => new UsuarioDTO(usuario));
 

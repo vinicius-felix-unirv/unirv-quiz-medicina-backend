@@ -35,13 +35,6 @@ export class CategoriasController {
 
   }
 
-  async getAllCategorias(req: Request, res: Response): Promise<Response> {
-
-    const categoriasDTOs = await categoriasService.getAllCategorias();
-
-    return res.status(200).json(categoriasDTOs);
-  }
-
   async getCategoriaId(req: Request, res: Response): Promise<Response> {
 
     const id = parseInt(req.params.id);
@@ -53,7 +46,7 @@ export class CategoriasController {
 
   async getAllCategoriaByCursoId(req: Request, res: Response): Promise<Response> { 
 
-    const cursoId = parseInt(req.params.cursoId);
+    const cursoId = parseInt(req.params.id);
 
     const allCategoriasByCurso = await categoriasService.getAllCategoriasByCursoId(cursoId);
 

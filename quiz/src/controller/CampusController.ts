@@ -24,11 +24,11 @@ export class CampusController{
 
   }
 
-  async getCampusByUserId(req: Request, res: Response): Promise<Response> {
+  async getCampusById(req: Request, res: Response): Promise<Response> {
 
     const Id = parseInt(req.params.id);
 
-    const campus = await campusService.getCampusByUserId(Id);
+    const campus = await campusService.getCampusById(Id);
 
     return res.status(200).json(campus);
 
@@ -51,7 +51,7 @@ export class CampusController{
 
     await campusService.deleteCampus(id);
 
-    return res.status(200).json({ message: 'Campus deleted successfully'});
+    return res.status(204).json();
 
   }
 }

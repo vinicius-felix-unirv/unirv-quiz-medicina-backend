@@ -4,6 +4,7 @@ import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
 import { QuizDTO } from '../model/QuizDTO';
 import quizRepository from '../repository/quizRepository';
+import cursoRepository from '../repository/cursoRepository';
 
 @Service()
 export class QuizService {
@@ -12,7 +13,11 @@ export class QuizService {
 
     const quizExist = await quizRepository.getQuizByTitulo(quiz.getTitulo() ?? '');
 
-    if (quizExist != null) throw new BadRequestError('Quiz already exists');
+    if(quizExist) throw new BadRequestError('Quiz ja existe');
+
+    const cursoExists = await cursoRepository.getCursoById(quiz.getCursoId());
+
+    if(!cursoExists) throw new NotFoundError('Curso nao encontrado');
 
     const newQuiz = await quizRepository.createQuiz(quiz);
 
@@ -34,12 +39,20 @@ export class QuizService {
     return new QuizDTO(updatedquiz);
   }
 
-  async getAllQuiz(): Promise<QuizDTO[]> {
+  async getAllQuiz(skip: number, take: number): Promise<QuizDTO[]> {
 
-    const quizs = await quizRepository.getAllQuiz();
+    const quizs = await quizRepository.getAllQuiz(skip, take);
 
     const quizsDTOs = quizs.map((quiz) => new QuizDTO(quiz));
 
+    return quizsDTOs;
+  }
+
+  async getAllQuizByCurosId(skip: number, take: number, cursoId: number): Promise<QuizDTO[]> {
+
+    const quizs = await quizRepository.getAllQuizByCursoId(skip, take, cursoId);
+
+    const quizsDTOs = quizs.map((quiz) => new QuizDTO(quiz));
 
     return quizsDTOs;
   }

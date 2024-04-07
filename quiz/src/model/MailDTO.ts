@@ -3,9 +3,11 @@ export interface IMailDTO{
 
     to: string,
     subject: string,
-    html: string,
     text: string
 }
+
+const template = `
+        <h1 style="Color: blue" >Hola homem das cavernas </h1>`;
 
 export class MailDTO{
 
@@ -18,7 +20,7 @@ export class MailDTO{
 
         this.to = data.to;
         this.subject = data.subject;
-        this.html = data.html;
+        this.html = template;
         this.text = data.text;
     }
 
