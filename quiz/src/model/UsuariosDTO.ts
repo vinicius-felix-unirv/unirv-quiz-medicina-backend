@@ -16,6 +16,24 @@ export interface IUsuarioDTO {
     status: boolean;
 }
 
+export interface IUsuarioAndCampusDTO{
+
+  nome: string;
+  email: string;
+  senha: string;
+  telefone: string;
+  sexo: number;
+  datanascimento: Date;
+  uf: string;
+  foto: string;
+  cursoid: number;
+  turma: '2A';
+  periodo: 4;
+  nomecampus: 'Unirv';
+  usuariosid: 52;
+  
+}
+
 
 export class UsuarioDTO {
 
