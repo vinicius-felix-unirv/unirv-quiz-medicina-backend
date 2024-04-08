@@ -105,6 +105,7 @@ model usuarios {
   datanascimento     DateTime             @db.Date
   role               Int                  @default(2)
   uf                 String               @db.VarChar(2)
+  cidade             String               @db.VarChar(255)
   foto               String               @db.VarChar(255)
   pontuacao          Int                  @default(0)
   status             Boolean              @default(true)
