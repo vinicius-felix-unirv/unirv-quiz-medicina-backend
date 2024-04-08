@@ -1,23 +1,22 @@
 import { usuarios } from '@prisma/client';
 
 export interface IUsuarioDTO {
-
-    id?: number;
-    nome: string;
-    email: string;
-    senha: string;
-    telefone: string;
-    sexo: number;
-    datanascimento: Date;
-    role: number;
-    uf: string;
-    foto: string;
-    pontuacao: number;
-    status: boolean;
+  id?: number;
+  nome: string;
+  email: string;
+  senha: string;
+  telefone: string;
+  sexo: number;
+  datanascimento: Date;
+  role: number;
+  uf: string;
+  foto: string;
+  pontuacao: number;
+  status: boolean;
+  cidade: string;
 }
 
 export interface IUsuarioAndCampusDTO{
-
   nome: string;
   email: string;
   senha: string;
@@ -26,12 +25,12 @@ export interface IUsuarioAndCampusDTO{
   datanascimento: Date;
   uf: string;
   foto: string;
+  cidade: string;
   cursoid: number;
-  turma: '2A';
-  periodo: 4;
-  nomecampus: 'Unirv';
-  usuariosid: 52;
-  
+  turma: string;
+  periodo: number;
+  nomecampus: string;
+  usuariosid: number;
 }
 
 
@@ -49,6 +48,7 @@ export class UsuarioDTO {
   private foto: string;
   private pontuacao: number;
   private status: boolean;
+  private cidade: string;
 
   constructor(data: IUsuarioDTO | usuarios) {
     this.id = data.id;
@@ -63,6 +63,7 @@ export class UsuarioDTO {
     this.foto = data.foto;
     this.pontuacao = data.pontuacao;
     this.status = data.status;
+    this.cidade = data.cidade;
   }
 
   getId(): number | undefined {
@@ -79,6 +80,7 @@ export class UsuarioDTO {
   getPontuacao(): number { return this.pontuacao; }
   getStatus(): boolean { return this.status; }
   getDataNascimento(): Date { return this.datanascimento; }
+  getCidade(): string { return this.cidade; }
 
   setPasswordHashed(hashedPassword: string) {
     this.senha = hashedPassword;

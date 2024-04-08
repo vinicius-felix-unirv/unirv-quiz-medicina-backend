@@ -46,7 +46,8 @@ export default {
                       sexo: usuario.getSexo(),
                       datanascimento: usuario.getDataNascimento(),
                       uf: usuario.getUf(),
-                      foto: usuario.getFoto()
+                      foto: usuario.getFoto(),
+                      cidade: usuario.getCidade()
                     } as usuarios
       }
     );
@@ -69,6 +70,7 @@ export default {
                   datanascimento: usuario.getDataNascimento(),
                   uf: usuario.getUf(),
                   foto: usuario.getFoto(),
+                  cidade: usuario.getCidade()
                 }
       }
     );

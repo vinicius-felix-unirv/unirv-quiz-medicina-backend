@@ -68,6 +68,7 @@ export class UsuarioService {
       role: 2,
       pontuacao: 0,
       status: true,
+      cidade: data.cidade,
     });
 
     const hashedPassword = await hash(data.senha, 10);
