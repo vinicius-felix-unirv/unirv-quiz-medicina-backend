@@ -1,82 +1,119 @@
 
 # Routes
 
-### Usuarios
+* [Usuarios](#usuarios)
+* [Campus](#campus)
+* [Quiz](#quiz)
+* [Perguntas](#perguntas)
+* [Progresso Perguntas](#progresso-perguntas)
+* [Perguntas Nivel](#perguntas-nivel)
+* [Categorias](#categorias)
+* [Alternativas](#alternativas)
+* [Cursos](#cursos)
+* [Email](#email)
+* [Authentication](#authentication)
 
-* GET   /usuarios/:id
-* GET   /cursos/:id/usuarios/:skip/:take
-* GET   /cursos/:id/usuarios/ranking
-* POST  /usuarios-campus
-* POST  /usuarios
-* PUT   /usuarios/:id
-* PUT   /usuarios/:id/pontuacao
-* PUT   /usuarios/:id/trocar-senha
 
-### Campus
+## Usuarios
 
-* GET    /usuarios/:id/campus
-* GET    /campus/:id
-* PUT    /campus/:id
-* POST   /campus
-* DELETE /campus/:id
+* ### GET   /usuarios/:id
+   Para fazer uma chama a esse endpoint é necessário o 'id' do usuario e estar autenticado
 
-### Quiz
+   Exemplo:
 
-* GET /quiz/:id
-* GET /curso/:id/quiz/:skip/:take
-* GET /quiz/:skip/:take
-* POST /quiz
-* PUT /quiz/:id
+            GET http://localhost:3000/usuarios/67
 
-### Perguntas
+   Response:
+   ```json
+    {
+        "id": 67,
+        "nome": "Juliscleydi",
+        "email": "hablaaabb@hotmail.com",
+        "senha": "$2a$10$q5zZ3x.7N4zr6.duNOhqNuuBjOl23E2Wq/ua5RDXgMF48Nl707Pm2",
+        "telefone": "string",
+        "sexo": 1,
+        "datanascimento": "2013-02-14T00:00:00.000Z",
+        "role": 2,
+        "uf": "go",
+        "foto": "string",
+        "pontuacao": 0,
+        "status": true,
+        "cidade": "americana"
+    }
+   ```
+* ### GET   /cursos/:id/usuarios/:skip/:take
+* ### GET   /cursos/:id/usuarios/ranking
+* ### POST  /usuarios-campus
+* ### POST  /usuarios
+* ### PUT   /usuarios/:id
+* ### PUT   /usuarios/:id/pontuacao
+* ### PUT   /usuarios/:id/trocar-senha
 
-* GET  /perguntas/:id
-* GET  /usuarios/:usuariosid/quiz/:id/perguntas/:skip/:take
-* POST /perguntas
-* PUT  /perguntas/:id
-* PUT  /perguntas/status/:id
+ ## Campus
 
-### Alternativas 
+* ### GET /usuarios/:id/campus
+* ### GET    /campus/:id
+* ### PUT    /campus/:id
+* ### POST   /campus
+* ### DELETE /campus/:id
 
-* GET    /perguntas/:id/alternativas
-* POST   /alternativas
-* POST   /alternativas/many
-* PUT    /alternativas/:id
-* DELETE /alternativas/:id
+ ## Quiz
 
-### Categorias
+* ### GET /quiz/:id
+* ### GET /curso/:id/quiz/:skip/:take
+* ### GET /quiz/:skip/:take
+* ### POST /quiz
+* ### PUT /quiz/:id
 
-* GET  /categorias/:id
-* GET  /curso/:id/categorias
-* POST /categorias
-* PUT  /categorias/:id
-* PUT  /categorias/:id/status
+ ## Perguntas
 
-### Perguntas-Nivel
+* ### GET  /perguntas/:id
+* ### GET  /usuarios/:usuariosid/quiz/:id/perguntas/:skip/:take
+* ### POST /perguntas
+* ### PUT  /perguntas/:id
+* ### PUT  /perguntas/status/:id
 
-* GET    /niveis/:id
-* GET    /niveis
-* POST   /niveis
-* PUT    /niveis/:id
-* DELETE /niveis/:id
+ ## Alternativas 
 
-### Progresso-Perguntas
+* ### GET    /perguntas/:id/alternativas
+* ### POST   /alternativas
+* ### POST   /alternativas/many
+* ### PUT    /alternativas/:id
+* ### DELETE /alternativas/:id
 
-* GET  /usuarios/:id/progresso-perguntas
-* POST /progresso-perguntas
-* POST /progresso-perguntas/many
+ ## Categorias
 
-### Curso
+* ### GET  /categorias/:id
+* ### GET  /curso/:id/categorias
+* ### POST /categorias
+* ### PUT  /categorias/:id
+* ### PUT  /categorias/:id/status
 
-* GET /cursos
+ ## Perguntas-Nivel
 
-### Email
+* ### GET    /niveis/:id
+* ### GET    /niveis
+* ### POST   /niveis
+* ### PUT    /niveis/:id
+* ### DELETE /niveis/:id
 
-* POST /send-email
+ ## Progresso-Perguntas
 
-### authentication
+* ### GET  /usuarios/:id/progresso-perguntas
+* ### POST /progresso-perguntas
+* ### POST /progresso-perguntas/many
 
-* POST /authentication
+ ## Curso
+
+* ### GET /cursos
+
+ ## Email
+
+* ### POST /send-email
+
+ ## Authentication
+
+* ### POST /authentication
 
 ```json
 {
