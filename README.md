@@ -43,6 +43,7 @@
         "cidade": "Americana"
     }
    ```
+   --------
 * ### GET /cursos/:id/usuarios/:skip/:take
 
    Para fazer uma chamada a esse endpoint é necessário passar o 'id' do curso e o valor do skip e take e estar autenticado.
@@ -89,7 +90,7 @@
         }
     ]
    ```
-
+   ---------
 * ### GET /cursos/:id/usuarios/ranking
 
    Para fazer uma chamada a esse endpoint é necessário passar o 'id' do curso e estar autenticado.
@@ -138,6 +139,7 @@
         }
     ]
    ```
+   --------
 * ### POST /usuarios
 
    Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
@@ -183,6 +185,7 @@
 	"cidade": "americana"
   }
    ```
+   --------
 * ### POST /usuarios-campus
 
    Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
@@ -242,6 +245,7 @@
         }
     }
    ```
+   --------
 * ### PUT /usuarios/:id
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário e um json com os seguintes atributos:
@@ -270,22 +274,22 @@
 
    ```json
    {
-	"id": 69,
-	"nome": "Exemplo",
-	"email": "exemplo0202@hotmail.com",
-	"senha": "$2a$10$NlJmn1N0bYhTdgJ9uoyxYesH4JCFfI98cnRzZoZ3nFU6ZJf930BN6",
-	"telefone": "exemplo",
-	"sexo": 1,
-	"datanascimento": "2013-02-14T00:00:00.000Z",
-	"role": 2,
-	"uf": "go",
-	"foto": "string",
-	"pontuacao": 0,
-	"status": true,
-	"cidade": "exemplo"
-  }
+      "id": 69,
+      "nome": "Exemplo",
+      "email": "exemplo0202@hotmail.com",
+      "senha": "$2a$10$NlJmn1N0bYhTdgJ9uoyxYesH4JCFfI98cnRzZoZ3nFU6ZJf930BN6",
+      "telefone": "exemplo",
+      "sexo": 1,
+      "datanascimento": "2013-02-14T00:00:00.000Z",
+      "role": 2,
+      "uf": "go",
+      "foto": "string",
+      "pontuacao": 0,
+      "status": true,
+      "cidade": "exemplo"
+   }
    ```
-
+   --------
 * ### PUT /usuarios/:id/pontuacao
 
    Para fazer uma chamada a esse endpoint é necessario estar autenticado e passar o 'id' do usuário que se deseja adicionar os pontos e um json com o atributo:
@@ -308,22 +312,22 @@
 
    ```json
    {
-	"id": 66,
-	"nome": "Juliscleydi",
-	"email": "hehehe@hotmail.com",
-	"senha": "$2a$10$YYeHpUoLNoqzmtTRDRGTSeLXDkZrTAwUS6XWk84WXL/W06zpCnFpO",
-	"telefone": "string",
-	"sexo": 1,
-	"datanascimento": "2013-02-14T00:00:00.000Z",
-	"role": 1,
-	"uf": "go",
-	"foto": "string",
-	"pontuacao": 123,
-	"status": true,
-	"cidade": "Americana"
+      "id": 66,
+      "nome": "Juliscleydi",
+      "email": "hehehe@hotmail.com",
+      "senha": "$2a$10$YYeHpUoLNoqzmtTRDRGTSeLXDkZrTAwUS6XWk84WXL/W06zpCnFpO",
+      "telefone": "string",
+      "sexo": 1,
+      "datanascimento": "2013-02-14T00:00:00.000Z",
+      "role": 1,
+      "uf": "go",
+      "foto": "string",
+      "pontuacao": 123,
+      "status": true,
+      "cidade": "Americana"
    }
    ```
-
+   --------
 * ### PUT /usuarios/:id/trocar-senha
 
    Para fazer uma chamada a esse endpoint é necessário o 'id' do usuário que deseja trocar a senha e um json com o atributo:
@@ -336,7 +340,7 @@
 
     ```json
     {
-	 "senha": "hehe2&5464"
+	   "senha": "hehe2&5464"
     }
     ```
 
@@ -346,10 +350,10 @@
 
     ```json
     {
-	 "message": "success"
+	   "message": "success"
     }
     ```
-
+  
  ## Campus
 
 * ### GET /usuarios/:id/campus
@@ -366,25 +370,25 @@
 
    ```json
    [
-	{
-		"id": 105,
-		"cursoid": 2,
-		"turma": "5A",
-		"periodo": 7,
-		"nomecampus": "Unirv",
-		"usuariosid": 66
-	},
-	{
-		"id": 108,
-		"cursoid": 1,
-		"turma": "2A",
-		"periodo": 4,
-		"nomecampus": "Unirv",
-		"usuariosid": 66
-	}
+      {
+         "id": 105,
+         "cursoid": 2,
+         "turma": "5A",
+         "periodo": 7,
+         "nomecampus": "Unirv",
+         "usuariosid": 66
+      },
+      {
+         "id": 108,
+         "cursoid": 1,
+         "turma": "2A",
+         "periodo": 4,
+         "nomecampus": "Unirv",
+         "usuariosid": 66
+      }
    ]
    ```
-   
+   --------
 * ### GET /campus/:id
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que procuras.
@@ -399,14 +403,15 @@
 
    ```json
    {
-	"id": 105,
-	"cursoid": 2,
-	"turma": "5A",
-	"periodo": 7,
-	"nomecampus": "Unirv",
-	"usuariosid": 66
+      "id": 105,
+      "cursoid": 2,
+      "turma": "5A",
+      "periodo": 7,
+      "nomecampus": "Unirv",
+      "usuariosid": 66
    }
    ```
+   --------
 * ### PUT /campus/:id
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso que vc deseja alterar e um json com os seguintes atributos:
@@ -440,6 +445,7 @@
       "usuariosid": 47
    }
    ```
+   --------
 * ### POST /campus
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos:
@@ -474,7 +480,7 @@
       "usuariosid": 66
    }
    ```
-   
+   --------
 * ### DELETE /campus/:id
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que deseja apagar.
@@ -487,6 +493,7 @@
 
          StatusCode: 204
 
+  
  ## Quiz
 
 * ### GET /quiz/:id
@@ -508,6 +515,7 @@
       "cursoid": 1
    }
    ```
+   --------
 * ### GET /curso/:id/quiz/:skip/:take
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso e o valor de 'skip' e 'take' para buscar os quizzes de um curso específico.
@@ -544,6 +552,7 @@
       }
    ]
    ```
+   --------
 * ### GET /quiz/:skip/:take
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar os valores de 'skip' e 'take' para buscar os todos os quizzes de forma paginada.
@@ -610,6 +619,7 @@
       }
    ]
    ```
+   --------
 * ### POST /quiz
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
@@ -626,7 +636,7 @@
       "cursoid": 2
    }
    ```
-      
+   
    Response:
 
    Esse endpoint retorna o quiz que acaba de ser criado com os valores passados pelo body.
@@ -638,7 +648,7 @@
       "cursoid": 2
    }
    ```
-
+   --------
 * ### PUT /quiz/:id
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz que deseja alterar e um json com os seguintes atributos.
