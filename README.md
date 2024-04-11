@@ -288,7 +288,7 @@
 
 * ### PUT /usuarios/:id/pontuacao
 
-   Para fazer uma chamada a esse endpoint é necessario o 'id' do usuário que se deseja adicionar os pontos e um json com o atributo:
+   Para fazer uma chamada a esse endpoint é necessario estar autenticado e passar o 'id' do usuário que se deseja adicionar os pontos e um json com o atributo:
 
    Exemplo:
 
@@ -353,18 +353,162 @@
  ## Campus
 
 * ### GET /usuarios/:id/campus
-* ### GET    /campus/:id
-* ### PUT    /campus/:id
-* ### POST   /campus
+   
+   Para fazer a chamada a esse endpoint é necessario estar autenticado e passar o 'id' do usuário para buscar todos os campus de um usuário.
+
+   Examplo: 
+
+        GET http://localhost:3000/usuarios/66/campus
+
+   Response: 
+
+   Esse endpoint retorna todos os campus de um usuário específico.
+
+   ```json
+   [
+	{
+		"id": 105,
+		"cursoid": 2,
+		"turma": "5A",
+		"periodo": 7,
+		"nomecampus": "Unirv",
+		"usuariosid": 66
+	},
+	{
+		"id": 108,
+		"cursoid": 1,
+		"turma": "2A",
+		"periodo": 4,
+		"nomecampus": "Unirv",
+		"usuariosid": 66
+	}
+   ]
+   ```
+   
+* ### GET /campus/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que procuras.
+
+   Exemplo:
+
+        Get http://localhost:3000/campus/105
+
+   Response:
+
+   Esse endpoint retorna um campus.
+
+   ```json
+   {
+	"id": 105,
+	"cursoid": 2,
+	"turma": "5A",
+	"periodo": 7,
+	"nomecampus": "Unirv",
+	"usuariosid": 66
+   }
+   ```
+* ### PUT /campus/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso que vc deseja alterar e um json com os seguintes atributos:
+
+   Exemplo:
+
+         PUT http://localhost:3000/campus/88
+
+   Body:
+
+   ```json
+   {
+      "cursoid": 1,
+      "turma": "4A",
+      "periodo": 8,
+      "nome": "Unirv"
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna um usuário alterado com os valores passados pelo body.
+
+   ```json
+   {
+      "id": 88,
+      "cursoid": 1,
+      "turma": "4A",
+      "periodo": 8,
+      "nome": "Unirv",
+      "usuariosid": 47
+   }
+   ```
+* ### POST /campus
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos:
+
+   Exemplo:
+
+         POST http://localhost:3000/campus
+
+   Body:
+
+   ```json
+   {
+      "cursoid": 1,
+      "turma": "2A",
+      "periodo": 4,
+      "nomecampus": "Unirv",
+      "usuariosid": 66
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna o novo campus criado.
+
+   ```json
+   {
+      "id": 107,
+      "cursoid": 1,
+      "turma": "2A",
+      "periodo": 4,
+      "nomecampus": "Unirv",
+      "usuariosid": 66
+   }
+   ```
+   
 * ### DELETE /campus/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que deseja apagar.
+
+   Exemplo: 
+
+         DELETE http://localhost:3000/campus/88
+
+   Response:
+
+         StatusCode: 204
 
  ## Quiz
 
 * ### GET /quiz/:id
+
+   ```json
+   ```
 * ### GET /curso/:id/quiz/:skip/:take
+
+   ```json
+   ```
 * ### GET /quiz/:skip/:take
+
+   ```json
+   ```
 * ### POST /quiz
+
+   ```json
+   ```
 * ### PUT /quiz/:id
+
+   ```json
+   ```
 
  ## Perguntas
 
