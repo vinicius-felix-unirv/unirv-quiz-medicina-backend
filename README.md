@@ -138,7 +138,7 @@
         }
     ]
    ```
-* ### POST  /usuarios
+* ### POST /usuarios
 
    Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
 
@@ -183,7 +183,7 @@
 	"cidade": "americana"
   }
    ```
-* ### POST  /usuarios-campus
+* ### POST /usuarios-campus
 
    Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
 
@@ -242,13 +242,113 @@
         }
     }
    ```
-* ### PUT   /usuarios/:id
+* ### PUT /usuarios/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário e um json com os seguintes atributos:
+
+   Exemplo:
+
+        PUT http://localhost:3000/usuarios/69
+
+   Body:
 
    ```json
-   
+   {
+    "nome": "Exemplo",
+    "email": "exemplo0202@hotmail.com",
+    "telefone": "exemplo",
+    "sexo": 1,
+    "datanascimento": "2013-02-14T13:15:03-08:00",
+    "uf": "go",
+    "foto": "string"
+   }
    ```
-* ### PUT   /usuarios/:id/pontuacao
-* ### PUT   /usuarios/:id/trocar-senha
+
+   Response:
+
+   Esse endpoint retorna o usuário alterado
+
+   ```json
+   {
+	"id": 69,
+	"nome": "Exemplo",
+	"email": "exemplo0202@hotmail.com",
+	"senha": "$2a$10$NlJmn1N0bYhTdgJ9uoyxYesH4JCFfI98cnRzZoZ3nFU6ZJf930BN6",
+	"telefone": "exemplo",
+	"sexo": 1,
+	"datanascimento": "2013-02-14T00:00:00.000Z",
+	"role": 2,
+	"uf": "go",
+	"foto": "string",
+	"pontuacao": 0,
+	"status": true,
+	"cidade": "exemplo"
+  }
+   ```
+
+* ### PUT /usuarios/:id/pontuacao
+
+   Para fazer uma chamada a esse endpoint é necessario o 'id' do usuário que se deseja adicionar os pontos e um json com o atributo:
+
+   Exemplo:
+
+        PUT http://localhost:3000/usuarios/66/pontuacao
+
+   Body:
+
+   ```json
+   {
+	"pontuacao": 123
+   }
+   ```
+
+   Response: 
+
+   Esse endpoint retorna um usuário com a sua pontuação alterada.
+
+   ```json
+   {
+	"id": 66,
+	"nome": "Juliscleydi",
+	"email": "hehehe@hotmail.com",
+	"senha": "$2a$10$YYeHpUoLNoqzmtTRDRGTSeLXDkZrTAwUS6XWk84WXL/W06zpCnFpO",
+	"telefone": "string",
+	"sexo": 1,
+	"datanascimento": "2013-02-14T00:00:00.000Z",
+	"role": 1,
+	"uf": "go",
+	"foto": "string",
+	"pontuacao": 123,
+	"status": true,
+	"cidade": "Americana"
+   }
+   ```
+
+* ### PUT /usuarios/:id/trocar-senha
+
+   Para fazer uma chamada a esse endpoint é necessário o 'id' do usuário que deseja trocar a senha e um json com o atributo:
+
+   Exemplo:
+
+        PUT http://localhost:3000/usuarios/66/trocar-senha
+
+    Body:
+
+    ```json
+    {
+	 "senha": "hehe2&5464"
+    }
+    ```
+
+    Response:
+
+    Esse endpoint retorna uma mensagem de sucesso ao conseguir trocar a senha.
+
+    ```json
+    {
+	 "message": "success"
+    }
+    ```
 
  ## Campus
 
