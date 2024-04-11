@@ -9,7 +9,7 @@
 * [Perguntas Nivel](#perguntas-nivel)
 * [Categorias](#categorias)
 * [Alternativas](#alternativas)
-* [Cursos](#cursos)
+* [Cursos](#curso)
 * [Email](#email)
 * [Authentication](#authentication)
 
@@ -491,23 +491,180 @@
 
 * ### GET /quiz/:id
 
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz que deseja buscar. 
+
+   Exemplo: 
+
+         GET http://localhost:3000/quiz/18
+      
+   Response:
+
+   Esse endpoint retorna um quiz.
+
    ```json
+   {
+      "id": 18,
+      "titulo": "Medicina",
+      "cursoid": 1
+   }
    ```
 * ### GET /curso/:id/quiz/:skip/:take
 
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso e o valor de 'skip' e 'take' para buscar os quizzes de um curso específico.
+
+   Exemplo: 
+
+         GET http://localhost:3000/curso/1/quiz/0/10
+      
+   Response:
+
+   Esse endpoint retorna vários quizzes que pertencem a um curso específico de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
    ```json
+   [
+      {
+         "id": 18,
+         "titulo": "Medicina I",
+         "cursoid": 1
+      },
+      {
+         "id": 29,
+         "titulo": "Anatomia",
+         "cursoid": 1
+      },
+      {
+         "id": 30,
+         "titulo": "farmaco",
+         "cursoid": 1
+      },
+      {
+         "id": 31,
+         "titulo": "ossos",
+         "cursoid": 1
+      }
+   ]
    ```
 * ### GET /quiz/:skip/:take
 
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar os valores de 'skip' e 'take' para buscar os todos os quizzes de forma paginada.
+
+   Exemplo: 
+
+         GET http://localhost:3000/quiz/0/10
+      
+   Response:
+
+   Esse endpoint retorna vários quizzes de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
    ```json
+   [
+      {
+         "id": 18,
+         "titulo": "Medicina I",
+         "cursoid": 1
+      },
+      {
+         "id": 23,
+         "titulo": "Veterinaria",
+         "cursoid": 4
+      },
+      {
+         "id": 26,
+         "titulo": "Redes I",
+         "cursoid": 4
+      },
+      {
+         "id": 27,
+         "titulo": "Redes II",
+         "cursoid": 4
+      },
+      {
+         "id": 28,
+         "titulo": "Banco de dados",
+         "cursoid": 4
+      },
+      {
+         "id": 29,
+         "titulo": "Anatomia",
+         "cursoid": 1
+      },
+      {
+         "id": 30,
+         "titulo": "farmaco",
+         "cursoid": 1
+      },
+      {
+         "id": 31,
+         "titulo": "ossos",
+         "cursoid": 1
+      },
+      {
+         "id": 32,
+         "titulo": "cavalos",
+         "cursoid": 2
+      },
+      {
+         "id": 33,
+         "titulo": "coelhos",
+         "cursoid": 2
+      }
+   ]
    ```
 * ### POST /quiz
 
-   ```json
-   ```
-* ### PUT /quiz/:id
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         POST http://localhost:3000/quiz
+
+   Body:
 
    ```json
+   {
+      "titulo": "coelhos",
+      "cursoid": 2
+   }
+   ```
+      
+   Response:
+
+   Esse endpoint retorna o quiz que acaba de ser criado com os valores passados pelo body.
+
+   ```json
+   {
+      "id": 33,
+      "titulo": "coelhos",
+      "cursoid": 2
+   }
+   ```
+
+* ### PUT /quiz/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz que deseja alterar e um json com os seguintes atributos.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/quiz/33
+
+   Body:
+
+   ```json
+   {
+      "titulo": "Vaquinhas"
+   }
+   ```
+      
+   Response:
+
+   Esse endpoint retorna o quiz que acaba de ser alterado com os valores passados pelo body.
+
+   ```json
+   {
+      "id": 33,
+      "titulo": "Vaquinhas",
+      "cursoid": 2
+   }
    ```
 
  ## Perguntas
