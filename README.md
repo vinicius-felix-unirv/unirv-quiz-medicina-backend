@@ -679,11 +679,177 @@
 
  ## Perguntas
 
-* ### GET  /perguntas/:id
+* ### GET /perguntas/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta que deseja buscar.
+
+   Exemplo: 
+
+         GET http://localhost:3000/perguntas/42
+
+   Response:
+
+   Esse endpoint retorna uma pergunta.
+
+   ```json
+   {
+      "id": 42,
+      "conteudo": "exemplo",
+      "perguntasnivelid": 6,
+      "tempo": 25,
+      "pathimage": "/exemplo",
+      "status": false,
+      "categoriasid": 23,
+      "quizid": 18
+   }
+   ```
+   -----
 * ### GET  /usuarios/:usuariosid/quiz/:id/perguntas/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e os valores de 'skip' e 'take'.
+
+   Exemplo: 
+
+         GET http://localhost:3000/usuarios/66/quiz/18/perguntas/0/10
+
+   Response:
+
+   Esse endpoint retorna as perguntas que ainda não foram respondidas de um quiz especifico de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
+   ```json
+   [
+      {
+         "id": 42,
+         "conteudo": "oi yagho",
+         "perguntasnivelid": 6,
+         "tempo": 25,
+         "pathimage": "testea",
+         "status": false,
+         "categoriasid": 23,
+         "quizid": 18
+      },
+      {
+         "id": 43,
+         "conteudo": "oi ",
+         "perguntasnivelid": 6,
+         "tempo": 25,
+         "pathimage": "testea",
+         "status": true,
+         "categoriasid": 22,
+         "quizid": 18
+      },
+      {
+         "id": 44,
+         "conteudo": "oi bb ",
+         "perguntasnivelid": 6,
+         "tempo": 25,
+         "pathimage": "testea",
+         "status": true,
+         "categoriasid": 23,
+         "quizid": 18
+      }
+   ]
+   ```
+   ------
 * ### POST /perguntas
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         POST http://localhost:3000/perguntas
+
+   Body:
+
+   ```json
+   {
+      "conteudo": "Quem trampa no front é gay??",
+      "perguntasnivelid": 9,
+      "tempo": 10,
+      "pathimage": "/frontlaele",
+      "categoriasid": 22,
+      "quizid": 23
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna a nova pergunta que acaba de ser criada com base nos atributos enviados pelo body.
+
+   ```json
+   {
+      "id": 45,
+      "conteudo": "Quem trampa no front é yag??",
+      "perguntasnivelid": 9,
+      "tempo": 10,
+      "pathimage": "/frontlaele",
+      "status": true,
+      "categoriasid": 22,
+      "quizid": 23
+   }
+   ```
 * ### PUT  /perguntas/:id
-* ### PUT  /perguntas/status/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta e um json com os seguintes atributos.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/perguntas/45
+
+   Body:
+
+   ```json
+   {
+      "conteudo": "qual a tua idade?",
+      "perguntasnivelid": 2,
+      "tempo": 30,
+      "pathimage": "/frontlaele",
+      "categoriasid": 22,
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna a pergunta que acaba de ser alterada com base nos atributos enviados pelo body.
+
+   ```json
+   {
+      "id": 45,
+      "conteudo": "qual a tua idade?",
+      "perguntasnivelid": 12,
+      "tempo": 30,
+      "pathimage": "/frontlaele",
+      "status": true,
+      "categoriasid": 22,
+      "quizid": 23
+   }
+   ```
+   ------
+* ### PUT  /perguntas/:id/status
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta que deseja alterar o status.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/perguntas/45/status
+
+   Response:
+
+   Esse endpoint retorna uma pergunta com o seu status alterado.
+
+   ```json
+   {
+      "id": 45,
+      "conteudo": "qual a tua idade?",
+      "perguntasnivelid": 12,
+      "tempo": 30,
+      "pathimage": "/frontlaele",
+      "status": false,
+      "categoriasid": 22,
+      "quizid": 23
+   }
+   ```
+
 
  ## Alternativas 
 
