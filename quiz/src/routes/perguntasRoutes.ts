@@ -10,6 +10,6 @@ perguntasRoutes.get('/perguntas/:id', isAuthenticated, perguntasController.getPe
 perguntasRoutes.get('/usuarios/:usuariosid/quiz/:id/perguntas/:skip/:take', isAuthenticated, perguntasController.getAllPerguntasByQuizId);
 perguntasRoutes.post('/perguntas', isAuthenticated, perguntasController.postPergunta);
 perguntasRoutes.put('/perguntas/:id', isAuthenticated, perguntasController.putPergunta);
-perguntasRoutes.put('/perguntas/status/:id', isAuthenticated, perguntasController.putStatusPergunta);
+perguntasRoutes.put('/perguntas/:id/status', isAuthenticated, perguntasController.putStatusPergunta);
 
 export { perguntasRoutes };
