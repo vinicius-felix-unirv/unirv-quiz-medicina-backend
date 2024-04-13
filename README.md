@@ -850,22 +850,368 @@
    }
    ```
 
-
  ## Alternativas 
 
-* ### GET    /perguntas/:id/alternativas
-* ### POST   /alternativas
-* ### POST   /alternativas/many
-* ### PUT    /alternativas/:id
+* ### GET /perguntas/:id/alternativas
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da pergunta que você deseja buscar as alternativas.
+
+   Exemplo: 
+
+         GET http://localhost:3000/perguntas/43/alternativas
+
+   Response:
+
+   Esse endpoint retorna todas alternativas de uma pergunta específica.
+
+   ```json
+   [
+      {
+         "id": 179,
+         "perguntasid": 43,
+         "resposta": "Baguio III",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "id": 180,
+         "perguntasid": 43,
+         "resposta": "Baguio IV",
+         "pathimage": null,
+         "correta": true
+      },
+      {
+         "id": 181,
+         "perguntasid": 43,
+         "resposta": "Baguio V",
+         "pathimage": null,
+         "correta": false
+      }
+   ]
+   ```
+   -------
+* ### POST /alternativas
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         Post http://localhost:3000/alternativas
+
+   Body:
+
+   ```json
+   {
+      "perguntasid": 42,
+      "resposta": "Baguio I",
+      "pathimage": null,
+      "correta": false
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna a alternativa criada com os atributos do body.
+
+   ```json
+   {
+      "id": 12,
+      "perguntasid": 42,
+      "resposta": "Baguio I",
+      "pathimage": null,
+      "correta": false
+   }
+   ```
+   ----
+* ### POST /alternativas/many
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         Post http://localhost:3000/alternativas/many
+
+   Body:
+
+   ```json
+   [
+      {
+         "perguntasid": 43,
+         "resposta": "Baguio I",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "perguntasid": 43,
+         "resposta": "Baguio II",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "perguntasid": 43,
+         "resposta": "Baguio III",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "perguntasid": 43,
+         "resposta": "Baguio IV",
+         "pathimage": null,
+         "correta": true
+      },
+      {
+         "perguntasid": 43,
+         "resposta": "Baguio V",
+         "pathimage": null,
+         "correta": false
+      }  
+   ]
+   ```
+
+   Response:
+
+   Esse endpoint retorna todas as alternativas criadas com os atributos do body.
+
+   ```json
+   [
+      {
+         "id": 177,
+         "perguntasid": 43,
+         "resposta": "Baguio I",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "id": 178,
+         "perguntasid": 43,
+         "resposta": "Baguio II",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "id": 179,
+         "perguntasid": 43,
+         "resposta": "Baguio III",
+         "pathimage": null,
+         "correta": false
+      },
+      {
+         "id": 180,
+         "perguntasid": 43,
+         "resposta": "Baguio IV",
+         "pathimage": null,
+         "correta": true
+      },
+      {
+         "id": 181,
+         "perguntasid": 43,
+         "resposta": "Baguio V",
+         "pathimage": null,
+         "correta": false
+      }
+   ]
+   ```
+   ----
+* ### PUT /alternativas/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da alternativa e um json com os seguintes atributos.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/alternativas/177
+
+   Body:
+
+   ```json
+   {
+      "resposta": "Hola Zeus",
+      "pathimage": "heheeehe",
+      "correta": true
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna a alternativa alterada com os atributos do body.
+
+   ```json
+   {
+      "id": 177,
+      "perguntasid": 43,
+      "resposta": "Hola Zeus",
+      "pathimage": "heheeehe",
+      "correta": true
+   }
+   ```
+   ----
 * ### DELETE /alternativas/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da alternativa que você deseja deletar.
+
+   Exemplo: 
+
+         DELETE http://localhost:3000/alternativas/177
+
+   Response: 
+   
+         StatusCode: 204
 
  ## Categorias
 
-* ### GET  /categorias/:id
+* ### GET /categorias/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da categoria que você deseja buscar.
+
+   Exemplo: 
+
+         GET http://localhost:3000/categorias/23
+
+   Response:
+
+   ```json
+   {
+      "id": 23,
+      "descricao": "Anatomia II",
+      "status": true,
+      "imagem": "/tests",
+      "cursoId": 1
+   }
+   ```
+   ---
 * ### GET  /curso/:id/categorias
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso para buscar todas as categorias dele.
+
+   Exemplo: 
+
+         GET http://localhost:3000/curso/1/categorias
+
+   Response:
+
+   Esse endpoint retorna todas as categorias de um curso específico.
+
+   ```json
+   [
+      {
+         "id": 23,
+         "descricao": "Anatomia II",
+         "status": true,
+         "imagem": "/tests",
+         "cursoId": 1
+      },
+      {
+         "id": 25,
+         "descricao": "Pediatria",
+         "status": true,
+         "imagem": "/tests",
+         "cursoId": 1
+      },
+      {
+         "id": 26,
+         "descricao": "Cardiologia",
+         "status": true,
+         "imagem": "/tests",
+         "cursoId": 1
+      },
+      {
+         "id": 27,
+         "descricao": "Neurologia",
+         "status": true,
+         "imagem": "/tests",
+         "cursoId": 1
+      },
+      {
+         "id": 22,
+         "descricao": "vasos",
+         "status": false,
+         "imagem": "/hehehehe",
+         "cursoId": 1
+      }
+   ]
+   ```
+   ---
 * ### POST /categorias
-* ### PUT  /categorias/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         Post http://localhost:3000/categorias
+
+   Body:
+
+   ```json
+   {
+      "descricao": "Farmaco",
+      "imagem": "/tests",
+      "cursoId": 2
+   }
+   ```
+   Response:
+
+   Esse endpoint retorna a categoria criada com os atributos do body.
+
+   ```json
+   {
+      "id": 28,
+      "descricao": "Farmaco",
+      "status": true,
+      "imagem": "/tests",
+      "cursoId": 2
+   }
+   ```
+   -----
+* ### PUT /categorias/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da categoria e um json com os seguintes atributos.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/categorias/28
+
+   Body:
+
+   ```json
+   {
+      "descricao": "Farmaco II",
+      "imagem": "/tests"
+   }
+   ```
+   Response:
+
+   Esse endpoint retorna a categoria alterada com os atributos do body.
+
+   ```json
+   {
+      "id": 28,
+      "descricao": "Farmaco II",
+      "status": true,
+      "imagem": "/tests",
+      "cursoId": 2
+   }
+   ```
+   -----
 * ### PUT  /categorias/:id/status
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da categoria que você deseja alterar o status
+
+   Exemplo: 
+
+         PUT http://localhost:3000/categorias/28/status
+
+   Response:
+
+   Esse endpoint retorna a categoria com o status alterado.
+
+   ```json
+   {
+      "id": 28,
+      "descricao": "Farmaco",
+      "status": false,
+      "imagem": "/tests",
+      "cursoId": 2
+   }
+   ```
 
  ## Perguntas-Nivel
 
