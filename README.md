@@ -491,6 +491,8 @@
 
    Response:
 
+   Esse endpoint retorna um status '204' confirmando que o campus foi deletado.
+
          StatusCode: 204
 
   
@@ -1053,6 +1055,8 @@
          DELETE http://localhost:3000/alternativas/177
 
    Response: 
+
+   Esse endpoint retorna um status '204' confirmando que a alternativa foi deletada.
    
          StatusCode: 204
 
@@ -1191,7 +1195,7 @@
    }
    ```
    -----
-* ### PUT  /categorias/:id/status
+* ### PUT /categorias/:id/status
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da categoria que você deseja alterar o status
 
@@ -1215,15 +1219,139 @@
 
  ## Perguntas-Nivel
 
-* ### GET    /niveis/:id
-* ### GET    /niveis
-* ### POST   /niveis
-* ### PUT    /niveis/:id
+* ### GET /niveis/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do nivel que você deseja buscar.
+
+   Exemplo: 
+
+         GET http://localhost:3000/niveis/10
+
+   Response:
+
+   Esse endpoint retorna um nivel.
+
+   ```json
+   {
+      "id": 10,
+      "nivel": 11,
+      "pontuacao": 55,
+      "tempo": 45
+   }
+   ```
+   ----
+* ### GET /niveis
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado.
+
+   Exemplo: 
+
+         GET http://localhost:3000/niveis
+
+   Response:
+
+   Esse endpoint retorna todos os niveis.
+
+   ```json
+   [
+      {
+         "id": 6,
+         "nivel": 4,
+         "pontuacao": 15,
+         "tempo": 45
+      },
+      {
+         "id": 8,
+         "nivel": 1,
+         "pontuacao": 15,
+         "tempo": 45
+      },
+      {
+         "id": 9,
+         "nivel": 2,
+         "pontuacao": 55,
+         "tempo": 45
+      },
+   ]
+   ```
+   ----
+* ### POST /niveis
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         Post http://localhost:3000/niveis
+
+   Body:
+
+   ```json
+   {      
+      "nivel": 2,
+      "pontuacao": 100,
+      "tempo": 32
+   }
+   ```
+   Response:
+
+   Esse endpoint retorna o nivel criado com os atributos do body.
+
+   ```json
+   {
+      "id": 12,
+      "nivel": 2,
+      "pontuacao": 100,
+      "tempo": 32
+   }
+   ```
+   -----
+* ### PUT /niveis/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do nivel que você deseja alterar e um json com os seguintes atributos.
+
+   Exemplo: 
+
+         PUT http://localhost:3000/niveis/12
+
+   Body:
+
+   ```json
+   {      
+      "nivel": 2,
+      "pontuacao": 50,
+      "tempo": 45
+   }
+   ```
+   Response:
+
+   Esse endpoint retorna o nivel alterado com os atributos do body.
+
+   ```json
+   {
+      "id": 12,
+      "nivel": 2,
+      "pontuacao": 50,
+      "tempo": 45
+   }
+   ```
+   -----
 * ### DELETE /niveis/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do nivel que você deseja deletar.
+
+   Exemplo: 
+
+         DELETE http://localhost:3000/niveis/12
+
+   Response:
+
+   Esse endpoint retorna um status '204' confirmando que o nivel foi deletado.
+
+         StatusCode: 204
 
  ## Progresso-Perguntas
 
-* ### GET  /usuarios/:id/progresso-perguntas
+* ### GET /usuarios/:id/progresso-perguntas
 * ### POST /progresso-perguntas
 * ### POST /progresso-perguntas/many
 
