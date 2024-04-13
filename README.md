@@ -1351,18 +1351,204 @@
 
  ## Progresso-Perguntas
 
-* ### GET /usuarios/:id/progresso-perguntas
+<!-- * ### GET /usuarios/:id/progresso-perguntas -->
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário que você deseja buscar o progresso das perguntas.
+
+   Exemplo: 
+
+         GET http://localhost:3000/usuarios/50/progresso-perguntas
+
+   Response:
+
+   Esse endpoint retorna todos 
+
+
+
+   ```json
+   {
+      "id": 10,
+      "nivel": 11,
+      "pontuacao": 55,
+      "tempo": 45
+   }
+   ```
+   ----
 * ### POST /progresso-perguntas
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         POST http://localhost:3000/progresso-perguntas
+
+   Body:
+
+   ```json
+   {      
+      "usuariosid": 50,
+      "perguntasid": 43
+   }
+   ```
+   Response:
+
+   Esse endpoint retorna um progresso-perguntas criado.
+
+   ```json
+   {      
+      "id": 5,
+      "usuariosid": 50,
+      "perguntasid": 43
+   }
+   ```
+   -----
 * ### POST /progresso-perguntas/many
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
+
+   Exemplo: 
+
+         POST http://localhost:3000/progresso-perguntas/many
+
+   Body:
+
+   ```json
+   [
+      {      
+         "usuariosid": 50,
+         "perguntasid": 42
+      },
+      {      
+         "usuariosid": 50,
+         "perguntasid": 43
+      },
+      {      
+         "usuariosid": 50,
+         "perguntasid": 44
+      }
+   ]
+   ```
+   Response:
+
+   Esse endpoint retorna todos os progresso-perguntas criados.
+
+   ```json
+   [
+      {   
+         "id": 8,   
+         "usuariosid": 50,
+         "perguntasid": 42
+      },
+      {    
+         "id": 9,  
+         "usuariosid": 50,
+         "perguntasid": 43
+      },
+      {  
+         "id": 10,    
+         "usuariosid": 50,
+         "perguntasid": 44
+      }
+   ]
+   ```
 
  ## Curso
 
 * ### GET /cursos
 
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado.
+
+   Exemplo: 
+
+         GET http://localhost:3000/cursos
+
+   Response:
+
+   Esse endpoint retorna todos os cursos.
+
+   ```json
+   [
+      {
+         "id": 1,
+         "nome": "Medicina",
+         "imagem": ""
+      },
+      {
+         "id": 2,
+         "nome": "Veterinaria",
+         "imagem": ""
+      },
+      {
+         "id": 3,
+         "nome": "Administração",
+         "imagem": ""
+      },
+      {
+         "id": 4,
+         "nome": "software",
+         "imagem": "/teste"
+      }
+   ]
+   ```
+
  ## Email
 
 * ### POST /send-email
 
+   Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
+
+   Exemplo: 
+
+         POST http://localhost:3000/send-email
+
+   Body:
+
+   ```json
+   {      
+      "to": "vinisinho@gmail.com",
+      "subject": "Agora vai dar bom negao",
+      "text": "Ultimos testes"
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna uma mensagem confirmando que o email foi enviado.
+
+   ```json
+   {
+	   "message": "Email sent successfully"
+   }
+   ```
+
  ## Authentication
 
 * ### POST /authentication
+
+   Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
+
+   Exemplo: 
+
+         POST http://localhost:3000/authentication
+
+   Body:
+
+   ```json
+   {
+      "email": "Barquinha@hotmail.com",
+      "senha": "Barca9393"
+   }
+   ```
+
+   Response:
+
+   Esse endpoint retorna um token que permite ao usuário ter acesso ao quiz.
+
+   ```json
+   {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsIm5hbWUiOiJKdWxpc2NsZXlkaSIsInJvbGUiOjEsImlhdCI6MTcxMjkzMjM3MCwiZXhwIjoxNzEyOTYxMTcwfQ.ZmBM2-lSQq98-BzN0DgGa73Ks53gC2Fb771HEWCSlkw",
+      "id": 66,
+      "role": 1
+   }
+   ```
+
