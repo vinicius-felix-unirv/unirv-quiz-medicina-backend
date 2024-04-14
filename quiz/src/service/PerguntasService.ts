@@ -30,7 +30,7 @@ export class PerguntasService {
 
     if(!userExists) throw new NotFoundError('Usuario nao encontrado');
 
-    const perguntas = await perguntasRepository.getAllPerguntasByQuizId(skip, take, quizId, userId);
+    const perguntas = await perguntasRepository.getAllPerguntasByQuizIdPagination(skip, take, quizId, userId);
 
     const perguntasDTOs = perguntas.map((pergunta) => new PerguntaDTO(pergunta));
 

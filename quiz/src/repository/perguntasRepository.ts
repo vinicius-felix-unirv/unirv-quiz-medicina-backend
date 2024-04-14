@@ -23,7 +23,7 @@ export default {
     return pergunta;
   },
 
-  async getAllPerguntasByQuizId(skip: number, take: number, quizId: number, userId: number): Promise<perguntas[]> {
+  async getAllPerguntasByQuizIdPagination(skip: number, take: number, quizId: number, userId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
       skip: skip,
       take: take,
@@ -40,10 +40,22 @@ export default {
     return perguntas;
   },
 
-  async getPerguntas(quizId: number): Promise<perguntas[]>{
+  async getAllPerguntasByQuizId(quizId: number): Promise<perguntas[]>{
 
     const perguntas =  await prisma.perguntas.findMany({
       where: {quizid: quizId}
+    });
+
+    return perguntas;
+  },
+
+  async getPerguntasByQuizAndCategoria(quizId: number, categoriaId: number): Promise<perguntas[]>{
+
+    const perguntas =  await prisma.perguntas.findMany({
+      where: {
+        quizid: quizId,
+        categoriasid: categoriaId
+      }
     });
 
     return perguntas;
