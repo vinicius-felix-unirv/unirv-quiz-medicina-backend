@@ -29,7 +29,18 @@ export class ProgressoPerguntasController{
     const usuarioId = parseInt(req.params.usuarioid);
     const quizId = parseInt(req.params.quizid);
 
-    const progressoPerg = await progressoPerguntasService.getProgressoPerguntasByQuizIdAndUsuarioId(quizId, usuarioId);
+    const progressoPerg = await progressoPerguntasService.getProgressoPerguntasByQuiz(quizId, usuarioId);
+
+    return res.status(200).json(progressoPerg);
+  }
+
+  async getProgressoByCategoria(req: Request, res: Response): Promise<Response>{
+
+    const usuarioId = parseInt(req.params.usuarioid);
+    const quizId = parseInt(req.params.quizid);
+    const categoriaid = parseInt(req.params.categoriaid);
+
+    const progressoPerg = await progressoPerguntasService.getProgressoPerguntasByCategoria(quizId, usuarioId, categoriaid);
 
     return res.status(200).json(progressoPerg);
   }

@@ -28,7 +28,7 @@ export default {
     return progressoPerguntasByUsuario;
   },
 
-  async getProgressoPerguntasByQuizIdAndUserId(quizId: number, userId: number): Promise<progressoperguntas[]>{
+  async getProgressoPerguntasByQuiz(quizId: number, userId: number): Promise<progressoperguntas[]>{
 
     const progressoPerguntasByUsuario = await prisma.progressoperguntas.findMany({
       where: {
@@ -39,6 +39,28 @@ export default {
           {
             perguntas: {
               quizid: quizId
+            }
+          }
+        ]
+         
+      }
+    });
+
+    return progressoPerguntasByUsuario;
+  },
+
+  async getProgressoPerguntasByCategoria(quizId: number, userId: number, categoriaId: number): Promise<progressoperguntas[]>{
+
+    const progressoPerguntasByUsuario = await prisma.progressoperguntas.findMany({
+      where: {
+        AND: [
+          {
+            usuariosid: userId
+          },
+          {
+            perguntas: {
+              quizid: quizId,
+              categoriasid: categoriaId
             }
           }
         ]

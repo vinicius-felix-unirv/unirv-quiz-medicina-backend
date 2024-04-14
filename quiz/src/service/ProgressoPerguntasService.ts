@@ -6,6 +6,7 @@ import usuariosRepository from '../repository/usuariosRepository';
 import perguntasRepository from '../repository/perguntasRepository';
 import { NotFoundError } from '../exception/NotFoundError';
 import quizRepository from '../repository/quizRepository';
+import categoriasRepository from '../repository/categoriasRepository';
 
 @Service()
 export class ProgressoPerguntasService{
@@ -71,7 +72,7 @@ export class ProgressoPerguntasService{
 
   }
 
-  async getProgressoPerguntasByQuizIdAndUsuarioId(quizId: number, usuarioId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
+  async getProgressoPerguntasByQuiz(quizId: number, usuarioId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
 
     const quizExists = await quizRepository.getQuizById(quizId);
 
@@ -81,10 +82,33 @@ export class ProgressoPerguntasService{
 
     if(!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
 
-    const progresso = await progressoPerguntasRepository.getProgressoPerguntasByQuizIdAndUserId(quizId, usuarioId);
+    const progresso = await progressoPerguntasRepository.getProgressoPerguntasByQuiz(quizId, usuarioId);
 
-    const perguntasTotal = await perguntasRepository.getPerguntas(quizId);
+    const perguntasTotal = await perguntasRepository.getAllPerguntasByQuizId(quizId);
 
     return { progressoAtual: progresso.length, progressoTotal: perguntasTotal.length};
   }
+
+  async getProgressoPerguntasByCategoria(quizId: number, usuarioId: number, categoriaId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
+
+    const quizExists = await quizRepository.getQuizById(quizId);
+
+    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
+
+    const usuarioExists = await usuariosRepository.getUsuarioById(usuarioId);
+
+    if(!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
+
+    const categoriaExists = await categoriasRepository.getCategoriaId(categoriaId);
+
+    if(!categoriaExists) throw new NotFoundError('Categoria nao encontrada');
+
+    const progresso = await progressoPerguntasRepository.getProgressoPerguntasByCategoria(quizId, usuarioId, categoriaId);
+
+    const perguntasTotal = await perguntasRepository.getPerguntasByQuizAndCategoria(quizId, categoriaId);
+
+    return { progressoAtual: progresso.length, progressoTotal: perguntasTotal.length};
+  }
+
+
 }
