@@ -5,6 +5,7 @@ import { BadRequestError } from '../exception/BadRequestError';
 import usuariosRepository from '../repository/usuariosRepository';
 import perguntasRepository from '../repository/perguntasRepository';
 import { NotFoundError } from '../exception/NotFoundError';
+import quizRepository from '../repository/quizRepository';
 
 @Service()
 export class ProgressoPerguntasService{
@@ -70,10 +71,20 @@ export class ProgressoPerguntasService{
 
   }
 
-  async getAllProgressoPergByUsuario(usuarioId: number): Promise<ProgressoPerguntasDTO[]> {
+  async getProgressoPerguntasByQuizIdAndUsuarioId(quizId: number, usuarioId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
 
-    const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(usuarioId);
+    const quizExists = await quizRepository.getQuizById(quizId);
 
-    return progressoPergByUsuario.map(p => new ProgressoPerguntasDTO(p));
+    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
+
+    const usuarioExists = await usuariosRepository.getUsuarioById(usuarioId);
+
+    if(!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
+
+    const progresso = await progressoPerguntasRepository.getProgressoPerguntasByQuizIdAndUserId(quizId, usuarioId);
+
+    const perguntasTotal = await perguntasRepository.getPerguntas(quizId);
+
+    return { progressoAtual: progresso.length, progressoTotal: perguntasTotal.length};
   }
 }

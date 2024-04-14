@@ -24,11 +24,12 @@ export class ProgressoPerguntasController{
 
   }
 
-  async getAllProgressoPergByUsuario(req: Request, res: Response): Promise<Response>{
+  async getProgressoByQuiz(req: Request, res: Response): Promise<Response>{
 
-    const usuarioId = parseInt(req.params.id);
+    const usuarioId = parseInt(req.params.usuarioid);
+    const quizId = parseInt(req.params.quizid);
 
-    const progressoPerg = await progressoPerguntasService.getAllProgressoPergByUsuario(usuarioId);
+    const progressoPerg = await progressoPerguntasService.getProgressoPerguntasByQuizIdAndUsuarioId(quizId, usuarioId);
 
     return res.status(200).json(progressoPerg);
   }

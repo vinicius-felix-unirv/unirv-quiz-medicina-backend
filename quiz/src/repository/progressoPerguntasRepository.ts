@@ -28,5 +28,26 @@ export default {
     return progressoPerguntasByUsuario;
   },
 
+  async getProgressoPerguntasByQuizIdAndUserId(quizId: number, userId: number): Promise<progressoperguntas[]>{
+
+    const progressoPerguntasByUsuario = await prisma.progressoperguntas.findMany({
+      where: {
+        AND: [
+          {
+            usuariosid: userId
+          },
+          {
+            perguntas: {
+              quizid: quizId
+            }
+          }
+        ]
+         
+      }
+    });
+
+    return progressoPerguntasByUsuario;
+  },
+
   
 };

@@ -40,6 +40,15 @@ export default {
     return perguntas;
   },
 
+  async getPerguntas(quizId: number): Promise<perguntas[]>{
+
+    const perguntas =  await prisma.perguntas.findMany({
+      where: {quizid: quizId}
+    });
+
+    return perguntas;
+  },
+
   async createPergunta(pergunta: PerguntaDTO): Promise<perguntas> {
 
     const newPergunta = await prisma.perguntas.create(
