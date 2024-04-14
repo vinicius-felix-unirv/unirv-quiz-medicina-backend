@@ -1351,26 +1351,41 @@
 
  ## Progresso-Perguntas
 
-<!-- * ### GET /usuarios/:id/progresso-perguntas -->
+* ### GET /usuarios/:usuarioid/quiz/:quizid/progresso-perguntas
 
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário que você deseja buscar o progresso das perguntas.
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário e o 'id' do quiz que você deseja buscar o progresso.
 
    Exemplo: 
 
-         GET http://localhost:3000/usuarios/50/progresso-perguntas
+         GET http://localhost:3000/usuarios/66/quiz/18/progresso-perguntas
 
    Response:
 
-   Esse endpoint retorna todos 
-
-
+   Esse endpoint retorna o progresso atual e o total.
 
    ```json
    {
-      "id": 10,
-      "nivel": 11,
-      "pontuacao": 55,
-      "tempo": 45
+      "progressoAtual": 3,
+      "progressoTotal": 3
+   }
+   ```
+   ----
+* ### GET /usuarios/:usuarioid/quiz/:quizid/categorias/:categoriaid/progresso-perguntas
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário, o 'id' do quiz e o 'id' da categoria que você deseja buscar o progresso.
+
+   Exemplo: 
+
+         GET http://localhost:3000/usuarios/66/quiz/18/categorias/22/progresso-perguntas
+
+   Response:
+
+   Esse endpoint retorna o progresso atual e o total.
+
+   ```json
+   {
+      "progressoAtual": 0,
+      "progressoTotal": 1
    }
    ```
    ----
