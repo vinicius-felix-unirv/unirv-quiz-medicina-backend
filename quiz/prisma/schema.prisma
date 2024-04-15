@@ -17,38 +17,34 @@ model alternativas {
 }
 
 model campus {
-  id         Int       @id @default(autoincrement())
-  turma      String   @db.VarChar(255)
-  periodo    Int
-  nomecampus       String   @db.VarChar(100)
-  cursoid    Int 
-  curso   curso? @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuariosid Int
-  usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id         Int        @id @default(autoincrement())
+  nomecampus String     @db.VarChar(255)
+  usuarios   usuarios[]
 }
 
 model categorias {
-  id             Int              @id @default(autoincrement())
-  descricao      String          @db.VarChar(25)
-  status         Boolean          @default(true)
-  imagem         String           @db.VarChar(255)
-  cursoId        Int       
-  curso   curso? @relation(fields: [cursoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id        Int         @id @default(autoincrement())
+  descricao String      @db.VarChar(25)
+  status    Boolean     @default(true)
+  imagem    String      @db.VarChar(255)
+  cursoId   Int
+  curso     curso?      @relation(fields: [cursoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntas perguntas[]
 }
 
 model curso {
-  id            Int                 @id @default(autoincrement())
-  nome          String              @db.VarChar(255)
-  imagem        String              @db.VarChar(255)
-  categorias categorias[]
-  campus campus[]
-  quiz quiz[]
+  id              Int               @id @default(autoincrement())
+  nome            String            @db.VarChar(255)
+  imagem          String            @db.VarChar(255)
+  categorias      categorias[]
+  usuarios        usuarios[]
+  quiz            quiz[]
+  quiz_avaliativo quiz_avaliativo[]
 }
 
 model logs {
   id         Int       @id @default(autoincrement())
-  datalogin  DateTime  @db.Date @default(now())
+  datalogin  DateTime  @default(now()) @db.Date
   usuariosid Int
   descricao  String    @db.VarChar(100)
   usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -60,23 +56,24 @@ model perguntas {
   perguntasnivelid   Int
   tempo              Int
   pathimage          String?
-  status             Boolean               @default(true)
+  status             Boolean              @default(true)
   categoriasid       Int
-  quizid             Int
-  categorias   categorias? @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  perguntasnivel   perguntasnivel? @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  quiz  quiz? @relation(fields: [quizid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quizid             Int?
+  categorias         categorias?          @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntasnivel     perguntasnivel?      @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quiz               quiz?                @relation(fields: [quizid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   alternativas       alternativas[]
   progressoperguntas progressoperguntas[]
-  
+  quiz_avaliativo    quiz_avaliativo?     @relation(fields: [quizavaliativoid], references: [id])
+  quizavaliativoid   Int?
 }
 
 model perguntasnivel {
-  id           Int         @id @default(autoincrement())
-  nivel        Int
-  pontuacao    Int
-  tempo        Int
-  perguntas    perguntas[]
+  id        Int         @id @default(autoincrement())
+  nivel     Int
+  pontuacao Int
+  tempo     Int
+  perguntas perguntas[]
 }
 
 model progressoperguntas {
@@ -88,35 +85,62 @@ model progressoperguntas {
 }
 
 model quiz {
-  id         Int        @id @default(autoincrement())
-  titulo     String     @db.VarChar(150)
-  cursoid    Int 
-  curso     curso?  @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  perguntas  perguntas[]
+  id        Int         @id @default(autoincrement())
+  titulo    String      @db.VarChar(150)
+  cursoid   Int
+  imagem    String      @db.VarChar(255)
+  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntas perguntas[]
+}
+
+model quiz_avaliativo {
+  id        Int         @id @default(autoincrement())
+  titulo    String      @db.VarChar(150)
+  imagem    String      @db.VarChar(255)
+  status    Boolean     @default(true)
+  usuarioid Int
+  usuarios  usuarios?   @relation(fields: [usuarioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cursoid   Int
+  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntas perguntas[]
+}
+
+model quiz_avaliativo_usuario {
+  id        Int       @id @default(autoincrement())
+  pontuacao Int
+  usuarioid Int
+  usuarios  usuarios? @relation(fields: [usuarioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model usuarios {
-  id                 Int                  @id @default(autoincrement())
-  nome               String               @db.VarChar(255)
-  email              String               @unique @db.VarChar(255)
-  senha              String               @db.VarChar(255)
-  telefone           String               @db.VarChar(15)
+  id                 Int                       @id @default(autoincrement())
+  nome               String                    @db.VarChar(255)
+  email              String                    @unique @db.VarChar(255)
+  senha              String                    @db.VarChar(255)
+  telefone           String                    @db.VarChar(15)
   sexo               Int
-  datanascimento     DateTime             @db.Date
-  role               Int                  @default(2)
-  uf                 String               @db.VarChar(2)
-  cidade             String               @db.VarChar(255)
-  foto               String               @db.VarChar(255)
-  pontuacao          Int                  @default(0)
-  status             Boolean              @default(true)
-  campus             campus[]
+  datanascimento     DateTime                  @db.Date
+  role               Int                       @default(2)
+  uf                 String                    @db.VarChar(2)
+  cidade             String                    @db.VarChar(255)
+  foto               String                    @db.VarChar(255)
+  pontuacao          Int                       @default(0)
+  status             Boolean                   @default(true)
+  turma              String                    @db.VarChar(255)
+  periodo            Int
+  cursoid            Int
+  curso              curso?                    @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  campusid           Int
+  campus             campus?                   @relation(fields: [campusid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   logs               logs[]
+  avaliacoes         quiz_avaliativo_usuario[]
+  quizavaliativos    quiz_avaliativo[]
   progressoperguntas progressoperguntas[]
 }
 
-model menu{
-  id              Int             @id @default(autoincrement())
-  urlMenu         String          @db.VarChar(255)
-  iconMenu        String          @db.VarChar(255)
-  role            Int 
+model menu {
+  id       Int    @id @default(autoincrement())
+  urlMenu  String @db.VarChar(255)
+  iconMenu String @db.VarChar(255)
+  role     Int
 }
