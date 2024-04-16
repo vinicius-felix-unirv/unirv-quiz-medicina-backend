@@ -4,20 +4,33 @@ import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
 import { QuizDTO } from '../model/QuizDTO';
 import quizRepository from '../repository/quizRepository';
-import cursoRepository from '../repository/cursoRepository';
+import { cursoService } from './containerConfig';
+import { quiz } from '@prisma/client';
 
 @Service()
 export class QuizService {
 
-  async saveQuiz(quiz: QuizDTO): Promise<QuizDTO> {
+  async quizAlreadyExistsByTitulo(titulo: string): Promise<void> {
 
-    const quizExist = await quizRepository.getQuizByTitulo(quiz.getTitulo() ?? '');
+    const quizExist = await quizRepository.getQuizByTitulo(titulo);
 
     if(quizExist) throw new BadRequestError('Quiz ja existe');
+  }
 
-    const cursoExists = await cursoRepository.getCursoById(quiz.getCursoId());
+  async quizExistsById(id: number): Promise<quiz> {
 
-    if(!cursoExists) throw new NotFoundError('Curso nao encontrado');
+    const quizExist = await quizRepository.getQuizById(id);
+
+    if(!quizExist) throw new NotFoundError('Quiz nao encontrado');
+
+    return quizExist;
+  }
+
+  async saveQuiz(quiz: QuizDTO): Promise<QuizDTO> {
+
+    await this.quizAlreadyExistsByTitulo(quiz.getTitulo());
+
+    await cursoService.cursoExistsById(quiz.getCursoId());
 
     const newQuiz = await quizRepository.createQuiz(quiz);
 
@@ -26,13 +39,9 @@ export class QuizService {
 
   async updateQuiz(id: number, quiz: QuizDTO): Promise<QuizDTO> {
 
-    const quizExist = await quizRepository.getQuizById(id);
+    await this.quizExistsById(id);
 
-    if (quizExist == null) throw new NotFoundError('Quiz not found');
-
-    const descricaoRegistered = await quizRepository.getQuizByTitulo(quiz.getTitulo() ?? '');
-
-    if (descricaoRegistered != null) throw new BadRequestError('quiz already exists');
+    await this.quizAlreadyExistsByTitulo(quiz.getTitulo());
 
     const updatedquiz = await quizRepository.updateQuiz(id, quiz);
 
@@ -50,6 +59,8 @@ export class QuizService {
 
   async getAllQuizByCurosId(skip: number, take: number, cursoId: number): Promise<QuizDTO[]> {
 
+    await cursoService.cursoExistsById(cursoId);
+
     const quizs = await quizRepository.getAllQuizByCursoId(skip, take, cursoId);
 
     const quizsDTOs = quizs.map((quiz) => new QuizDTO(quiz));
@@ -59,10 +70,8 @@ export class QuizService {
 
   async getQuizById(id: number): Promise<QuizDTO> {
 
-    const quizExist = await quizRepository.getQuizById(id);
+    const quiz = await this.quizExistsById(id);
 
-    if (quizExist == null) throw new NotFoundError('quiz not found');
-
-    return new QuizDTO(quizExist);
+    return new QuizDTO(quiz);
   }
 }

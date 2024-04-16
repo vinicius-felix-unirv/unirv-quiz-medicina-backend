@@ -1,6 +1,6 @@
 import { quiz } from '@prisma/client';
 import { prisma } from '../db/quizClientPrisma';
-import { QuizDTO, IQuizDTO } from './../model/QuizDTO';
+import { QuizDTO } from './../model/QuizDTO';
 
 export default {
 
@@ -23,7 +23,8 @@ export default {
     const newQuiz = await prisma.quiz.create({ 
       data: { 
         titulo: quiz.getTitulo(),
-        cursoid: quiz.getCursoId() 
+        cursoid: quiz.getCursoId(),
+        imagem: quiz.getImagem()
       } });
 
     return newQuiz;
@@ -36,7 +37,7 @@ export default {
         where: { id: id },
         data: {
           titulo: quiz.getTitulo(),
-
+          imagem: quiz.getImagem()
         }
       }
     );
@@ -67,20 +68,20 @@ export default {
     return quiz;
   },
 
-  async getAllQuizWithQuestion(): Promise<quiz[]> {
+  // async getAllQuizWithQuestion(): Promise<quiz[]> {
 
-    const quiz = await prisma.quiz.findMany();
+  //   const quiz = await prisma.quiz.findMany();
 
-    let quizDto: IQuizDTO;
+  //   let quizDto: IQuizDTO;
 
-    quiz.map(async x => {
-      const perguntas = await prisma.perguntas.findMany({ where: { id: x.id } });
-      quizDto = new IQuizDTO(x);
-      perguntas.map(perg => quizDto.setPerguntas(perg));
+  //   quiz.map(async x => {
+  //     const perguntas = await prisma.perguntas.findMany({ where: { id: x.id } });
+  //     quizDto = new IQuizDTO(x);
+  //     perguntas.map(perg => quizDto.setPerguntas(perg));
 
-    });
+  //   });
 
-    return quiz;
-  }
+  //   return quiz;
+  // }
 
 };
