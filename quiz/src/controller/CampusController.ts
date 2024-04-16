@@ -14,11 +14,9 @@ export class CampusController{
         
   }
 
-  async getAllCampusByUserId(req: Request, res: Response): Promise<Response> {
+  async getAllCampus(req: Request, res: Response): Promise<Response> {
 
-    const userId = parseInt(req.params.id);
-
-    const campus = await campusService.getAllCampusByUserId(userId);
+    const campus = await campusService.getAllCampus();
 
     return res.status(200).json(campus);
 

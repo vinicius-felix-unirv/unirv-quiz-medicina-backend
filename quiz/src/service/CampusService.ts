@@ -3,27 +3,17 @@ import { CampusDTO } from '../model/CampusDTO';
 import campusRepository from '../repository/campusRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
-import usuariosRepository from '../repository/usuariosRepository';
-import cursoRepository from '../repository/cursoRepository';
 
 @Service()
 export class CampusService{
 
   async createCampus(campus: CampusDTO): Promise<CampusDTO>{
 
-    const usuariosidExists = await usuariosRepository.getUsuarioById(campus.getUsuarioId());
+    const campusList = await campusRepository.getAllCampus();
 
-    if(!usuariosidExists) throw new NotFoundError('Usuarios nao encontrados');
+    const campusExists = campusList.some(c => c.nomecampus === campus.getNomeCampus());
 
-    const cursoExist = await cursoRepository.getCursoById(campus.getCursoId());
-
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrados');
-        
-    const campusList = await campusRepository.getAllCampusByUserId(campus.getUsuarioId());
-
-    const campusExist = campusList.some(c => c.cursoid === campus.getCursoId());
-
-    if(campusExist) throw new BadRequestError('Campus ja existe');
+    if(campusExists) throw new BadRequestError('Campus ja existe');
 
     const newCampus = await campusRepository.createCampus(campus);
 
@@ -31,15 +21,11 @@ export class CampusService{
 
   }
 
-  async getAllCampusByUserId(id: number): Promise<CampusDTO[]> {
+  async getAllCampus(): Promise<CampusDTO[]> {
 
-    const userExists = await usuariosRepository.getUsuarioById(id);
+    const campus = await campusRepository.getAllCampus();
 
-    if (!userExists) throw new NotFoundError('Usuario nao encontrado');
-
-    const campusByUserId = await campusRepository.getAllCampusByUserId(id);
-
-    return campusByUserId.map(campus => new CampusDTO(campus));
+    return campus.map(campus => new CampusDTO(campus));
   }
 
   async getCampusById(id: number): Promise<CampusDTO> {
@@ -57,15 +43,11 @@ export class CampusService{
 
     if(!campusExist)  throw new NotFoundError('Campus nao encontrado');
 
-    const cursoExist = await cursoRepository.getCursoById(campus.getCursoId());
+    const campusList = await campusRepository.getAllCampus();
 
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrados');
+    const campusAlreadyExists = campusList.some(c => c.nomecampus === campus.getNomeCampus());
 
-    const campusList = await campusRepository.getAllCampusByUserId(campusExist.usuariosid);
-
-    const campusAlreadyExists = campusList.filter(c => c.cursoid === campus.getCursoId());
-
-    if(campusAlreadyExists.length != 0 && campusAlreadyExists[0].id != id) throw new BadRequestError('Campus ja existe');
+    if(campusAlreadyExists) throw new BadRequestError('Campus ja existe');
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
@@ -76,7 +58,7 @@ export class CampusService{
 
     const campusExist = await campusRepository.getCampusById(id);
 
-    if(!campusExist)  throw new NotFoundError('Campus nao encontrado');
+    if(!campusExist) throw new NotFoundError('Campus nao encontrado');
 
     await campusRepository.deleteCampus(id);
     

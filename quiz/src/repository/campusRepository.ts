@@ -4,13 +4,13 @@ import { prisma } from '../db/quizClientPrisma';
 
 export default {
 
-  async getAllCampusByUserId(id: number): Promise<campus[]>{
+  async getAllCampus(): Promise<campus[]> {
 
-    const campusByUserId = await prisma.campus.findMany({ where: {usuariosid: id} });
+    const campus = await prisma.campus.findMany();
 
-    return campusByUserId;
+    return campus;
   },
-
+  
   async getCampusById(id: number): Promise<campus | null>{
 
     const campusByUserId = await prisma.campus.findFirst({ where: {id: id} });
@@ -23,11 +23,7 @@ export default {
     const newCampus = await prisma.campus.create({
 
       data: {       
-        cursoid: campus.getCursoId(),
-        turma: campus.getTurma(),
-        periodo: campus.getPeriodo(),
-        nomecampus: campus.getNomeCampus(),
-        usuariosid: campus.getUsuarioId()
+        nomecampus: campus.getNomeCampus()
       }
     });
 
@@ -39,9 +35,6 @@ export default {
     const updatedCampus = await prisma.campus.update({
       where: { id: id },
       data: {
-        cursoid: campus.getCursoId(),
-        turma: campus.getTurma(),
-        periodo: campus.getPeriodo(),
         nomecampus: campus.getNomeCampus()
       }
     });
