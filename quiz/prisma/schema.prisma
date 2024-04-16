@@ -10,10 +10,10 @@ datasource db {
 model alternativas {
   id          Int        @id @default(autoincrement())
   perguntasid Int
-  resposta    String?    @db.VarChar
-  pathimage   String?
+  resposta    String?    @db.VarChar(255)
+  pathimage   String?    @db.VarChar(255)
   correta     Boolean    @default(false)
-  perguntas   perguntas? @relation(fields: [perguntasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntas   perguntas? @relation(fields: [perguntasid], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model campus {
@@ -28,7 +28,7 @@ model categorias {
   status    Boolean     @default(true)
   imagem    String      @db.VarChar(255)
   cursoId   Int
-  curso     curso?      @relation(fields: [cursoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso     curso?      @relation(fields: [cursoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   perguntas perguntas[]
 }
 
@@ -47,7 +47,7 @@ model logs {
   datalogin  DateTime  @default(now()) @db.Date
   usuariosid Int
   descricao  String    @db.VarChar(100)
-  usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuarios   usuarios? @relation(fields: [usuariosid], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model perguntas {
@@ -61,10 +61,10 @@ model perguntas {
   quizid             Int?
   categorias         categorias?          @relation(fields: [categoriasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   perguntasnivel     perguntasnivel?      @relation(fields: [perguntasnivelid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  quiz               quiz?                @relation(fields: [quizid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quiz               quiz?                @relation(fields: [quizid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   alternativas       alternativas[]
   progressoperguntas progressoperguntas[]
-  quiz_avaliativo    quiz_avaliativo?     @relation(fields: [quizavaliativoid], references: [id])
+  quiz_avaliativo    quiz_avaliativo?     @relation(fields: [quizavaliativoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   quizavaliativoid   Int?
 }
 
@@ -80,8 +80,8 @@ model progressoperguntas {
   id          Int        @id @default(autoincrement())
   usuariosid  Int
   perguntasid Int
-  perguntas   perguntas? @relation(fields: [perguntasid], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usuarios    usuarios?  @relation(fields: [usuariosid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  perguntas   perguntas? @relation(fields: [perguntasid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuarios    usuarios?  @relation(fields: [usuariosid], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model quiz {
@@ -89,7 +89,7 @@ model quiz {
   titulo    String      @db.VarChar(150)
   cursoid   Int
   imagem    String      @db.VarChar(255)
-  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   perguntas perguntas[]
 }
 
@@ -99,17 +99,22 @@ model quiz_avaliativo {
   imagem    String      @db.VarChar(255)
   status    Boolean     @default(true)
   usuarioid Int
-  usuarios  usuarios?   @relation(fields: [usuarioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuarios  usuarios?   @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   cursoid   Int
-  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   perguntas perguntas[]
+  quiz_avaliativo_usuario quiz_avaliativo_usuario[]
 }
 
 model quiz_avaliativo_usuario {
   id        Int       @id @default(autoincrement())
-  pontuacao Int
+  quizavaliativoid   Int 
+  quiz_avaliativo  quiz_avaliativo? @relation(fields: [quizavaliativoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   usuarioid Int
-  usuarios  usuarios? @relation(fields: [usuarioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usuarios  usuarios? @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  pontuacao Int
+  horainicial DateTime  @db.Date
+  horafinal DateTime    @db.Date
 }
 
 model usuarios {
@@ -120,7 +125,7 @@ model usuarios {
   telefone           String                    @db.VarChar(15)
   sexo               Int
   datanascimento     DateTime                  @db.Date
-  role               Int                       @default(2)
+  role               Int                       @default(3)
   uf                 String                    @db.VarChar(2)
   cidade             String                    @db.VarChar(255)
   foto               String                    @db.VarChar(255)
