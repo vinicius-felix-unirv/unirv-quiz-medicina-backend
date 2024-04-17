@@ -45,7 +45,7 @@ export class CampusService{
 
   async getCampusById(id: number): Promise<CampusDTO> {
 
-    const campus = await this.campusExistsById(id);    
+    const campus = await this.campusExistsById(id);
 
     return new CampusDTO(campus);
   }
