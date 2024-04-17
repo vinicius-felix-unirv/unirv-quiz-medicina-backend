@@ -8,7 +8,8 @@ export interface IperguntasDTO {
   pathimage: string;
   status: boolean;
   categoriasid: number;
-  quizid: number;
+  quizid: number | null;
+  quizavaliativoid: number | null;
 }
 export class PerguntaDTO {
 
@@ -19,7 +20,8 @@ export class PerguntaDTO {
   private pathimage: string | null;
   private status: boolean;
   private categoriasid: number;
-  private quizid: number;
+  private quizid: number | null;
+  private quizavaliativoid: number | null;
 
   constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
@@ -30,6 +32,7 @@ export class PerguntaDTO {
     this.status = data.status;
     this.categoriasid = data.categoriasid;
     this.quizid = data.quizid;
+    this.quizavaliativoid = data.quizavaliativoid;
   }
 
   getId(): number | undefined {
@@ -60,8 +63,12 @@ export class PerguntaDTO {
     return this.categoriasid;
   }
 
-  getQuizId(): number {
+  getQuizId(): number | null {
     return this.quizid;
+  }
+
+  getQuizAvaliativoId(): number | null {
+    return this.quizavaliativoid;
   }
 
   setStatus(status: boolean): void {

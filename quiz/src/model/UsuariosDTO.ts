@@ -14,25 +14,11 @@ export interface IUsuarioDTO {
   pontuacao: number;
   status: boolean;
   cidade: string;
-}
-
-export interface IUsuarioAndCampusDTO{
-  nome: string;
-  email: string;
-  senha: string;
-  telefone: string;
-  sexo: number;
-  datanascimento: Date;
-  uf: string;
-  foto: string;
-  cidade: string;
-  cursoid: number;
   turma: string;
   periodo: number;
-  nomecampus: string;
-  usuariosid: number;
+  cursoid: number;
+  campusid: number;
 }
-
 
 export class UsuarioDTO {
 
@@ -49,6 +35,10 @@ export class UsuarioDTO {
   private pontuacao: number;
   private status: boolean;
   private cidade: string;
+  private turma: string;
+  private periodo: number;
+  private cursoid: number;
+  private campusid: number;
 
   constructor(data: IUsuarioDTO | usuarios) {
     this.id = data.id;
@@ -64,11 +54,13 @@ export class UsuarioDTO {
     this.pontuacao = data.pontuacao;
     this.status = data.status;
     this.cidade = data.cidade;
+    this.turma = data.turma;
+    this.periodo = data.periodo;
+    this.cursoid = data.cursoid;
+    this.campusid = data.campusid;
   }
 
-  getId(): number | undefined {
-    return this.id;
-  }
+  getId(): number | undefined { return this.id; }
   getNome(): string { return this.nome; }
   getEmail(): string { return this.email; }
   getSenha(): string { return this.senha; }
@@ -81,7 +73,11 @@ export class UsuarioDTO {
   getStatus(): boolean { return this.status; }
   getDataNascimento(): Date { return this.datanascimento; }
   getCidade(): string { return this.cidade; }
-
+  getTurma(): string { return this.turma; }
+  getPeriodo(): number { return this.periodo; }
+  getCursoId(): number { return this.cursoid; }
+  getCampusId(): number { return this.campusid; }
+  
   setPasswordHashed(hashedPassword: string) {
     this.senha = hashedPassword;
   }
