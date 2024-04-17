@@ -6,7 +6,7 @@ import { NotFoundError } from '../exception/NotFoundError';
 @Service()
 export class CursoService{
 
-    async cursoExistsById(id: number): Promise<void>{
+    async checksCursoExistsById(id: number): Promise<void>{
 
         const cursoExists = await cursoRepository.getCursoById(id);
 

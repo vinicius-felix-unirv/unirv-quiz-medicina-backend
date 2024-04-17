@@ -10,14 +10,14 @@ import { quiz } from '@prisma/client';
 @Service()
 export class QuizService {
 
-  async quizAlreadyExistsByTitulo(titulo: string): Promise<void> {
+  async checksQuizExistsByTitulo(titulo: string): Promise<void> {
 
     const quizExist = await quizRepository.getQuizByTitulo(titulo);
 
     if(quizExist) throw new BadRequestError('Quiz ja existe');
   }
 
-  async quizExistsById(id: number): Promise<quiz> {
+  async checksQuizExistsById(id: number): Promise<quiz> {
 
     const quizExist = await quizRepository.getQuizById(id);
 
@@ -28,9 +28,9 @@ export class QuizService {
 
   async saveQuiz(quiz: QuizDTO): Promise<QuizDTO> {
 
-    await this.quizAlreadyExistsByTitulo(quiz.getTitulo());
+    await this.checksQuizExistsByTitulo(quiz.getTitulo());
 
-    await cursoService.cursoExistsById(quiz.getCursoId());
+    await cursoService.checksCursoExistsById(quiz.getCursoId());
 
     const newQuiz = await quizRepository.createQuiz(quiz);
 
@@ -39,9 +39,9 @@ export class QuizService {
 
   async updateQuiz(id: number, quiz: QuizDTO): Promise<QuizDTO> {
 
-    await this.quizExistsById(id);
+    await this.checksQuizExistsById(id);
 
-    await this.quizAlreadyExistsByTitulo(quiz.getTitulo());
+    await this.checksQuizExistsByTitulo(quiz.getTitulo());
 
     const updatedquiz = await quizRepository.updateQuiz(id, quiz);
 
@@ -59,7 +59,7 @@ export class QuizService {
 
   async getAllQuizByCurosId(skip: number, take: number, cursoId: number): Promise<QuizDTO[]> {
 
-    await cursoService.cursoExistsById(cursoId);
+    await cursoService.checksCursoExistsById(cursoId);
 
     const quizs = await quizRepository.getAllQuizByCursoId(skip, take, cursoId);
 
@@ -70,7 +70,7 @@ export class QuizService {
 
   async getQuizById(id: number): Promise<QuizDTO> {
 
-    const quiz = await this.quizExistsById(id);
+    const quiz = await this.checksQuizExistsById(id);
 
     return new QuizDTO(quiz);
   }
