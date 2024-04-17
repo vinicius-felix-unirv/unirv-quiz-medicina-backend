@@ -1,31 +1,35 @@
 import { Service } from 'typedi';
-import { IUsuarioAndCampusDTO, UsuarioDTO } from '../model/UsuariosDTO';
+import { UsuarioDTO } from '../model/UsuariosDTO';
 import usuariosRepository from '../repository/usuariosRepository';
 import { hash } from 'bcryptjs';
 import { NotFoundError } from '../exception/NotFoundError';
 import { BadRequestError } from '../exception/BadRequestError';
-import cursoRepository from '../repository/cursoRepository';
-import campusRepository from '../repository/campusRepository';
-import { CampusDTO } from '../model/CampusDTO';
+import { usuarios } from '@prisma/client';
+import { campusService, cursoService } from './containerConfig';
 
 @Service()
 export class UsuarioService {
 
-  async getUsuarioById(id: number): Promise<UsuarioDTO> {
+  async checksUsuarioExistsById(id: number): Promise<usuarios>{
 
     const usuarioExists = await usuariosRepository.getUsuarioById(id);
 
     if (!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
 
-    return new UsuarioDTO(usuarioExists);
+    return usuarioExists;
+  }
+
+  async getUsuarioById(id: number): Promise<UsuarioDTO> {
+
+    const usuario = await this.checksUsuarioExistsById(id);
+
+    return new UsuarioDTO(usuario);
 
   }
 
   async getAllUsuariosByCursoId(skip: number, take: number, cursoId: number): Promise<UsuarioDTO[]> {
 
-    const cursoExists = await cursoRepository.getCursoById(cursoId);
-
-    if (!cursoExists) throw new NotFoundError('Curso nao encontrado');
+    await cursoService.checksCursoExistsById(cursoId);
 
     const usuarios = await usuariosRepository.getAllUsuariosByCursoId(skip, take, cursoId);
 
@@ -41,6 +45,10 @@ export class UsuarioService {
 
     if (emailExists) throw new BadRequestError('Email ja cadastrado');
 
+    await cursoService.checksCursoExistsById(usuario.getCursoId());
+
+    await campusService.checksCampusExistsById(usuario.getCampusId());
+
     const hashedPassword = await hash(usuario.getSenha(), 10);
 
     usuario.setPasswordHashed(hashedPassword);
@@ -50,57 +58,13 @@ export class UsuarioService {
     return new UsuarioDTO(newUsuario);
   }
 
-  async saveUsuarioAndCampus(data: IUsuarioAndCampusDTO): Promise<{usuario: UsuarioDTO, campus: CampusDTO}> {
-
-    const emailExists = await usuariosRepository.getUsuarioByEmail(data.email);
-
-    if (emailExists) throw new BadRequestError('Email ja cadastrado');
-
-    const usuarioDTO = new UsuarioDTO({
-      nome: data.nome,
-      email: data.email,
-      senha: data.senha,
-      telefone: data.telefone,
-      sexo: data.sexo,
-      datanascimento: data.datanascimento,
-      uf: data.uf,
-      foto: data.foto,
-      role: 2,
-      pontuacao: 0,
-      status: true,
-      cidade: data.cidade,
-    });
-
-    const hashedPassword = await hash(data.senha, 10);
-
-    usuarioDTO.setPasswordHashed(hashedPassword);
-
-    const cursoExist = await cursoRepository.getCursoById(data.cursoid);
-
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrados');
-    
-    const newUsuario = await usuariosRepository.createUsuario(usuarioDTO);
-
-    const campusDTO = new CampusDTO({
-      usuariosid: newUsuario.id,
-      nomecampus: data.nomecampus,
-      turma: data.turma,
-      periodo: data.periodo,
-      cursoid: data.cursoid,
-    });
-    const newCampus = await campusRepository.createCampus(campusDTO);
-
-    return {
-      usuario: new UsuarioDTO(newUsuario),
-      campus: new CampusDTO(newCampus)
-    }; 
-  }
-
   async alterUsuario(id: number, usuario: UsuarioDTO): Promise<UsuarioDTO> {
 
-    const usuarioExists = await usuariosRepository.getUsuarioById(id);
+    await this.checksUsuarioExistsById(id);
 
-    if (!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
+    await cursoService.checksCursoExistsById(usuario.getCursoId());
+
+    await campusService.checksCampusExistsById(usuario.getCampusId());
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
@@ -115,9 +79,7 @@ export class UsuarioService {
 
   async alterPassword(userId: number, password: string): Promise<void>{
 
-    const userExists = await usuariosRepository.getUsuarioById(userId);
-    
-    if(!userExists) throw new NotFoundError('Usuario nao encontrado');
+    const userExists = await this.checksUsuarioExistsById(userId);
     
     const user = new UsuarioDTO(userExists);
 
@@ -131,9 +93,7 @@ export class UsuarioService {
 
   async addPontuacao(userId: number, pontuacao: number): Promise<UsuarioDTO> {
 
-    const userExists = await usuariosRepository.getUsuarioById(userId);
-
-    if (!userExists) throw new NotFoundError('Usuario nao encontrado');
+    const userExists = await this.checksUsuarioExistsById(userId);
 
     if(pontuacao < 0) throw new BadRequestError('A pontuacao nao pode ser negativa');
 
@@ -146,9 +106,7 @@ export class UsuarioService {
 
   async getRankingByCursoId(cursoId: number): Promise<UsuarioDTO[]> {
 
-    const cursoExists = await cursoRepository.getCursoById(cursoId);
-
-    if(!cursoExists) throw new NotFoundError('Curso nao encontrado');
+    await cursoService.checksCursoExistsById(cursoId);
 
     const ranking = await usuariosRepository.getTopTenPontuacao(cursoId);
 

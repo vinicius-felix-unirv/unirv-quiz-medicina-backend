@@ -36,16 +36,6 @@ export class UsuariosController {
 
   }
 
-  async postUsuarioAndCampus(req: Request, res: Response): Promise<Response> {
-
-    const usuarioAndCampusRequest = req.body;
-
-    const usuarioAndCampusResponse = await usuarioService.saveUsuarioAndCampus(usuarioAndCampusRequest);
-
-    return res.status(201).json(usuarioAndCampusResponse);
-
-  }
-
   async putUsuario(req: Request, res: Response): Promise<Response> {
     
     const id = parseInt(req.params.id);

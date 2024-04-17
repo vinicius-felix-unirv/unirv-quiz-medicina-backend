@@ -24,9 +24,7 @@ export default {
       skip: skip,
       take: take,
       where: { 
-        campus: {
-          some: {cursoid: cursoId}
-        }
+        cursoid: cursoId
       }
     });
 
@@ -47,7 +45,11 @@ export default {
                       datanascimento: usuario.getDataNascimento(),
                       uf: usuario.getUf(),
                       foto: usuario.getFoto(),
-                      cidade: usuario.getCidade()
+                      cidade: usuario.getCidade(),
+                      turma: usuario.getTurma(),
+                      periodo: usuario.getPeriodo(),
+                      cursoid: usuario.getCursoId(),
+                      campusid: usuario.getCampusId()
                     } as usuarios
       }
     );
@@ -70,7 +72,11 @@ export default {
                   datanascimento: usuario.getDataNascimento(),
                   uf: usuario.getUf(),
                   foto: usuario.getFoto(),
-                  cidade: usuario.getCidade()
+                  cidade: usuario.getCidade(),
+                  turma: usuario.getTurma(),
+                  periodo: usuario.getPeriodo(),
+                  cursoid: usuario.getCursoId(),
+                  campusid: usuario.getCampusId()
                 }
       }
     );
@@ -109,11 +115,7 @@ export default {
     const topTen = await prisma.usuarios.findMany({
       take: 10,
       where: {
-        campus: {
-          some: {
-            cursoid: cursoId
-          }
-        }
+        cursoid: cursoId
       },
       orderBy: {pontuacao: 'desc'}
     });
