@@ -9,6 +9,7 @@ import { ProgressoPerguntasService } from './ProgressoPerguntasService';
 import { AlternativasService } from './AlternativasService';
 import { SendEmailService } from './SendEmailService';
 import { CursoService } from './CursoService';
+import { QuizAvaliativoService } from './QuizAvaliativoService';
 
 
 const categoriasService = Container.get(CategoriasService);
@@ -21,6 +22,7 @@ const progressoPerguntasService = Container.get(ProgressoPerguntasService);
 const alternativasService = Container.get(AlternativasService);
 const sendEmailService = Container.get(SendEmailService);
 const cursoService = Container.get(CursoService);
+const quizAvaliativoService = Container.get(QuizAvaliativoService);
 
 
 export {
@@ -33,6 +35,7 @@ export {
   progressoPerguntasService, 
   alternativasService,
   sendEmailService, 
-  cursoService
+  cursoService,
+  quizAvaliativoService
 };
 
