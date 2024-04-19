@@ -22,11 +22,25 @@ export class QuizAvaliativoController {
         return res.status(200).json(quiz);
     }
 
-    async getAllQuizAvaliativos(req: Request, res: Response): Promise<Response> {
+    async getAllQuizAvaliativosByUsuarioAndCurso(req: Request, res: Response): Promise<Response> {
 
-        const usuarioId = parseInt(req.params.id);
+        const usuarioId = parseInt(req.params.usuarioid);
+        const cursoId = parseInt(req.params.cursoid);
+        const skip = parseInt(req.params.skip);
+        const take = parseInt(req.params.take);
 
-        const quizList = await quizAvaliativoService.getAllQuizAvaliativoByUsuarioId(usuarioId);
+        const quizList = await quizAvaliativoService.getAllQuizAvaliativoByUsuarioAndCurso(usuarioId, cursoId, skip, take);
+
+        return res.status(200).json(quizList);
+    }
+
+    async getAllQuizAvaliativosByCurso(req: Request, res: Response): Promise<Response> {
+
+        const cursoId = parseInt(req.params.cursoid);
+        const skip = parseInt(req.params.skip);
+        const take = parseInt(req.params.take);
+
+        const quizList = await quizAvaliativoService.getAllQuizAvaliativoByCurso(cursoId, skip, take);
 
         return res.status(200).json(quizList);
     }

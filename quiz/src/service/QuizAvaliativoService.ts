@@ -4,6 +4,7 @@ import quizAvaliativoRepository from '../repository/quizAvaliativoRepository';
 import { cursoService, usuarioService } from './containerConfig';
 import { NotFoundError } from '../exception/NotFoundError';
 import { Service } from 'typedi';
+import { BadRequestError } from '../exception/BadRequestError';
 
 @Service()
 export class QuizAvaliativoService {
@@ -16,12 +17,17 @@ export class QuizAvaliativoService {
 
         return quizExists;
     }
+
     async createQuizAvaliativo(quiz: QuizAvaliativoDTO): Promise<QuizAvaliativoDTO> {
 
         await Promise.all([
             usuarioService.checksUsuarioExistsById(quiz.getUsuariosId()),
             cursoService.checksCursoExistsById(quiz.getCursoId())
         ]);
+
+        const quizExists = await quizAvaliativoRepository.getQuizAvaliativoByTituloAndCursoId(quiz.getTitulo(), quiz.getCursoId());
+
+        if(quizExists) throw new BadRequestError('Quiz-Avaliativo ja existe');
 
         const newQuiz = await quizAvaliativoRepository.createQuizAvaliativo(quiz);
 
@@ -35,11 +41,23 @@ export class QuizAvaliativoService {
         return new QuizAvaliativoDTO(quiz);
     }
 
-    async getAllQuizAvaliativoByUsuarioId(usuarioId: number): Promise<QuizAvaliativoDTO[]> {
+    async getAllQuizAvaliativoByUsuarioAndCurso(usuarioId: number, cursoId: number, skip: number, take: number): Promise<QuizAvaliativoDTO[]> {
 
-        await usuarioService.checksUsuarioExistsById(usuarioId);
+        await Promise.all([
+            usuarioService.checksUsuarioExistsById(usuarioId),
+            cursoService.checksCursoExistsById(cursoId)
+        ]);
 
-        const quizList = await quizAvaliativoRepository.getAllQuizAvaliativoByUserId(usuarioId);
+        const quizList = await quizAvaliativoRepository.getAllQuizAvaliativoByUsuarioAndCurso(usuarioId, cursoId, skip, take);
+
+        return quizList.map(q => new QuizAvaliativoDTO(q));
+    }
+
+    async getAllQuizAvaliativoByCurso(cursoId: number, skip: number, take: number): Promise<QuizAvaliativoDTO[]> {
+
+        await cursoService.checksCursoExistsById(cursoId);
+
+        const quizList = await quizAvaliativoRepository.getAllQuizAvaliativoByCursoId(cursoId, skip, take);
 
         return quizList.map(q => new QuizAvaliativoDTO(q));
     }

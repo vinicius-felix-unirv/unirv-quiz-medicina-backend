@@ -11,7 +11,6 @@ export default {
             data: {
                 titulo: quiz.getTitulo(),
                 imagem: quiz.getImagem(),
-                status: quiz.getStatus(),
                 usuarioid: quiz.getUsuariosId(),
                 cursoid: quiz.getCursoId()
             }
@@ -27,10 +26,41 @@ export default {
         return quiz;
     },
 
-    async getAllQuizAvaliativoByUserId(usuarioId: number): Promise<quiz_avaliativo[]> {
+    async getAllQuizAvaliativoByUsuarioAndCurso(usuarioId: number, cursoId: number, skip: number, take: number): Promise<quiz_avaliativo[]> {
 
         const quiz = await prisma.quiz_avaliativo.findMany({
-            where: {usuarioid: usuarioId}
+            skip: skip,
+            take: take,
+            where: {
+                usuarioid: usuarioId,
+                cursoid: cursoId
+            }
+        });
+
+        return quiz;
+    },
+
+    async getAllQuizAvaliativoByCursoId(cursoId: number, skip: number, take: number): Promise<quiz_avaliativo[]> {
+
+        const quiz = await prisma.quiz_avaliativo.findMany({
+            skip: skip,
+            take: take,
+            where: {
+                cursoid: cursoId,
+                status: true
+            }
+        });
+
+        return quiz;
+    },
+
+    async getQuizAvaliativoByTituloAndCursoId(titulo: string, cursoId: number): Promise<quiz_avaliativo | null> {
+
+        const quiz = await prisma.quiz_avaliativo.findFirst({
+            where: {
+                titulo: titulo,
+                cursoid: cursoId
+            }
         });
 
         return quiz;
