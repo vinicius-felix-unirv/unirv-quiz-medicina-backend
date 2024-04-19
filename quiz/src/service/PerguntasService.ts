@@ -7,20 +7,29 @@ import quizRepository from '../repository/quizRepository';
 import perguntasNivelRepository from '../repository/perguntasNivelRepository';
 import categoriasRepository from '../repository/categoriasRepository';
 import usuariosRepository from '../repository/usuariosRepository';
+import { perguntas } from '@prisma/client';
 
 @Service()
 export class PerguntasService {
 
-  async getPerguntaById(id: number): Promise<PerguntaDTO> {
+  async perguntaExistsById(id: number): Promise<perguntas> {
 
     const perguntaExists = await perguntasRepository.getPerguntaById(id);
 
-    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+    if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
 
-    return new PerguntaDTO(perguntaExists);
+    return perguntaExists;
+  }
+
+  async getPerguntaById(id: number): Promise<PerguntaDTO> {
+
+    const pergunta = await this.perguntaExistsById(id);
+
+    return new PerguntaDTO(pergunta);
 
   }
 
+  // modificar;
   async getAllPerguntasByQuizId(skip: number, take: number, quizId: number, userId: number): Promise<PerguntaDTO[]> {
     const quizExists = await quizRepository.getQuizById(quizId);
 
@@ -42,7 +51,7 @@ export class PerguntasService {
 
     const perguntaExist = await perguntasRepository.getPergunta(pergunta);
 
-    if (perguntaExist) throw new BadRequestError('Pergunta ja existe');
+    if(perguntaExist) throw new BadRequestError('Pergunta ja existe');
 
     const nivelExists = await perguntasNivelRepository.getPerguntasNivelById(pergunta.getPerguntasNivelId());
 
@@ -52,9 +61,9 @@ export class PerguntasService {
 
     if(!categoriasExists) throw new NotFoundError('Categoria nao encontrada');
 
-    const quizExists = await quizRepository.getQuizById(pergunta.getQuizId());
+    // await quizService.quizExistsById(pergunta.getQuizId()!);
 
-    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
+    // ainda temos que validar se existe algum quiz;
 
     const newPergunta = await perguntasRepository.createPergunta(pergunta);
 
@@ -63,9 +72,7 @@ export class PerguntasService {
 
   async alterPergunta(id: number, pergunta: PerguntaDTO): Promise<PerguntaDTO> {
 
-    const perguntaExists = await perguntasRepository.getPerguntaById(id);
-
-    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+    await this.perguntaExistsById(id);
 
     const perguntaAlreadyExists = await perguntasRepository.getPergunta(pergunta);
 
@@ -86,9 +93,7 @@ export class PerguntasService {
 
   async alterStatusPergunta(id: number): Promise<PerguntaDTO> {
 
-    const perguntaExists = await perguntasRepository.getPerguntaById(id);
-
-    if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+    const perguntaExists = await this.perguntaExistsById(id);
 
     const pergunta = new PerguntaDTO(perguntaExists);
 

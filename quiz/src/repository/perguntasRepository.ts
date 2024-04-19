@@ -4,6 +4,7 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 
 export default {
 
+  // modificar para buscar as perguntas que pertensem a um quiz especifico;
   async getPergunta(pergunta: PerguntaDTO): Promise<perguntas | null> {
 
     const newPergunta = await prisma.perguntas.findFirst(
@@ -23,6 +24,7 @@ export default {
     return pergunta;
   },
 
+  // modificar o parametro de busca para a categoria.
   async getAllPerguntasByQuizIdPagination(skip: number, take: number, quizId: number, userId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
       skip: skip,
@@ -72,7 +74,8 @@ export default {
           tempo: pergunta.getTempo(),
           pathimage: pergunta.getPathImage(),
           categoriasid: pergunta.getCategoriasId(),
-          quizid: pergunta.getQuizId()
+          quizid: pergunta.getQuizId(),
+          quizavaliativoid: pergunta.getQuizAvaliativoId()
         }
       }
     );

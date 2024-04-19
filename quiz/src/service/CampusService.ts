@@ -8,7 +8,7 @@ import { campus } from '@prisma/client';
 @Service()
 export class CampusService{
 
-  async campusAlreadyExists(nomeCampus: string): Promise<void>{
+  async checksCampusExistsByNomeCampus(nomeCampus: string): Promise<void>{
 
     const campusList = await campusRepository.getAllCampus();
 
@@ -17,7 +17,7 @@ export class CampusService{
     if(campusExists) throw new BadRequestError('Campus ja existe');
   }
 
-  async campusExistsById(id: number): Promise<campus> {
+  async checksCampusExistsById(id: number): Promise<campus> {
 
     const campus = await campusRepository.getCampusById(id);
 
@@ -28,7 +28,7 @@ export class CampusService{
 
   async createCampus(campus: CampusDTO): Promise<CampusDTO>{
 
-    await this.campusAlreadyExists(campus.getNomeCampus());
+    await this.checksCampusExistsByNomeCampus(campus.getNomeCampus());
 
     const newCampus = await campusRepository.createCampus(campus);
 
@@ -45,16 +45,16 @@ export class CampusService{
 
   async getCampusById(id: number): Promise<CampusDTO> {
 
-    const campus = await this.campusExistsById(id);
+    const campus = await this.checksCampusExistsById(id);
 
     return new CampusDTO(campus);
   }
 
   async updatedCampus(id: number, campus: CampusDTO): Promise<CampusDTO>{
 
-    await this.campusExistsById(id);
+    await this.checksCampusExistsById(id);
 
-    await this.campusAlreadyExists(campus.getNomeCampus());
+    await this.checksCampusExistsByNomeCampus(campus.getNomeCampus());
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
@@ -63,7 +63,7 @@ export class CampusService{
 
   async deleteCampus(id: number): Promise<void> {
 
-    await this.campusExistsById(id);
+    await this.checksCampusExistsById(id);
 
     await campusRepository.deleteCampus(id);
     
