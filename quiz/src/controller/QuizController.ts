@@ -16,10 +16,11 @@ export class QuizController {
 
   async putQuiz(req: Request, res: Response): Promise<Response> {
 
-    const id = parseInt(req.params.id);
+    const quizId = parseInt(req.params.quizid);
+    const cursoId = parseInt(req.params.cursoid);
     const body = req.body;
 
-    const updatedQuiz = await quizService.updateQuiz(id, new QuizDTO(body));
+    const updatedQuiz = await quizService.updateQuiz(quizId, new QuizDTO(body), cursoId);
 
     return res.status(200).json(updatedQuiz);
   }

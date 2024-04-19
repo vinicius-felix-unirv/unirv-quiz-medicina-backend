@@ -10,11 +10,13 @@ import { quiz } from '@prisma/client';
 @Service()
 export class QuizService {
 
-  async checksQuizExistsByTitulo(titulo: string): Promise<void> {
+  async checksQuizExistsByTituloAndCurso(titulo: string, cursoId: number): Promise<quiz> {
 
-    const quizExist = await quizRepository.getQuizByTitulo(titulo);
+    const quizExist = await quizRepository.getQuizByTituloAndCurso(titulo, cursoId);
 
     if(quizExist) throw new BadRequestError('Quiz ja existe');
+
+    return quizExist;
   }
 
   async checksQuizExistsById(id: number): Promise<quiz> {
@@ -28,22 +30,26 @@ export class QuizService {
 
   async saveQuiz(quiz: QuizDTO): Promise<QuizDTO> {
 
-    await this.checksQuizExistsByTitulo(quiz.getTitulo());
-
-    await cursoService.checksCursoExistsById(quiz.getCursoId());
+    await Promise.all([
+      this.checksQuizExistsByTituloAndCurso(quiz.getTitulo(), quiz.getCursoId()),
+      cursoService.checksCursoExistsById(quiz.getCursoId()),
+    ]);
 
     const newQuiz = await quizRepository.createQuiz(quiz);
 
     return new QuizDTO(newQuiz);
   }
 
-  async updateQuiz(id: number, quiz: QuizDTO): Promise<QuizDTO> {
+  async updateQuiz(quizId: number, quiz: QuizDTO, cursoId: number): Promise<QuizDTO> {
 
-    await this.checksQuizExistsById(id);
+    const [quizBytitulo] = await Promise.all([
+      quizRepository.getQuizByTituloAndCurso(quiz.getTitulo(), cursoId),
+      this.checksQuizExistsById(quizId)
+    ]);
 
-    await this.checksQuizExistsByTitulo(quiz.getTitulo());
+    if(quizBytitulo && quizId != quizBytitulo.id) throw new BadRequestError('Quiz ja existe');
 
-    const updatedquiz = await quizRepository.updateQuiz(id, quiz);
+    const updatedquiz = await quizRepository.updateQuiz(quizId, quiz);
 
     return new QuizDTO(updatedquiz);
   }

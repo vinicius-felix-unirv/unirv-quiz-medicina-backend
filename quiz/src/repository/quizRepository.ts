@@ -4,9 +4,14 @@ import { QuizDTO } from './../model/QuizDTO';
 
 export default {
 
-  async getQuizByTitulo(_titulo: string): Promise<quiz> {
+  async getQuizByTituloAndCurso(_titulo: string, _cursoid: number): Promise<quiz> {
 
-    const quiz = await prisma.quiz.findFirst({ where: { titulo: _titulo } });
+    const quiz = await prisma.quiz.findFirst({ 
+      where: { 
+        titulo: _titulo, 
+        cursoid: _cursoid
+      } 
+    });
 
     return quiz!;
   },
