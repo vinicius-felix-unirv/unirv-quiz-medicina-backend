@@ -51,7 +51,7 @@ export class QuizAvaliativoController {
 
         const body = req.body;
 
-        const updatedQuiz = await quizAvaliativoService.updateQuizAvaliativo(id, body);
+        const updatedQuiz = await quizAvaliativoService.updateQuizAvaliativo(id, new QuizAvaliativoDTO(body));
 
         return res.status(200).json(updatedQuiz);
     }

@@ -40,12 +40,11 @@ export class QuizService {
     return new QuizDTO(newQuiz);
   }
 
-  async updateQuiz(quizId: number, quiz: QuizDTO, cursoId: number): Promise<QuizDTO> {
+  async updateQuiz(quizId: number, quiz: QuizDTO): Promise<QuizDTO> {
 
-    const [quizBytitulo] = await Promise.all([
-      quizRepository.getQuizByTituloAndCurso(quiz.getTitulo(), cursoId),
-      this.checksQuizExistsById(quizId)
-    ]);
+    const quizExists = await this.checksQuizExistsById(quizId);
+
+    const quizBytitulo = await quizRepository.getQuizByTituloAndCurso(quiz.getTitulo(), quizExists.cursoid);
 
     if(quizBytitulo && quizId != quizBytitulo.id) throw new BadRequestError('Quiz ja existe');
 

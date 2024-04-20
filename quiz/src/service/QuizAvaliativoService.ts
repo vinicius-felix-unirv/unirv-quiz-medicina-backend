@@ -9,7 +9,7 @@ import { BadRequestError } from '../exception/BadRequestError';
 @Service()
 export class QuizAvaliativoService {
 
-    async checksQuizAvaliativoExistsById(id: number): Promise<quiz_avaliativo> {
+    async checksQuizAvaliativoExistsById(id: number): Promise<quiz_avaliativo>{
 
         const quizExists = await quizAvaliativoRepository.getQuizAvaliativoById(id);
 
@@ -18,16 +18,20 @@ export class QuizAvaliativoService {
         return quizExists;
     }
 
+    async checksQuizAvaliativoExistsByTituloAndCurso(titulo: string, cursoId: number): Promise<void> {
+
+        const quizExists = await quizAvaliativoRepository.getQuizAvaliativoByTituloAndCursoId(titulo, cursoId);
+
+        if(quizExists) throw new BadRequestError('Quiz-Avaliativo ja existe');
+    }
+
     async createQuizAvaliativo(quiz: QuizAvaliativoDTO): Promise<QuizAvaliativoDTO> {
 
         await Promise.all([
             usuarioService.checksUsuarioExistsById(quiz.getUsuariosId()),
-            cursoService.checksCursoExistsById(quiz.getCursoId())
+            cursoService.checksCursoExistsById(quiz.getCursoId()),
+            this.checksQuizAvaliativoExistsByTituloAndCurso(quiz.getTitulo(), quiz.getCursoId())
         ]);
-
-        const quizExists = await quizAvaliativoRepository.getQuizAvaliativoByTituloAndCursoId(quiz.getTitulo(), quiz.getCursoId());
-
-        if(quizExists) throw new BadRequestError('Quiz-Avaliativo ja existe');
 
         const newQuiz = await quizAvaliativoRepository.createQuizAvaliativo(quiz);
 
@@ -64,7 +68,11 @@ export class QuizAvaliativoService {
 
     async updateQuizAvaliativo(id: number, quiz: QuizAvaliativoDTO): Promise<QuizAvaliativoDTO> {
 
-        await this.checksQuizAvaliativoExistsById(id);
+        const quizExists = await this.checksQuizAvaliativoExistsById(id);
+
+        const quizByTitulo = await quizAvaliativoRepository.getQuizAvaliativoByTituloAndCursoId(quiz.getTitulo(), quizExists.cursoid);
+
+        if(quizByTitulo && id != quizByTitulo.id) throw new BadRequestError('Quiz-Avaliativo ja existe');     
 
         const updatedQuiz = await quizAvaliativoRepository.alterQuizAvaliativo(id, quiz);
 
