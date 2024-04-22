@@ -4,20 +4,34 @@ import { NotFoundError } from '../exception/NotFoundError';
 import { CategoriasDTO } from '../model/CategoriasDTO';
 import categoriasRepository from '../repository/categoriasRepository';
 import { Service } from 'typedi';
-import cursoRepository from '../repository/cursoRepository';
+import { cursoService } from './containerConfig';
+import { categorias } from '@prisma/client';
 
 @Service()
 export class CategoriasService {
 
-  async saveCategoria(categoria: CategoriasDTO): Promise<CategoriasDTO> {
+  async checksCategoriaExistsByDescricao(descricao: string, cursoId: number): Promise<void>{
 
-    const categoriaExist = await categoriasRepository.getCategoria(categoria.getDescricao());
+    const categoriaExist = await categoriasRepository.getCategoriaByDescricaoAndCursoId(descricao, cursoId);
 
     if (categoriaExist) throw new BadRequestError('Categoria ja existe');
+  }
 
-    const cursoExist = await cursoRepository.getCursoById(categoria.getCursoId());
+  async checksCategoriaExistsById(id: number): Promise<categorias>{
 
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
+    const categoriaExist = await categoriasRepository.getCategoriaId(id);
+
+    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
+
+    return categoriaExist;
+  }
+
+  async saveCategoria(categoria: CategoriasDTO): Promise<CategoriasDTO> {
+
+    await Promise.all([
+      this.checksCategoriaExistsByDescricao(categoria.getDescricao(), categoria.getCursoId()),
+      cursoService.checksCursoExistsById(categoria.getCursoId())
+    ]);
 
     const newCategoria = await categoriasRepository.createCategoria(categoria);
 
@@ -26,13 +40,11 @@ export class CategoriasService {
 
   async alterCategoria(id: number, categoria: CategoriasDTO): Promise<CategoriasDTO> {
 
-    const categoriaExist = await categoriasRepository.getCategoriaId(id);
+    const categoriaExist = await this.checksCategoriaExistsById(id);
 
-    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
+    const descricaoRegistered = await categoriasRepository.getCategoriaByDescricaoAndCursoId(categoria.getDescricao(), categoriaExist.cursoId);
 
-    const descricaoRegistered = await categoriasRepository.getCategoria(categoria.getDescricao());
-
-    if (descricaoRegistered) throw new BadRequestError('Categoria ja existe');
+    if(descricaoRegistered && descricaoRegistered.id != id) throw new BadRequestError('Categoria ja existe');
 
     const updatedCategoria = await categoriasRepository.updateCategoria(id, categoria);
 
@@ -41,9 +53,7 @@ export class CategoriasService {
 
   async alterStatusCategoria(id: number): Promise<CategoriasDTO> {
 
-    const categoriaExist = await categoriasRepository.getCategoriaId(id);
-
-    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
+    const categoriaExist = await this.checksCategoriaExistsById(id);
 
     const categoria = new CategoriasDTO(categoriaExist);
 
@@ -56,18 +66,14 @@ export class CategoriasService {
 
   async getCategoriaId(id: number): Promise<CategoriasDTO> {
 
-    const categoriaExist = await categoriasRepository.getCategoriaId(id);
-
-    if (!categoriaExist) throw new NotFoundError('Categoria nao encontrada');
+    const categoriaExist = await this.checksCategoriaExistsById(id);
 
     return new CategoriasDTO(categoriaExist);
   }
 
   async getAllCategoriasByCursoId(cursoId: number): Promise<CategoriasDTO[]> {
 
-    const cursoExist = await cursoRepository.getCursoById(cursoId);
-
-    if(!cursoExist) throw new NotFoundError('Curso nao encontrado');
+    await cursoService.checksCursoExistsById(cursoId);
 
     const allCategoriasByCurso = await categoriasRepository.getAllCategoriasByCursoId(cursoId);
 

@@ -6,9 +6,14 @@ import { CategoriasDTO } from '../model/CategoriasDTO';
 
 export default {
 
-  async getCategoria(descricao: string): Promise<categorias | null> {
+  async getCategoriaByDescricaoAndCursoId(descricao: string, cursoId: number): Promise<categorias | null> {
     
-    const categoria = await prisma.categorias.findFirst({where: {descricao: descricao}});
+    const categoria = await prisma.categorias.findFirst({
+      where: {
+        descricao: descricao,
+        cursoId: cursoId
+      }
+    });
 
     return categoria;
   },
@@ -27,7 +32,6 @@ export default {
         data: 
         {
           descricao: categoria.getDescricao(), 
-          status: categoria.getStatus(),
           imagem: categoria.getImagem(),
           cursoId: categoria.getCursoId()
         }
@@ -53,7 +57,10 @@ export default {
   async getAllCategoriasByCursoId(cursoId: number): Promise<categorias[]> {
 
     const allCategoriasByCurso = await prisma.categorias.findMany({
-      where: { cursoId: cursoId}
+      where: { 
+        cursoId: cursoId,
+        status: true
+      }
     });
 
     return allCategoriasByCurso;

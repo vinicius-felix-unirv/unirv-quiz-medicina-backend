@@ -52,9 +52,10 @@ export class CampusService{
 
   async updatedCampus(id: number, campus: CampusDTO): Promise<CampusDTO>{
 
-    await this.checksCampusExistsById(id);
-
-    await this.checksCampusExistsByNomeCampus(campus.getNomeCampus());
+    await Promise.all([
+      this.checksCampusExistsById(id),
+      this.checksCampusExistsByNomeCampus(campus.getNomeCampus())
+    ]);
 
     const updatedCampus = await campusRepository.putCampus(id, campus);
 
