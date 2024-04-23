@@ -4,7 +4,6 @@ import { perguntasRoutes } from './perguntasRoutes';
 import { usuariosRoutes } from './usuarioRoutes';
 import { authenticationRoutes } from './authenticationRoutes';
 import { campusRoutes } from './campusRoutes';
-import { perguntasNivelRoutes } from './PerguntasNivelRoutes';
 import { progressoPerguntasRoutes } from './progressoPerguntasRoutes';
 import { quizRoutes } from './quizRoutes';
 import { alternativasRoutes } from './alternativasRoutes';
@@ -12,6 +11,7 @@ import { sendEmailRoutes } from './sendEmailRoutes';
 import { cursoRoutes } from './CursoRoutes';
 import { quizAvaliativoRoutes } from './quizAvaliativoRoutes';
 import { quizAvaliativoUsuarioRoutes } from './quizAvaliativoUsuariosRoutes';
+import { perguntasNivelRoutes } from './perguntasNivelRoutes';
 
 const routes = Router();
 
