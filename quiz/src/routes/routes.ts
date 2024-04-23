@@ -11,6 +11,7 @@ import { alternativasRoutes } from './alternativasRoutes';
 import { sendEmailRoutes } from './sendEmailRoutes';
 import { cursoRoutes } from './CursoRoutes';
 import { quizAvaliativoRoutes } from './quizAvaliativoRoutes';
+import { quizAvaliativoUsuarioRoutes } from './quizAvaliativoUsuariosRoutes';
 
 const routes = Router();
 
@@ -26,7 +27,8 @@ routes.use(
     alternativasRoutes,
     sendEmailRoutes, 
     cursoRoutes,
-    quizAvaliativoRoutes
+    quizAvaliativoRoutes,
+    quizAvaliativoUsuarioRoutes
 );
 
 
