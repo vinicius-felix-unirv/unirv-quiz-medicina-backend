@@ -20,7 +20,22 @@ export class PerguntasController {
     const take = parseInt(req.params.take);
     const quizId = parseInt(req.params.id);
     const userId = parseInt(req.params.usuariosid);
-    const perguntas = await perguntaService.getAllPerguntasByQuizId(skip, take, quizId, userId);
+    const categoriaId = parseInt(req.params.categoriasid);
+
+    const perguntas = await perguntaService.getAllPerguntasByQuizIdAndCategoria(skip, take, quizId, userId, categoriaId);
+
+    return res.status(200).json(perguntas);
+  }
+
+  async getAllPerguntasByQuizAvaliativoId(req: Request, res: Response): Promise<Response> {
+
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const quizAvaliativoId = parseInt(req.params.id);
+    const userId = parseInt(req.params.usuariosid);
+    const categoriaId = parseInt(req.params.categoriasid);
+
+    const perguntas = await perguntaService.getAllPerguntasByQuizAvaliativoIdAndCategoria(skip, take, quizAvaliativoId, userId, categoriaId);
 
     return res.status(200).json(perguntas);
   }

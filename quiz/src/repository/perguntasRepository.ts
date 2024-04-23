@@ -4,15 +4,29 @@ import { PerguntaDTO } from '../model/PerguntaDTO';
 
 export default {
 
-  // modificar para buscar as perguntas que pertensem a um quiz especifico;
-  async getPergunta(pergunta: PerguntaDTO): Promise<perguntas | null> {
+  
+  async getPerguntaByQuiz(pergunta: PerguntaDTO, quizId: number): Promise<perguntas | null> {
 
-    const newPergunta = await prisma.perguntas.findFirst(
-      { where: { 
+    const newPergunta = await prisma.perguntas.findFirst({ 
+      where: { 
         conteudo: pergunta.getConteudo(),
-        pathimage: pergunta.getPathImage(),
         categoriasid: pergunta.getCategoriasId(),
-      } });
+        quizid: quizId
+      } 
+    });
+
+    return newPergunta;
+  },
+
+  async getPerguntaByQuizAvaliativo(pergunta: PerguntaDTO, quizAvaliatiovId: number): Promise<perguntas | null> {
+
+    const newPergunta = await prisma.perguntas.findFirst({ 
+      where: { 
+        conteudo: pergunta.getConteudo(),
+        categoriasid: pergunta.getCategoriasId(),
+        quizavaliativoid: quizAvaliatiovId
+      } 
+    });
 
     return newPergunta;
   },
@@ -24,19 +38,39 @@ export default {
     return pergunta;
   },
 
-  // modificar o parametro de busca para a categoria.
-  async getAllPerguntasByQuizIdPagination(skip: number, take: number, quizId: number, userId: number): Promise<perguntas[]> {
+  async getAllPerguntasByQuizIdAnCategoriaPagination(skip: number, take: number, quizId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
       skip: skip,
       take: take,
       where: {
+        categoriasid: categoriaId,
         quizid: quizId,
         progressoperguntas: {
           none: {
             usuariosid: userId
           }
-        }
-      }
+        },
+        status: true
+      },
+    });
+
+    return perguntas;
+  },
+
+  async getAllPerguntasByQuizAvaliativoIdAnCategoriaPagination(skip: number, take: number, quizAvaliativoId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
+    const perguntas = await prisma.perguntas.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        categoriasid: categoriaId,
+        quizavaliativoid: quizAvaliativoId,
+        progressoperguntas: {
+          none: {
+            usuariosid: userId
+          }
+        },
+        status: true
+      },
     });
 
     return perguntas;
