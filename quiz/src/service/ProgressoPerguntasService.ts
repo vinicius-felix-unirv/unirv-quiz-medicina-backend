@@ -2,31 +2,31 @@ import { Service } from 'typedi';
 import { AllProgressoPerguntasDTO, ProgressoPerguntasDTO } from '../model/ProgressoPerguntasDTO';
 import progressoPerguntasRepository from '../repository/progressoPerguntasRepository';
 import { BadRequestError } from '../exception/BadRequestError';
-import usuariosRepository from '../repository/usuariosRepository';
 import perguntasRepository from '../repository/perguntasRepository';
-import { NotFoundError } from '../exception/NotFoundError';
-import quizRepository from '../repository/quizRepository';
-import categoriasRepository from '../repository/categoriasRepository';
+import { categoriasService, perguntaService, quizService, usuarioService } from './containerConfig';
+import { progressoperguntas } from '@prisma/client';
+
 
 @Service()
 export class ProgressoPerguntasService{
 
+
+  checksIfProgressoPerguntaExists(progresso: progressoperguntas[], perguntaId: number): void {
+
+    const progressoExists = progresso.some( p => p.perguntasid === perguntaId);
+
+    if(progressoExists) throw new BadRequestError('Progresso ja existe');
+  }
   async createProgressoPerg(progressoPergunta: ProgressoPerguntasDTO): Promise<ProgressoPerguntasDTO>{
 
-    const [usuariosIdExists, perguntaIdExists] = await Promise.all(
-      [
-        usuariosRepository.getUsuarioById(progressoPergunta.getUsuariosId()),
-        perguntasRepository.getPerguntaById(progressoPergunta.getPerguntasId())
-      ]
-    );
-    
-    if(!usuariosIdExists || !perguntaIdExists) throw new NotFoundError('Usuario ou pergunta nao encontrados');
-
+    await Promise.all([
+      usuarioService.checksUsuarioExistsById(progressoPergunta.getUsuariosId()),
+      perguntaService.checksPerguntaExistsById(progressoPergunta.getPerguntasId())
+    ]);
+  
     const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(progressoPergunta.getUsuariosId());
 
-    const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === progressoPergunta.getPerguntasId());
-     
-    if(progressoExist) throw new BadRequestError('Progresso-Pergunta ja existe');
+    this.checksIfProgressoPerguntaExists(progressoPergByUsuario, progressoPergunta.getPerguntasId());
 
     const progressoPerg = await progressoPerguntasRepository.createProgressoPergunta(progressoPergunta);
 
@@ -35,21 +35,15 @@ export class ProgressoPerguntasService{
 
   async createManyProgressoPergunta(data: AllProgressoPerguntasDTO): Promise<ProgressoPerguntasDTO[]> {
 
-    const usuariosExists = await usuariosRepository.getUsuarioById(data.progressoPerguntas[0].getUsuariosId());
-
-    if (!usuariosExists) throw new NotFoundError('Usuario nao encontrado');
-
     const progressoPergByUsuario = await progressoPerguntasRepository.getProgressoPerguntasByUsuario(data.progressoPerguntas[0].getUsuariosId());
     
     for(const progressoPerguntas of data.progressoPerguntas){
 
-      const perguntaIdExists = await perguntasRepository.getPerguntaById(progressoPerguntas.getPerguntasId());
+      await usuarioService.checksUsuarioExistsById(progressoPerguntas.getUsuariosId());
 
-      if(!perguntaIdExists) throw new NotFoundError('Pergunta nao encontrada');
+      await perguntaService.checksPerguntaExistsById(progressoPerguntas.getPerguntasId());
 
-      const progressoExist = progressoPergByUsuario.some( p => p.perguntasid === perguntaIdExists.id);
-
-      if(progressoExist) throw new BadRequestError('Progresso-Pergunta ja existe');
+      this.checksIfProgressoPerguntaExists(progressoPergByUsuario, progressoPerguntas.getPerguntasId());
       
       const perguntasRepeated = new Set<number>();
       
@@ -74,13 +68,10 @@ export class ProgressoPerguntasService{
 
   async getProgressoPerguntasByQuiz(quizId: number, usuarioId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
 
-    const quizExists = await quizRepository.getQuizById(quizId);
-
-    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
-
-    const usuarioExists = await usuariosRepository.getUsuarioById(usuarioId);
-
-    if(!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
+    await Promise.all([
+      quizService.checksQuizExistsById(quizId),
+      usuarioService.checksUsuarioExistsById(usuarioId)
+    ]);
 
     const progresso = await progressoPerguntasRepository.getProgressoPerguntasByQuiz(quizId, usuarioId);
 
@@ -91,17 +82,11 @@ export class ProgressoPerguntasService{
 
   async getProgressoPerguntasByCategoria(quizId: number, usuarioId: number, categoriaId: number): Promise<{progressoAtual: number, progressoTotal: number}> {
 
-    const quizExists = await quizRepository.getQuizById(quizId);
-
-    if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
-
-    const usuarioExists = await usuariosRepository.getUsuarioById(usuarioId);
-
-    if(!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
-
-    const categoriaExists = await categoriasRepository.getCategoriaId(categoriaId);
-
-    if(!categoriaExists) throw new NotFoundError('Categoria nao encontrada');
+    await Promise.all([
+      quizService.checksQuizExistsById(quizId),
+      usuarioService.checksUsuarioExistsById(usuarioId),
+      categoriasService.checksCategoriaExistsById(categoriaId)
+    ]);
 
     const progresso = await progressoPerguntasRepository.getProgressoPerguntasByCategoria(quizId, usuarioId, categoriaId);
 
