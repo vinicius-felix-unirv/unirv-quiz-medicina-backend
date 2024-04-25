@@ -11,7 +11,8 @@ import { sendEmailRoutes } from './sendEmailRoutes';
 import { cursoRoutes } from './CursoRoutes';
 import { quizAvaliativoRoutes } from './quizAvaliativoRoutes';
 import { quizAvaliativoUsuarioRoutes } from './quizAvaliativoUsuariosRoutes';
-import { perguntasNivelRoutes } from './perguntasNivelRoutes';
+import { perguntasNivelRoutes } from './PerguntasNivelRoutes';
+
 
 const routes = Router();
 

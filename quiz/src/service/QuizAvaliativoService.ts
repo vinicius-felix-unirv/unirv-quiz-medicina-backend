@@ -13,7 +13,7 @@ export class QuizAvaliativoService {
 
         const quizExists = await quizAvaliativoRepository.getQuizAvaliativoById(id);
 
-        if(!quizExists) throw new NotFoundError('Quiz nao encontrado');
+        if(!quizExists) throw new NotFoundError('Quiz-avaliativo nao encontrado');
 
         return quizExists;
     }
