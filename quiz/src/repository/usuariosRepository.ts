@@ -24,7 +24,8 @@ export default {
       skip: skip,
       take: take,
       where: { 
-        cursoid: cursoId
+        cursoid: cursoId,
+        status: true
       }
     });
 
@@ -115,7 +116,8 @@ export default {
     const topTen = await prisma.usuarios.findMany({
       take: 10,
       where: {
-        cursoid: cursoId
+        cursoid: cursoId,
+        status: true
       },
       orderBy: {pontuacao: 'desc'}
     });
