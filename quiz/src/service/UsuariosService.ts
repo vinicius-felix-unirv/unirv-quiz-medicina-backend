@@ -19,6 +19,15 @@ export class UsuarioService {
     return usuarioExists;
   }
 
+  async checksUsuarioExistsByEmail(email: string): Promise<usuarios>{
+
+    const usuarioExists = await usuariosRepository.getUsuarioByEmail(email);
+
+    if (!usuarioExists) throw new NotFoundError('Usuario nao encontrado');
+
+    return usuarioExists;
+  }
+
   async getUsuarioById(id: number): Promise<UsuarioDTO> {
 
     const usuario = await this.checksUsuarioExistsById(id);
