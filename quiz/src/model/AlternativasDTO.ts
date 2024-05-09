@@ -4,8 +4,8 @@ export interface IAlternativasDTO {
 
     id?: number,
     perguntasid: number,
-    resposta: string,
-    pathimage: string,
+    resposta: string | null,
+    pathimage: string | null,
     correta: boolean,
 
 }

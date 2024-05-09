@@ -2,10 +2,10 @@ import { perguntas } from '@prisma/client';
 
 export interface IperguntasDTO {
   id?: number;
-  conteudo: string;
+  conteudo: string | null;
   perguntasnivelid: number;
   tempo: number;
-  pathimage: string;
+  pathimage: string | null;
   status: boolean;
   categoriasid: number;
   quizid: number | null;

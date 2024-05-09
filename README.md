@@ -1098,13 +1098,13 @@
    }
    ```
    ---
-* ### GET  /curso/:id/categorias
+* ### GET  /cursos/:id/categorias
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso para buscar todas as categorias dele.
 
    Exemplo: 
 
-         GET http://localhost:3000/curso/1/categorias
+         GET http://localhost:3000/cursos/1/categorias
 
    Response:
 
