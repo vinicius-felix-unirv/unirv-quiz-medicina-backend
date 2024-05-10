@@ -4,6 +4,8 @@
 * [Usuarios](#usuarios)
 * [Campus](#campus)
 * [Quiz](#quiz)
+* [Quiz-avaliativo](#quiz-avaliativo)
+* [Quiz-avaliativo-usuarios](#quiz-avaliativo-usuarios)
 * [Perguntas](#perguntas)
 * [Progresso Perguntas](#progresso-perguntas)
 * [Perguntas Nivel](#perguntas-nivel)
@@ -669,7 +671,260 @@
       "imagem": "/testes"
    }
    ```
+ -------
+ ## Quiz-Avaliativo
 
+* ### GET /quiz-avaliativos/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo que deseja buscar.
+
+         GET http://localhost:3000/quiz-avaliativos/4
+
+   Response: 
+
+   ```json
+   {
+		"id": 4,
+		"titulo": "nnnnnnnnnnnnn",
+		"imagem": "/s",
+		"status": true,
+		"usuarioid": 70,
+		"cursoid": 5
+	}
+   ```
+   -----
+* ### GET /usuarios/:usuarioid/cursos/:cursoid/quiz-avaliativos/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do usuario, o 'id' do curso e os valores de skip e take para buscar os quiz-avaliativos.
+
+         GET http://localhost:3000/usuarios/70/cursos/6/quiz-avaliativos/0/10
+
+   Response: 
+
+   ```json
+   [
+      {
+         "id": 2,
+         "titulo": "teste 01",
+         "imagem": "/test",
+         "status": false,
+         "usuarioid": 70,
+         "cursoid": 6
+      },
+      {
+         "id": 6,
+         "titulo": "nnnnnnnnnnnnn",
+         "imagem": "/s",
+         "status": false,
+         "usuarioid": 70,
+         "cursoid": 6
+      },
+      {
+         "id": 7,
+         "titulo": "teste 02",
+         "imagem": "/d",
+         "status": true,
+         "usuarioid": 70,
+         "cursoid": 6
+      }
+   ]
+   ```
+   -----
+* ### GET /cursos/:cursoid/quiz-avaliativos/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar 'id' do curso e os valores de skip e take para buscar os quiz-avaliativos.
+
+         GET http://localhost:3000/cursos/5/quiz-avaliativos/0/10
+
+   Response: 
+
+   Esse endpoint retorna varios quiz-avaliativos de forma paginada cujo status seja true
+
+   ```json
+   [
+      {
+         "id": 4,
+         "titulo": "nnnnnnnnnnnnn",
+         "imagem": "/s",
+         "status": true,
+         "usuarioid": 70,
+         "cursoid": 5
+      },
+      {
+         "id": 8,
+         "titulo": "teste 02",
+         "imagem": "/d",
+         "status": true,
+         "usuarioid": 70,
+         "cursoid": 5
+      }
+   ]
+   ```
+   -----
+* ### POST /quiz-avaliativos
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar um json com os seguintes atributos.
+
+         POST http://localhost:3000/quiz-avaliativos
+
+   Body: 
+
+   ```json
+   {
+      "titulo": "teste 02",
+      "cursoid": 5,
+      "imagem": "/d",
+      "usuarioid": 70
+   }
+   ```
+
+   Response: 
+
+   Esse endpoint retorna o novo quiz-avaliativo que foi criado
+
+   ```json
+   {
+      "id": 8,
+      "titulo": "teste 02",
+      "imagem": "/d",
+      "status": true,
+      "usuarioid": 70,
+      "cursoid": 5
+   }
+   ```
+   -----
+* ### PUT /quiz-avaliativos/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo e um json com os seguintes atributos.
+
+         POST http://localhost:3000/quiz-avaliativos/4
+
+   Body: 
+
+   ```json
+   {
+      "titulo": "nnnnnnnnnnnnn",
+      "imagem": "/s"
+   }
+   ```
+
+   Response: 
+
+   Esse endpoint retorna o quiz-avaliativo que foi alterado com os atributos passados pelo body
+
+   ```json
+   {
+      "id": 4,
+      "titulo": "nnnnnnnnnnnnn",
+      "imagem": "/s",
+      "status": true,
+      "usuarioid": 70,
+      "cursoid": 5
+   }
+   ```
+   -----
+* ### PUT /quiz-avaliativos/:id/status
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo.
+
+         POST http://localhost:3000/quiz-avaliativos/4/status
+
+   Response: 
+
+   Esse endpoint retorna o quiz-avaliativo com o status alterado
+
+   ```json
+   {
+      "id": 4,
+      "titulo": "nnnnnnnnnnnnn",
+      "imagem": "/s",
+      "status": false,
+      "usuarioid": 70,
+      "cursoid": 5
+   }
+   ```
+   -----
+ ## Quiz-Avaliativo-Usuarios
+
+* ### GET /quiz-avaliativos-usuarios/:id
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do
+   quiz-avaliativos-usuarios.
+
+         GET http://localhost:3000/quiz-avaliativos-usuarios/1
+   
+   Response: 
+
+   ```json
+   {
+      "id": 1,
+      "quizavaliativoid": 4,
+      "usuarioid": 103,
+      "pontuacao": 30,
+      "horainicial": "2013-02-14T00:00:00.000Z",
+      "horafinal": "2013-02-14T00:00:00.000Z"
+   }
+   ```
+   --------
+* ### GET /quiz-avaliativos-usuarios/:id/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do
+   quiz-avaliativos-usuarios e os valores de skip e take.
+
+         GET http://localhost:3000/quiz-avaliativos-usuarios/4/0/10
+   
+   Response: 
+
+   ```json
+   [
+      {
+         "id": 1,
+         "quizavaliativoid": 4,
+         "usuarioid": 103,
+         "pontuacao": 30,
+         "horainicial": "2013-02-14T00:00:00.000Z",
+         "horafinal": "2013-02-14T00:00:00.000Z"
+      },
+      {
+         "id": 3,
+         "quizavaliativoid": 4,
+         "usuarioid": 104,
+         "pontuacao": 500,
+         "horainicial": "2013-02-14T00:00:00.000Z",
+         "horafinal": "2013-02-14T00:00:00.000Z"
+      }
+   ]
+   ```
+   --------
+* ### POST /quiz-avaliativos-usuarios
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar um json com os seguintes atributos.
+
+         POST http://localhost:3000/quiz-avaliativos-usuarios
+   
+   Body: 
+   ```json
+   {
+      "quizavaliativoid": 4,
+      "usuarioid": 104,
+      "pontuacao": 70,
+      "horainicial": "2013-02-14T13:15:03-08:00",
+      "horafinal": "2013-02-14T13:15:03-09:00"
+   }
+   ```
+   Response: 
+
+   ```json
+   {
+      "id": 1,
+      "quizavaliativoid": 4,
+      "usuarioid": 104,
+      "pontuacao": 70,
+      "horainicial": "2013-02-14T00:00:00.000Z",
+      "horafinal": "2013-02-14T00:00:00.000Z"
+   }
+   ```
+   --------
  ## Perguntas
 
 * ### GET /perguntas/:id
