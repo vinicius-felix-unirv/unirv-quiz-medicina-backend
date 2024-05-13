@@ -1,4 +1,38 @@
 
+# Primeiros passos
+
+ Faça um clone da aplicação:
+
+      git clone https://github.com/vinicius-felix-unirv/unirv-quiz-medicina-backend.git
+
+
+## Configuração:
+
+ Navegue até a pasta quiz e adicione um novo arquivo '.env' e coloque as seguintes variáveis de ambiente:
+
+   ```env
+   DATABASE_URL="postgresql://postgres:MOgOnBYzQgVEFuhQTerBHDCmURButwvc@roundhouse.proxy.rlwy.net:32795/railway"
+
+   # configurações do envio de email
+
+   MAIL_HOST="smtp.gmail.com"
+   MAIL_PORT=465
+   MAIL_USER="devquizunirv@gmail.com"
+   MAIL_PASS="lupfpdggauhebqfd"
+   MAIL_FROM="devquizunirv@gmail.com"
+   ```
+ Logo a pos a criação do arquivo .env execute os seguintes comandos:
+
+ Esse comando é para instalar todas as dependencias da aplicação.
+
+      npm install
+
+ Esse comando serve para executar as migrations do prisma no banco de dados.
+
+      npx prisma migrate dev
+
+ 
+
 # Routes
 
 * [Usuarios](#usuarios)
