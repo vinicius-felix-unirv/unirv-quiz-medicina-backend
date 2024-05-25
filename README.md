@@ -1439,6 +1439,68 @@
    ]
    ```
    ---
+* ### GET  /quiz/:id/categorias
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz para buscar todas as categorias dele.
+
+   Exemplo: 
+
+         GET http://localhost:3000/quiz/1/categorias
+
+   Response:
+
+   Esse endpoint retorna todas as categorias de um quiz específico.
+
+   ```json
+   [
+      {
+         "id": 1,
+         "descricao": "Anatomia",
+         "status": true,
+         "imagem": "/Anatomia.png",
+         "cursoId": 1
+      },
+      {
+         "id": 2,
+         "descricao": "Farmacologia",
+         "status": true,
+         "imagem": "/Farmacologia.png",
+         "cursoId": 1
+      }
+   ]
+   ```
+   ---
+* ### GET  /quiz-avaliativos/:id/categorias
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz-avaliativo para buscar todas as categorias dele.
+
+   Exemplo: 
+
+         GET http://localhost:3000/quiz-avaliativos/1/categorias
+
+   Response:
+
+   Esse endpoint retorna todas as categorias de um quiz-avaliativo específico.
+
+   ```json
+   [
+      {
+         "id": 1,
+         "descricao": "Anatomia",
+         "status": true,
+         "imagem": "/Anatomia.png",
+         "cursoId": 1
+      },
+      {
+         "id": 2,
+         "descricao": "Farmacologia",
+         "status": true,
+         "imagem": "/Farmacologia.png",
+         "cursoId": 1
+      }
+   ]
+   ```
+   ---
 * ### POST /categorias
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.

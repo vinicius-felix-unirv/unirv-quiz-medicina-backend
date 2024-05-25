@@ -52,4 +52,24 @@ export class CategoriasController {
 
     return res.status(200).json(allCategoriasByCurso);
   }
+
+  async getAllCategoriasInQuiz(req: Request, res: Response): Promise<Response>{
+
+    const quizId = parseInt(req.params.id);
+
+    const categorias = await categoriasService.getAllCategoriasInQuizId(quizId);
+
+    return res.status(200).json(categorias);
+  }
+
+  async getAllCategoriasInQuizAvaliativo(req: Request, res: Response): Promise<Response>{
+
+    const quizAvaliativoId = parseInt(req.params.id);
+
+    const categorias = await categoriasService.getAllCategoriasInQuizAvaliativoId(quizAvaliativoId);
+
+    return res.status(200).json(categorias);
+  }
+
+
 }

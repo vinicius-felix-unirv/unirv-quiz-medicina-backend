@@ -4,7 +4,7 @@ import { NotFoundError } from '../exception/NotFoundError';
 import { CategoriasDTO } from '../model/CategoriasDTO';
 import categoriasRepository from '../repository/categoriasRepository';
 import { Service } from 'typedi';
-import { cursoService } from './containerConfig';
+import { cursoService, quizAvaliativoService, quizService } from './containerConfig';
 import { categorias } from '@prisma/client';
 
 @Service()
@@ -79,5 +79,25 @@ export class CategoriasService {
 
     return allCategoriasByCurso.map(categorias => new CategoriasDTO(categorias));
 
+  }
+
+  async getAllCategoriasInQuizId(quizId: number): Promise<CategoriasDTO[]>{
+
+    await quizService.checksQuizExistsById(quizId);
+
+    const categorias = await categoriasRepository.getAllCategoriasInQuizId(quizId);
+
+    return categorias.map(categoria => new CategoriasDTO(categoria));
+    
+  }
+
+  async getAllCategoriasInQuizAvaliativoId(quizAvaliativoId: number): Promise<CategoriasDTO[]>{
+
+    await quizAvaliativoService.checksQuizAvaliativoExistsById(quizAvaliativoId);
+
+    const categorias = await categoriasRepository.getAllCategoriasInQuizId(quizAvaliativoId);
+
+    return categorias.map(categoria => new CategoriasDTO(categoria));
+    
   }
 }
