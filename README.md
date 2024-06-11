@@ -31,6 +31,9 @@
 
       npx prisma migrate dev
 
+ Comando para execução:
+
+      npm run dev
  
 
 # Routes
