@@ -25,9 +25,8 @@ export default {
     return pergunta;
   },
 
-  async getAllPerguntasByQuizIdAnCategoriaPagination(skip: number, take: number, quizId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
+  async getAllPerguntasByQuizIdAnCategoriaPagination(take: number, quizId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
-      skip: skip,
       take: take,
       where: {
         categoriasid: categoriaId,

@@ -41,7 +41,6 @@
 * [Usuarios](#usuarios)
 * [Campus](#campus)
 * [Quiz](#quiz)
-* [Quiz-avaliativo](#quiz-avaliativo)
 * [Quiz-avaliativo-usuarios](#quiz-avaliativo-usuarios)
 * [Perguntas](#perguntas)
 * [Progresso Perguntas](#progresso-perguntas)
@@ -709,178 +708,7 @@
    }
    ```
  -------
- ## Quiz-Avaliativo
-
-* ### GET /quiz-avaliativos/:id
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo que deseja buscar.
-
-         GET http://localhost:3000/quiz-avaliativos/4
-
-   Response: 
-
-   ```json
-   {
-		"id": 4,
-		"titulo": "nnnnnnnnnnnnn",
-		"imagem": "/s",
-		"status": true,
-		"usuarioid": 70,
-		"cursoid": 5
-	}
-   ```
-   -----
-* ### GET /usuarios/:usuarioid/cursos/:cursoid/quiz-avaliativos/:skip/:take
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do usuario, o 'id' do curso e os valores de skip e take para buscar os quiz-avaliativos.
-
-         GET http://localhost:3000/usuarios/70/cursos/6/quiz-avaliativos/0/10
-
-   Response: 
-
-   ```json
-   [
-      {
-         "id": 2,
-         "titulo": "teste 01",
-         "imagem": "/test",
-         "status": false,
-         "usuarioid": 70,
-         "cursoid": 6
-      },
-      {
-         "id": 6,
-         "titulo": "nnnnnnnnnnnnn",
-         "imagem": "/s",
-         "status": false,
-         "usuarioid": 70,
-         "cursoid": 6
-      },
-      {
-         "id": 7,
-         "titulo": "teste 02",
-         "imagem": "/d",
-         "status": true,
-         "usuarioid": 70,
-         "cursoid": 6
-      }
-   ]
-   ```
-   -----
-* ### GET /cursos/:cursoid/quiz-avaliativos/:skip/:take
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar 'id' do curso e os valores de skip e take para buscar os quiz-avaliativos.
-
-         GET http://localhost:3000/cursos/5/quiz-avaliativos/0/10
-
-   Response: 
-
-   Esse endpoint retorna varios quiz-avaliativos de forma paginada cujo status seja true
-
-   ```json
-   [
-      {
-         "id": 4,
-         "titulo": "nnnnnnnnnnnnn",
-         "imagem": "/s",
-         "status": true,
-         "usuarioid": 70,
-         "cursoid": 5
-      },
-      {
-         "id": 8,
-         "titulo": "teste 02",
-         "imagem": "/d",
-         "status": true,
-         "usuarioid": 70,
-         "cursoid": 5
-      }
-   ]
-   ```
-   -----
-* ### POST /quiz-avaliativos
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar um json com os seguintes atributos.
-
-         POST http://localhost:3000/quiz-avaliativos
-
-   Body: 
-
-   ```json
-   {
-      "titulo": "teste 02",
-      "cursoid": 5,
-      "imagem": "/d",
-      "usuarioid": 70
-   }
-   ```
-
-   Response: 
-
-   Esse endpoint retorna o novo quiz-avaliativo que foi criado
-
-   ```json
-   {
-      "id": 8,
-      "titulo": "teste 02",
-      "imagem": "/d",
-      "status": true,
-      "usuarioid": 70,
-      "cursoid": 5
-   }
-   ```
-   -----
-* ### PUT /quiz-avaliativos/:id
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo e um json com os seguintes atributos.
-
-         POST http://localhost:3000/quiz-avaliativos/4
-
-   Body: 
-
-   ```json
-   {
-      "titulo": "nnnnnnnnnnnnn",
-      "imagem": "/s"
-   }
-   ```
-
-   Response: 
-
-   Esse endpoint retorna o quiz-avaliativo que foi alterado com os atributos passados pelo body
-
-   ```json
-   {
-      "id": 4,
-      "titulo": "nnnnnnnnnnnnn",
-      "imagem": "/s",
-      "status": true,
-      "usuarioid": 70,
-      "cursoid": 5
-   }
-   ```
-   -----
-* ### PUT /quiz-avaliativos/:id/status
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz-avaliativo.
-
-         POST http://localhost:3000/quiz-avaliativos/4/status
-
-   Response: 
-
-   Esse endpoint retorna o quiz-avaliativo com o status alterado
-
-   ```json
-   {
-      "id": 4,
-      "titulo": "nnnnnnnnnnnnn",
-      "imagem": "/s",
-      "status": false,
-      "usuarioid": 70,
-      "cursoid": 5
-   }
-   ```
-   -----
+ 
  ## Quiz-Avaliativo-Usuarios
 
 * ### GET /quiz-avaliativos-usuarios/:id
@@ -970,7 +798,7 @@
 
    Exemplo: 
 
-         GET http://localhost:3000/perguntas/42
+         GET http://localhost:3000/perguntas/83
 
    Response:
 
@@ -978,25 +806,24 @@
 
    ```json
    {
-      "id": 51,
-      "conteudo": "Querwwwwwwwwwwwwww",
-      "perguntasnivelid": 9,
-      "tempo": 103,
-      "pathimage": "/frontlaele",
-      "status": false,
+      "id": 83,
+      "conteudo": "olha la",
+      "perguntasnivelid": 12,
+      "tempo": 50,
+      "pathimage": "/teste01",
+      "status": true,
       "categoriasid": 31,
-      "quizid": null,
-      "quizavaliativoid": 2
+      "quizid": 75
    }
    ```
    -----
-* ### GET  /usuarios/:usuariosid/quiz-avaliativos/:id/categorias/:categoriasid/perguntas/:skip/:take
+* ### GET  /usuarios/:usuariosid/quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
 
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz-avaliativo e o 'id' da categoria e os valores de 'skip' e 'take'.
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e o 'id' da categoria e o valor de 'take'.
 
    Exemplo: 
 
-         GET http://localhost:3000/usuarios/70/quiz-avaliativos/2/categorias/30/perguntas/0/10
+         GET http://localhost:3000/usuarios/105/quiz/75/categorias/30/perguntas/10
 
    Response:
 
@@ -1005,54 +832,24 @@
    ```json
    [
       {
-         "id": 50,
-         "conteudo": "Quer",
+         "id": 82,
+         "conteudo": "olha la",
          "perguntasnivelid": 12,
          "tempo": 50,
-         "pathimage": "/fsddsddddddddddddddddddddddddddddddsdle",
+         "pathimage": "/teste01",
          "status": true,
          "categoriasid": 30,
-         "quizid": null,
-         "quizavaliativoid": 2
+         "quizid": 75
       },
       {
-         "id": 51,
-         "conteudo": "Querwwwwwwwwwwwwww",
-         "perguntasnivelid": 12,
-         "tempo": 50,
-         "pathimage": "/frontlaesdsddsdsdle",
+         "id": 84,
+         "conteudo": "Vc quer bolo?",
+         "perguntasnivelid": 9,
+         "tempo": 70,
+         "pathimage": "/teste01",
          "status": true,
          "categoriasid": 30,
-         "quizid": null,
-         "quizavaliativoid": 2
-      }
-   ]
-   ```
-   ------
-* ### GET  /usuarios/:usuariosid/quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e o 'id' da categoria e os valores de 'skip' e 'take'.
-
-   Exemplo: 
-
-         GET http://localhost:3000/usuarios/70/quiz/34/categorias/31/perguntas/0/10
-
-   Response:
-
-   Esse endpoint retorna as perguntas de uma categoria que ainda não foram respondidas de um quiz especifico e que o status seja true de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
-
-   ```json
-   [
-      {
-         "id": 49,
-         "conteudo": "Quer dar se fala",
-         "perguntasnivelid": 9,
-         "tempo": 103,
-         "pathimage": "/frontlaele",
-         "status": true,
-         "categoriasid": 31,
-         "quizid": 34,
-         "quizavaliativoid": null
+         "quizid": 75
       }
    ]
    ```
@@ -1069,13 +866,12 @@
 
    ```json
    {
-      "conteudo": "Querwwwwwwwwwwwwww",
+      "conteudo": "pq tuu ta aqui",
       "perguntasnivelid": 9,
-      "tempo": 103,
+      "tempo": 13,
       "pathimage": "/frontlaele",
-      "categoriasid": 31,
-      "quizid": null,
-      "quizavaliativoid": 2
+      "categoriasid": 30,
+      "quizid": 75
    }
    ```
 
@@ -1085,15 +881,14 @@
 
    ```json
    {
-      "id": 51,
-      "conteudo": "Querwwwwwwwwwwwwww",
+      "id": 85,
+      "conteudo": "pq tuu ta aqui",
       "perguntasnivelid": 9,
-      "tempo": 103,
+      "tempo": 13,
       "pathimage": "/frontlaele",
       "status": true,
-      "categoriasid": 31,
-      "quizid": null,
-      "quizavaliativoid": 2
+      "categoriasid": 30,
+      "quizid": 75
    }
    ```
 * ### PUT  /perguntas/:id
@@ -1129,8 +924,7 @@
       "pathimage": "/fsddsddddddddddddddddddddddddddddddsdle",
       "status": true,
       "categoriasid": 31,
-      "quizid": null,
-      "quizavaliativoid": 2
+      "quizid": 58
    }
    ```
    ------
@@ -1155,8 +949,7 @@
       "pathimage": "/frontlaele",
       "status": true,
       "categoriasid": 30,
-      "quizid": null,
-      "quizavaliativoid": 2
+      "quizid": 45
    }
    ```
 
@@ -1453,37 +1246,6 @@
    Response:
 
    Esse endpoint retorna todas as categorias de um quiz específico.
-
-   ```json
-   [
-      {
-         "id": 1,
-         "descricao": "Anatomia",
-         "status": true,
-         "imagem": "/Anatomia.png",
-         "cursoId": 1
-      },
-      {
-         "id": 2,
-         "descricao": "Farmacologia",
-         "status": true,
-         "imagem": "/Farmacologia.png",
-         "cursoId": 1
-      }
-   ]
-   ```
-   ---
-* ### GET  /quiz-avaliativos/:id/categorias
-
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz-avaliativo para buscar todas as categorias dele.
-
-   Exemplo: 
-
-         GET http://localhost:3000/quiz-avaliativos/1/categorias
-
-   Response:
-
-   Esse endpoint retorna todas as categorias de um quiz-avaliativo específico.
 
    ```json
    [

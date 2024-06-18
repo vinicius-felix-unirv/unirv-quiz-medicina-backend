@@ -42,7 +42,7 @@ export class PerguntasService {
 
   }
 
-  async getAllPerguntasByQuizIdAndCategoria(skip: number, take: number, quizId: number, userId: number, categoriaId: number): Promise<PerguntaDTO[]> {
+  async getAllPerguntasByQuizIdAndCategoria(take: number, quizId: number, userId: number, categoriaId: number): Promise<PerguntaDTO[]> {
     
     await Promise.all([
       quizService.checksQuizExistsById(quizId),
@@ -50,7 +50,7 @@ export class PerguntasService {
       categoriasService.checksCategoriaExistsById(categoriaId)
     ]);
 
-    const perguntas = await perguntasRepository.getAllPerguntasByQuizIdAnCategoriaPagination(skip, take, quizId, userId, categoriaId);
+    const perguntas = await perguntasRepository.getAllPerguntasByQuizIdAnCategoriaPagination(take, quizId, userId, categoriaId);
 
     return perguntas.map((pergunta) => new PerguntaDTO(pergunta));
 
