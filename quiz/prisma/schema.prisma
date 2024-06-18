@@ -39,7 +39,6 @@ model curso {
   categorias      categorias[]
   usuarios        usuarios[]
   quiz            quiz[]
-  quiz_avaliativo quiz_avaliativo[]
 }
 
 model logs {
@@ -64,8 +63,6 @@ model perguntas {
   quiz               quiz?                @relation(fields: [quizid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   alternativas       alternativas[]
   progressoperguntas progressoperguntas[]
-  quiz_avaliativo    quiz_avaliativo?     @relation(fields: [quizavaliativoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  quizavaliativoid   Int?
 }
 
 model perguntasnivel {
@@ -89,27 +86,20 @@ model quiz {
   titulo    String      @db.VarChar(150)
   cursoid   Int
   imagem    String      @db.VarChar(255)
-  curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  perguntas perguntas[]
-}
-
-model quiz_avaliativo {
-  id        Int         @id @default(autoincrement())
-  titulo    String      @db.VarChar(150)
-  imagem    String      @db.VarChar(255)
   status    Boolean     @default(true)
+  avaliativo  Boolean   @default(false)
   usuarioid Int
-  usuarios  usuarios?   @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  cursoid   Int
+  usuarios  usuarios?   @relation(fields: [usuarioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso     curso?      @relation(fields: [cursoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   perguntas perguntas[]
   quiz_avaliativo_usuario quiz_avaliativo_usuario[]
 }
 
+
 model quiz_avaliativo_usuario {
   id        Int       @id @default(autoincrement())
-  quizavaliativoid   Int 
-  quiz_avaliativo  quiz_avaliativo? @relation(fields: [quizavaliativoid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  quizid   Int 
+  quiz  quiz? @relation(fields: [quizid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   usuarioid Int
   usuarios  usuarios? @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   pontuacao Int
@@ -139,7 +129,7 @@ model usuarios {
   campus             campus?                   @relation(fields: [campusid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   logs               logs[]
   avaliacoes         quiz_avaliativo_usuario[]
-  quizavaliativos    quiz_avaliativo[]
+  quizavaliativos    quiz[]
   progressoperguntas progressoperguntas[]
 }
 
