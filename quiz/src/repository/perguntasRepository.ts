@@ -18,19 +18,6 @@ export default {
     return newPergunta;
   },
 
-  async getPerguntaByQuizAvaliativo(pergunta: PerguntaDTO, quizAvaliatiovId: number): Promise<perguntas | null> {
-
-    const newPergunta = await prisma.perguntas.findFirst({ 
-      where: { 
-        conteudo: pergunta.getConteudo(),
-        categoriasid: pergunta.getCategoriasId(),
-        quizavaliativoid: quizAvaliatiovId
-      } 
-    });
-
-    return newPergunta;
-  },
-
   async getPerguntaById(id: number): Promise<perguntas | null> {
 
     const pergunta = await prisma.perguntas.findUnique({ where: { id: id } });
@@ -45,25 +32,6 @@ export default {
       where: {
         categoriasid: categoriaId,
         quizid: quizId,
-        progressoperguntas: {
-          none: {
-            usuariosid: userId
-          }
-        },
-        status: true
-      },
-    });
-
-    return perguntas;
-  },
-
-  async getAllPerguntasByQuizAvaliativoIdAnCategoriaPagination(skip: number, take: number, quizAvaliativoId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
-    const perguntas = await prisma.perguntas.findMany({
-      skip: skip,
-      take: take,
-      where: {
-        categoriasid: categoriaId,
-        quizavaliativoid: quizAvaliativoId,
         progressoperguntas: {
           none: {
             usuariosid: userId
@@ -109,7 +77,6 @@ export default {
           pathimage: pergunta.getPathImage(),
           categoriasid: pergunta.getCategoriasId(),
           quizid: pergunta.getQuizId(),
-          quizavaliativoid: pergunta.getQuizAvaliativoId()
         }
       }
     );

@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { QuizAvaliativoUsuariosDTO } from '../model/QuizAvaliativoUsuariosDTO';
-import { quizAvaliativoService, usuarioService } from './containerConfig';
+import { quizService, usuarioService } from './containerConfig';
 import { BadRequestError } from '../exception/BadRequestError';
 import quizAvaliativoUsuariosRepository from '../repository/quizAvaliativoUsuariosRepository';
 import { NotFoundError } from '../exception/NotFoundError';
@@ -19,14 +19,13 @@ export class QuizAvaliativoUsuarioService {
     async saveScore(data: QuizAvaliativoUsuariosDTO): Promise<QuizAvaliativoUsuariosDTO>{
 
         await Promise.all([
-            quizAvaliativoService.checksQuizAvaliativoExistsById(data.getQuizAvaliativoId()),
-            usuarioService.checksUsuarioExistsById(data.getUsuarioId()),
-        
+            quizService.checksQuizExistsById(data.getQuizId()),
+            usuarioService.checksUsuarioExistsById(data.getUsuarioId())
         ]);
 
         if(data.getPontuacao() < 0) throw new BadRequestError('A pontuacao nao pode ser negativa');
 
-        await this.checksScoreExists(data.getQuizAvaliativoId(), data.getUsuarioId());
+        await this.checksScoreExists(data.getQuizId(), data.getUsuarioId());
 
         const newScore = await quizAvaliativoUsuariosRepository.addingScoreQuizAvaliativo(data);
 
@@ -44,7 +43,7 @@ export class QuizAvaliativoUsuarioService {
 
     async getAllScoreByQuizAvaliativoId(quizid: number, skip: number, take: number): Promise<QuizAvaliativoUsuariosDTO[]> {
 
-        await quizAvaliativoService.checksQuizAvaliativoExistsById(quizid);
+        await quizService.checksQuizExistsById(quizid);
 
         const scores = await quizAvaliativoUsuariosRepository.getManyScoreByQuizAvaliativoId(quizid, skip, take);
 

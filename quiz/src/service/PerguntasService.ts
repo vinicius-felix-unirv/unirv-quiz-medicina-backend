@@ -4,7 +4,7 @@ import perguntasRepository from '../repository/perguntasRepository';
 import { NotFoundError } from '../exception/NotFoundError';
 import { BadRequestError } from '../exception/BadRequestError';
 import { perguntas } from '@prisma/client';
-import { categoriasService, perguntasNivelService, quizAvaliativoService, quizService, usuarioService } from './containerConfig';
+import { categoriasService, perguntasNivelService, quizService, usuarioService } from './containerConfig';
 
 @Service()
 export class PerguntasService {
@@ -25,32 +25,13 @@ export class PerguntasService {
     if(perguntaExist) throw new BadRequestError('Pergunta ja existe no quiz');
   }
 
-  async checksPerguntaExistsInQuizAvaliativo(pergunta: PerguntaDTO, quizAvaliativoId: number): Promise<void> {
-
-    const perguntaExist = await perguntasRepository.getPerguntaByQuizAvaliativo(pergunta, quizAvaliativoId);
-    
-    if(perguntaExist) throw new BadRequestError('Pergunta ja existe no quiz-avaliativo');
-  }
-
   async validateAttributes(pergunta: PerguntaDTO): Promise<void> {
-
-    if(pergunta.getQuizId()){
-      await Promise.all([
-        quizService.checksQuizExistsById(pergunta.getQuizId()!),
-        this.checksPerguntaExistsInQuiz(pergunta, pergunta.getQuizId()!),
-        perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
-        categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
-      ]);
-
-    }else{
-      await Promise.all([
-        quizAvaliativoService.checksQuizAvaliativoExistsById(pergunta.getQuizAvaliativoId()!),
-        this.checksPerguntaExistsInQuizAvaliativo(pergunta, pergunta.getQuizAvaliativoId()!),
-        perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
-        categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
-      ]);
-      
-    }
+    await Promise.all([
+      quizService.checksQuizExistsById(pergunta.getQuizId()!),
+      this.checksPerguntaExistsInQuiz(pergunta, pergunta.getQuizId()!),
+      perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
+      categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
+    ]);
   }
 
   async getPerguntaById(id: number): Promise<PerguntaDTO> {
@@ -75,20 +56,6 @@ export class PerguntasService {
 
   }
 
-  async getAllPerguntasByQuizAvaliativoIdAndCategoria(skip: number, take: number, quizAvaliativoId: number, userId: number, categoriaId: number): Promise<PerguntaDTO[]> {
-    
-    await Promise.all([
-      quizAvaliativoService.checksQuizAvaliativoExistsById(quizAvaliativoId),
-      usuarioService.checksUsuarioExistsById(userId),
-      categoriasService.checksCategoriaExistsById(categoriaId)
-    ]);
-
-    const perguntas = await perguntasRepository.getAllPerguntasByQuizAvaliativoIdAnCategoriaPagination(skip, take, quizAvaliativoId, userId, categoriaId);
-
-    return perguntas.map((pergunta) => new PerguntaDTO(pergunta));
-
-  }
-
   async savePergunta(pergunta: PerguntaDTO): Promise<PerguntaDTO> {
 
     await this.validateAttributes(pergunta);
@@ -101,25 +68,15 @@ export class PerguntasService {
   async alterPergunta(id: number, pergunta: PerguntaDTO): Promise<PerguntaDTO> {
 
     const perguntaExists = await this.checksPerguntaExistsById(id);
+   
+    const [perguntadb] = await Promise.all([
+      perguntasRepository.getPerguntaByQuiz(pergunta, perguntaExists.quizid!),
+      perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
+      categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
+    ]);
 
-    if(perguntaExists.quizid){
-      const [perguntadb] = await Promise.all([
-        perguntasRepository.getPerguntaByQuiz(pergunta, perguntaExists.quizid),
-        perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
-        categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
-      ]);
-
-      if(perguntadb && perguntadb.id != id) throw new BadRequestError('Pergunta ja existe');
-    }else{
-      const [perguntadb] = await Promise.all([
-        perguntasRepository.getPerguntaByQuizAvaliativo(pergunta, perguntaExists.quizavaliativoid!),
-        perguntasNivelService.checksNivelExists(pergunta.getPerguntasNivelId()),
-        categoriasService.checksCategoriaExistsById(pergunta.getCategoriasId())
-      ]);
-
-      if(perguntadb && perguntadb.id != id) throw new BadRequestError('Pergunta ja existe');
-    }
-
+    if(perguntadb && perguntadb.id != id) throw new BadRequestError('Pergunta ja existe');
+    
     const updatedPergunta = await perguntasRepository.updatePergunta(id, pergunta);
 
     return new PerguntaDTO(updatedPergunta);

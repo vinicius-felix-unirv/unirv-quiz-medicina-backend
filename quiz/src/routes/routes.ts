@@ -9,7 +9,6 @@ import { quizRoutes } from './quizRoutes';
 import { alternativasRoutes } from './alternativasRoutes';
 import { sendEmailRoutes } from './sendEmailRoutes';
 import { cursoRoutes } from './CursoRoutes';
-import { quizAvaliativoRoutes } from './quizAvaliativoRoutes';
 import { quizAvaliativoUsuarioRoutes } from './quizAvaliativoUsuariosRoutes';
 import { perguntasNivelRoutes } from './PerguntasNivelRoutes';
 
@@ -28,7 +27,6 @@ routes.use(
     alternativasRoutes,
     sendEmailRoutes, 
     cursoRoutes,
-    quizAvaliativoRoutes,
     quizAvaliativoUsuarioRoutes
 );
 

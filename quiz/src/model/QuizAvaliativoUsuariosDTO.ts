@@ -2,7 +2,7 @@ import { quiz_avaliativo_usuario } from '@prisma/client';
 
 export interface IQuizAvaliativoUsuariosDTO{
     id?: number;
-    quizavaliativoid: number;
+    quizid: number;
     usuarioid: number;
     pontuacao: number;
     horainicial: Date;
@@ -11,7 +11,7 @@ export interface IQuizAvaliativoUsuariosDTO{
 export class QuizAvaliativoUsuariosDTO {
 
     private id?: number;
-    private quizavaliativoid: number;
+    private quizid: number;
     private usuarioid: number;
     private pontuacao: number;
     private horainicial: Date;
@@ -20,7 +20,7 @@ export class QuizAvaliativoUsuariosDTO {
     constructor(data: quiz_avaliativo_usuario | IQuizAvaliativoUsuariosDTO){
 
         this.id = data.id;
-        this.quizavaliativoid = data.quizavaliativoid;
+        this.quizid = data.quizid;
         this.usuarioid = data.usuarioid;
         this.pontuacao = data.pontuacao;
         this.horainicial = data.horainicial;
@@ -28,7 +28,7 @@ export class QuizAvaliativoUsuariosDTO {
     }
 
     getId(): number | undefined { return this.id; }
-    getQuizAvaliativoId(): number { return this.quizavaliativoid; }
+    getQuizId(): number { return this.quizid; }
     getUsuarioId(): number { return this.usuarioid; }
     getPontuacao(): number { return this.pontuacao; }
     getHoraInicial(): Date { return this.horainicial; }

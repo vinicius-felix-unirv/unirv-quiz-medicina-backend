@@ -92,20 +92,4 @@ export default {
     return categorias;
   },
 
-  async getAllCategoriasInQuizAvaliativoId(quizAvaliativoId: number): Promise<categorias[]>{
-
-    const categorias = await prisma.categorias.findMany({
-      where:{
-       perguntas: {
-        some: {
-          quizavaliativoid: quizAvaliativoId
-        }
-       }
-      },
-      distinct: ['id']
-    });
-
-    return categorias;
-  }
-
 };

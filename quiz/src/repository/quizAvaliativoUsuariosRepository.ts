@@ -9,7 +9,7 @@ export default {
 
         const newScore = await prisma.quiz_avaliativo_usuario.create({
             data: {
-                quizavaliativoid: data.getQuizAvaliativoId(),
+                quizid: data.getQuizId(),
                 usuarioid: data.getUsuarioId(),
                 pontuacao: data.getPontuacao(),
                 horainicial: data.getHoraInicial(),
@@ -24,7 +24,7 @@ export default {
 
         const scoreExists = await prisma.quiz_avaliativo_usuario.findFirst({
             where: {
-                quizavaliativoid: quizId,
+                quizid: quizId,
                 usuarioid: usuarioId
             }
         });
@@ -46,7 +46,7 @@ export default {
         const score = await prisma.quiz_avaliativo_usuario.findMany({
             skip: skip,
             take: take,
-            where: { quizavaliativoid: quizid }
+            where: { quizid: quizid }
         });
 
         return score;

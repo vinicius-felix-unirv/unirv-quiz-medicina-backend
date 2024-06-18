@@ -29,7 +29,10 @@ export default {
       data: { 
         titulo: quiz.getTitulo(),
         cursoid: quiz.getCursoId(),
-        imagem: quiz.getImagem()
+        imagem: quiz.getImagem(),
+        status: quiz.getStatus(),
+        avaliativo: quiz.getAvaliativo(),
+        usuarioid: quiz.getUsuarioId()
       } });
 
     return newQuiz;
@@ -72,21 +75,5 @@ export default {
 
     return quiz;
   },
-
-  // async getAllQuizWithQuestion(): Promise<quiz[]> {
-
-  //   const quiz = await prisma.quiz.findMany();
-
-  //   let quizDto: IQuizDTO;
-
-  //   quiz.map(async x => {
-  //     const perguntas = await prisma.perguntas.findMany({ where: { id: x.id } });
-  //     quizDto = new IQuizDTO(x);
-  //     perguntas.map(perg => quizDto.setPerguntas(perg));
-
-  //   });
-
-  //   return quiz;
-  // }
 
 };

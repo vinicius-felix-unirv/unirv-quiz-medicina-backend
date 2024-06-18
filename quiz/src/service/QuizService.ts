@@ -4,7 +4,7 @@ import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
 import { QuizDTO } from '../model/QuizDTO';
 import quizRepository from '../repository/quizRepository';
-import { cursoService } from './containerConfig';
+import { cursoService, usuarioService } from './containerConfig';
 import { quiz } from '@prisma/client';
 
 @Service()
@@ -33,6 +33,7 @@ export class QuizService {
     await Promise.all([
       this.checksQuizExistsByTituloAndCurso(quiz.getTitulo(), quiz.getCursoId()),
       cursoService.checksCursoExistsById(quiz.getCursoId()),
+      usuarioService.checksUsuarioExistsById(quiz.getUsuarioId())
     ]);
 
     const newQuiz = await quizRepository.createQuiz(quiz);

@@ -9,7 +9,6 @@ export interface IperguntasDTO {
   status: boolean;
   categoriasid: number;
   quizid: number | null;
-  quizavaliativoid: number | null;
 }
 export class PerguntaDTO {
 
@@ -21,7 +20,6 @@ export class PerguntaDTO {
   private status: boolean;
   private categoriasid: number;
   private quizid: number | null;
-  private quizavaliativoid: number | null;
 
   constructor(data: IperguntasDTO | perguntas) {
     this.id = data.id;
@@ -32,7 +30,6 @@ export class PerguntaDTO {
     this.status = data.status;
     this.categoriasid = data.categoriasid;
     this.quizid = data.quizid;
-    this.quizavaliativoid = data.quizavaliativoid;
   }
 
   getId(): number | undefined {
@@ -65,10 +62,6 @@ export class PerguntaDTO {
 
   getQuizId(): number | null {
     return this.quizid;
-  }
-
-  getQuizAvaliativoId(): number | null {
-    return this.quizavaliativoid;
   }
 
   setStatus(status: boolean): void {
