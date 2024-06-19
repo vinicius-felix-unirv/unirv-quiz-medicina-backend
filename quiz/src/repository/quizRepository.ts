@@ -4,28 +4,25 @@ import { QuizDTO } from './../model/QuizDTO';
 
 export default {
 
-  async getQuizByTituloAndCurso(_titulo: string, _cursoid: number): Promise<quiz> {
+  async getQuizByTituloAndCurso(_titulo: string, _cursoid: number): Promise<quiz | null> {
 
-    const quiz = await prisma.quiz.findFirst({ 
+    return await prisma.quiz.findFirst({ 
       where: { 
         titulo: _titulo, 
         cursoid: _cursoid
       } 
     });
-
-    return quiz!;
   },
 
-  async getQuizById(id: number): Promise<quiz> {
+  async getQuizById(id: number): Promise<quiz | null> {
 
-    const quiz = await prisma.quiz.findFirst({ where: { id: id } });
+    return await prisma.quiz.findFirst({ where: { id: id } });
 
-    return quiz!;
   },
 
   async createQuiz(quiz: QuizDTO): Promise<quiz> {
 
-    const newQuiz = await prisma.quiz.create({ 
+    return await prisma.quiz.create({ 
       data: { 
         titulo: quiz.getTitulo(),
         cursoid: quiz.getCursoId(),
@@ -33,14 +30,13 @@ export default {
         status: quiz.getStatus(),
         avaliativo: quiz.getAvaliativo(),
         usuarioid: quiz.getUsuarioId()
-      } });
-
-    return newQuiz;
+      } 
+    });
   },
 
   async updateQuiz(id: number, quiz: QuizDTO): Promise<quiz> {
 
-    const updatedQuiz = await prisma.quiz.update(
+    return await prisma.quiz.update(
       {
         where: { id: id },
         data: {
@@ -50,30 +46,62 @@ export default {
       }
     );
 
-    return updatedQuiz;
   },
 
   async getAllQuiz(skip: number, take: number): Promise<quiz[]> {
 
-    const quiz = await prisma.quiz.findMany({
+    return await prisma.quiz.findMany({
       skip: skip,
       take: take
     });
-
-    return quiz;
   },
 
   async getAllQuizByCursoId(skip: number, take: number, cursoId: number): Promise<quiz[]> {
 
-    const quiz = await prisma.quiz.findMany({
+    return await prisma.quiz.findMany({
       skip: skip,
       take: take,
       where: {
         cursoid: cursoId
       }
     });
+  },
 
-    return quiz;
+  async getAllQuizByUsuarioAndCursoId(skip: number, take: number, cursoId: number, usuarioId: number): Promise<quiz[]> {
+
+    return await prisma.quiz.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        cursoid: cursoId, 
+        usuarioid: usuarioId
+      }
+    });
+  },
+
+  async getAllQuizAvaliativoByUsuarioAndCursoId(skip: number, take: number, cursoId: number, usuarioId: number): Promise<quiz[]> {
+
+    return await prisma.quiz.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        cursoid: cursoId, 
+        avaliativo: true,
+        usuarioid: usuarioId
+      }
+    });
+  },
+
+  async putStatusQuiz(quizId: number, quiz: QuizDTO): Promise<quiz> {
+
+    return await prisma.quiz.update({
+      where: {
+        id: quizId
+      },
+      data: {
+        status: quiz.getStatus()
+      }
+    });
   },
 
 };

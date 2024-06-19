@@ -16,7 +16,7 @@ export class QuizService {
 
     if(quizExist) throw new BadRequestError('Quiz ja existe');
 
-    return quizExist;
+    return quizExist!;
   }
 
   async checksQuizExistsById(id: number): Promise<quiz> {
@@ -79,5 +79,30 @@ export class QuizService {
     const quiz = await this.checksQuizExistsById(id);
 
     return new QuizDTO(quiz);
+  }
+
+  async getAllQuizByUsuarioAndCursoId(skip: number, take: number, cursoId: number, usuarioId: number): Promise<QuizDTO[]> {
+
+    const quizByUsuario = await quizRepository.getAllQuizByUsuarioAndCursoId(skip, take, cursoId, usuarioId);
+
+    return quizByUsuario.map(quiz => new QuizDTO(quiz));
+  }
+
+  async getAllQuizAvaliativoByUsuarioAndCursoId(skip: number, take: number, cursoId: number, usuarioId: number): Promise<QuizDTO[]> {
+
+    const quizAvaliativoByUsuario = await quizRepository.getAllQuizAvaliativoByUsuarioAndCursoId(skip, take, cursoId, usuarioId);
+
+    return quizAvaliativoByUsuario.map(quiz => new QuizDTO(quiz));
+  }
+
+  async putStatusQuiz(quizId: number): Promise<QuizDTO> {
+
+    const quizExists = await this.checksQuizExistsById(quizId);
+
+    const quiz = new QuizDTO(quizExists);
+    quiz.setStatus(!quiz.getStatus());
+    const quizUpdated = await quizRepository.putStatusQuiz(quizId, quiz);
+
+    return new QuizDTO(quizUpdated);
   }
 }

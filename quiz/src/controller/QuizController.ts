@@ -49,8 +49,43 @@ export class QuizController {
 
     const id = parseInt(req.params.id);
 
-    const Quiz = await quizService.getQuizById(id);
+    const quiz = await quizService.getQuizById(id);
 
-    return res.status(200).json(Quiz);
+    return res.status(200).json(quiz);
   }
+
+  async getAllQuizByUsuarioAndCursoId(req: Request, res: Response): Promise<Response> {
+
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const cursoId = parseInt(req.params.cursoid);
+    const usuarioId = parseInt(req.params.usuarioid);
+
+    const quizByUsuario = await quizService.getAllQuizByUsuarioAndCursoId(skip, take, cursoId, usuarioId);
+
+    return res.status(200).json(quizByUsuario);
+  }
+
+  async getAllQuizAvaliativoByUsuarioAndCursoId(req: Request, res: Response): Promise<Response> {
+
+    const skip = parseInt(req.params.skip);
+    const take = parseInt(req.params.take);
+    const cursoId = parseInt(req.params.cursoid);
+    const usuarioId = parseInt(req.params.usuarioid);
+
+    const quizAvaliativoByUsuario = await quizService.getAllQuizAvaliativoByUsuarioAndCursoId(skip, take, cursoId, usuarioId);
+
+    return res.status(200).json(quizAvaliativoByUsuario);
+  }
+
+  async putStatusQuiz(req: Request, res: Response): Promise<Response> {
+
+    const quizId = parseInt(req.params.id);
+
+    const quizUpedated =  await quizService.putStatusQuiz(quizId);
+
+    return res.status(200).json(quizUpedated);
+  }
+
+
 }

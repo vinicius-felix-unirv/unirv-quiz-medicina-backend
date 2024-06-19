@@ -5,9 +5,9 @@ import { isAuthenticated } from '../middlewares/isAuthenticated';
 const usuariosRoutes = Router();
 const usuariosController = new UsuariosController();
 
-usuariosRoutes.get('/usuarios/:id', isAuthenticated, usuariosController.getUsuarioById);
-usuariosRoutes.get('/cursos/:id/usuarios/:skip/:take', isAuthenticated, usuariosController.getAllUsuarios);
-usuariosRoutes.get('/cursos/:id/usuarios/ranking', isAuthenticated, usuariosController.getRankingByCursoId);
+usuariosRoutes.get('/usuarios/:id',  usuariosController.getUsuarioById);
+usuariosRoutes.get('/cursos/:id/usuarios/:skip/:take',  usuariosController.getAllUsuarios);
+usuariosRoutes.get('/cursos/:id/usuarios/ranking',  usuariosController.getRankingByCursoId);
 usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
 usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
 usuariosRoutes.put('/usuarios/:id/pontuacao', isAuthenticated, usuariosController.putPontuacao);

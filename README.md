@@ -520,7 +520,7 @@
 
    Exemplo: 
 
-         GET http://localhost:3000/quiz/34
+         GET http://localhost:3000/quiz/76
       
    Response:
 
@@ -528,10 +528,13 @@
 
    ```json
    {
-      "id": 34,
-      "titulo": "Odonto",
+      "id": 76,
+      "titulo": "Segundo semestre",
       "cursoid": 5,
-      "imagem": "/testes"
+      "imagem": "/testes",
+      "status": true,
+      "avaliativo": false,
+      "usuarioid": 105
    }
    ```
    --------
@@ -541,7 +544,7 @@
 
    Exemplo: 
 
-         GET http://localhost:3000/curso/1/quiz/0/10
+         GET http://localhost:3000/curso/5/quiz/0/10
       
    Response:
 
@@ -550,34 +553,92 @@
    ```json
    [
       {
-         "id": 34,
-         "titulo": "Odonto",
+         "id": 75,
+         "titulo": "Primeiro semestre",
          "cursoid": 5,
-         "imagem": "/testes"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": true,
+         "usuarioid": 105
       },
       {
-         "id": 35,
-         "titulo": "Farmaco II",
+         "id": 76,
+         "titulo": "Segundo semestre",
          "cursoid": 5,
-         "imagem": "/teste"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 105
       },
       {
-         "id": 36,
-         "titulo": "Farmaco I",
+         "id": 77,
+         "titulo": "Terceiro semestre",
          "cursoid": 5,
-         "imagem": "/teste"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 104
+      }
+   ]
+   ```
+   --------
+* ### GET /curso/:id/usuarios/:usuarioid/quiz/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso, o 'id' do usuario e os valores de 'skip' e 'take' para buscar os quizzes de um curso e usuario específico.
+
+   Exemplo: 
+
+         GET http://localhost:3000/cursos/5/usuarios/105/quiz/0/10
+      
+   Response:
+
+   Esse endpoint retorna vários quizzes que pertencem a um curso e usuario específico de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
+   ```json
+   [
+      {
+         "id": 75,
+         "titulo": "Primeiro semestre",
+         "cursoid": 5,
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": true,
+         "usuarioid": 105
       },
       {
-         "id": 38,
-         "titulo": "Farmaco",
+         "id": 76,
+         "titulo": "Segundo semestre",
          "cursoid": 5,
-         "imagem": "/teste"
-      },
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 105
+      }
+   ]
+   ```
+   --------
+* ### GET /curso/:id/usuarios/:usuarioid/quiz-avaliativos/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso, o 'id' do usuario e os valores de 'skip' e 'take' para buscar os quizzes avaliativos de um curso e usuario específico.
+
+   Exemplo: 
+
+         GET http://localhost:3000/cursos/5/usuarios/104/quiz-avaliativos/0/10
+      
+   Response:
+
+   Esse endpoint retorna vários quizzes avaliativos que pertencem a um curso e usuario específico de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
+   ```json
+   [
       {
-         "id": 39,
-         "titulo": "Farmaco 3",
+         "id": 77,
+         "titulo": "Terceiro semestre",
          "cursoid": 5,
-         "imagem": "/teste"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 104
       }
    ]
    ```
@@ -597,52 +658,31 @@
    ```json
    [
       {
-         "id": 34,
-         "titulo": "Odonto",
+         "id": 75,
+         "titulo": "Primeiro semestre",
          "cursoid": 5,
-         "imagem": "/testes"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": true,
+         "usuarioid": 105
       },
       {
-         "id": 35,
-         "titulo": "Farmaco II",
+         "id": 76,
+         "titulo": "Segundo semestre",
          "cursoid": 5,
-         "imagem": "/teste"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 105
       },
       {
-         "id": 36,
-         "titulo": "Farmaco I",
+         "id": 77,
+         "titulo": "Terceiro semestre",
          "cursoid": 5,
-         "imagem": "/teste"
-      },
-      {
-         "id": 37,
-         "titulo": "Farmaco",
-         "cursoid": 6,
-         "imagem": "/teste"
-      },
-      {
-         "id": 38,
-         "titulo": "Farmaco",
-         "cursoid": 5,
-         "imagem": "/teste"
-      },
-      {
-         "id": 39,
-         "titulo": "Farmaco 3",
-         "cursoid": 5,
-         "imagem": "/teste"
-      },
-      {
-         "id": 40,
-         "titulo": "Farmaco I",
-         "cursoid": 6,
-         "imagem": "/testes"
-      },
-      {
-         "id": 41,
-         "titulo": "Odonto",
-         "cursoid": 6,
-         "imagem": "/teste"
+         "imagem": "/testes",
+         "status": true,
+         "avaliativo": false,
+         "usuarioid": 104
       }
    ]
    ```
@@ -659,9 +699,11 @@
 
    ```json
    {
-      "titulo": "anatomia 23",
+      "titulo": "Terceiro semestre",
       "cursoid": 5,
-      "imagem": "/testes"
+      "imagem": "/testes",
+      "avaliativo": false,
+      "usuarioid": 104
    }
    ```
    
@@ -671,11 +713,14 @@
 
    ```json
    {
-      "id": 42,
-      "titulo": "anatomia 23",
-      "cursoid": 5,
-      "imagem": "/testes"
-   }
+		"id": 77,
+		"titulo": "Terceiro semestre",
+		"cursoid": 5,
+		"imagem": "/testes",
+		"status": true,
+		"avaliativo": false,
+		"usuarioid": 104
+	}
    ```
    --------
 * ### PUT /quiz/:id
@@ -684,15 +729,15 @@
 
    Exemplo: 
 
-         PUT http://localhost:3000/quiz/40
+         PUT http://localhost:3000/quiz/75
 
    Body:
 
    ```json
    {
-      "titulo": "Farmaco I",
-      "imagem": "/testes"
-   }
+		"titulo": "Primeiro semestre",
+		"imagem": "/testes"
+	}
    ```
       
    Response:
@@ -701,14 +746,40 @@
 
    ```json
    {
-      "id": 40,
-      "titulo": "Farmaco I",
-      "cursoid": 6,
-      "imagem": "/testes"
+      "id": 75,
+      "titulo": "Primeiro semestre",
+      "cursoid": 5,
+      "imagem": "/testes",
+      "status": true,
+      "avaliativo": true,
+      "usuarioid": 105
    }
    ```
  -------
- 
+* ### PUT /quiz/:id/status
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz que deseja alterar o status;
+
+   Exemplo: 
+
+         PUT http://localhost:3000/quiz/75/status
+      
+   Response:
+
+   Esse endpoint retorna o quiz com o status alterado.
+
+   ```json
+   {
+      "id": 75,
+      "titulo": "Primeiro semestre",
+      "cursoid": 5,
+      "imagem": "/testes",
+      "status": false,
+      "avaliativo": true,
+      "usuarioid": 105
+   }
+   ```
+ -------
  ## Quiz-Avaliativo-Usuarios
 
 * ### GET /quiz-avaliativos-usuarios/:id
