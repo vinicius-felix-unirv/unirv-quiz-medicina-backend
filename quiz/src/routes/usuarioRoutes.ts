@@ -10,7 +10,7 @@ usuariosRoutes.get('/cursos/:id/usuarios/:skip/:take',  usuariosController.getAl
 usuariosRoutes.get('/cursos/:id/usuarios/ranking',  usuariosController.getRankingByCursoId);
 usuariosRoutes.post('/usuarios', usuariosController.postUsuario);
 usuariosRoutes.put('/usuarios/:id', isAuthenticated, usuariosController.putUsuario);
-usuariosRoutes.put('/usuarios/:id/pontuacao', isAuthenticated, usuariosController.putPontuacao);
+usuariosRoutes.put('/usuarios/:id/pontuacao',  usuariosController.putPontuacao);
 usuariosRoutes.put('/usuarios/:id/trocar-senha', isAuthenticated, usuariosController.putSenha);
 
 

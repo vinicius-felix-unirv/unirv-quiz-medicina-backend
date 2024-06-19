@@ -8,7 +8,7 @@ const alternativasController = new AlternativasController();
 
 alternativasRoutes.post('/alternativas', isAuthenticated, alternativasController.postAlternativa);
 alternativasRoutes.post('/alternativas/many', isAuthenticated, alternativasController.postAllAlternativa);
-alternativasRoutes.get('/perguntas/:id/alternativas', isAuthenticated, alternativasController.getAllAlternativasByPerguntaId);
+alternativasRoutes.get('/perguntas/:id/alternativas',  alternativasController.getAllAlternativasByPerguntaId);
 alternativasRoutes.put('/alternativas/:id', isAuthenticated, alternativasController.updateAlternativa);
 alternativasRoutes.delete('/alternativas/:id', isAuthenticated, alternativasController.deleteAlternativa);
 
