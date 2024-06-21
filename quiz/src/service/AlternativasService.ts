@@ -18,7 +18,7 @@ export class AlternativasService{
         if (limitOfAlternativas > 5) throw new BadRequestError('Limite de alternativas excedido');
 
         for(const alternativa of alternativas.alternativas){
-            const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta());
+            const alternativaExists = alternativasByPergunta.some(a => a.conteudo === alternativa.getConteudo());
 
             if(alternativaExists) throw new BadRequestError('Alternativa ja existe');
         }
@@ -35,7 +35,7 @@ export class AlternativasService{
 
         if (alternativasByPergunta.length >= 5) throw new BadRequestError('Limite de alternativas excedido');
 
-        const alternativaExists = alternativasByPergunta.some(a => a.resposta === alternativa.getResposta() && a.resposta != null);
+        const alternativaExists = alternativasByPergunta.some(a => a.conteudo === alternativa.getConteudo() && a.conteudo != null);
 
         if(alternativaExists) throw new BadRequestError('Alternativa ja existe');
         
@@ -62,11 +62,11 @@ export class AlternativasService{
 
         for (let i = 0; i < alternativas.alternativas.length; i++){
 
-            const equasAlternativas = alternativas.alternativas[i].getResposta();
+            const equasAlternativas = alternativas.alternativas[i].getConteudo();
 
             for(let j = i+1; j < alternativas.alternativas.length; j++){
 
-                if(alternativas.alternativas[j].getResposta() === equasAlternativas && alternativas.alternativas[j].getResposta() != null)
+                if(alternativas.alternativas[j].getConteudo() === equasAlternativas && alternativas.alternativas[j].getConteudo() != null)
                     throw new BadRequestError('As alternativas não podem ser iguais');
             }
 
@@ -104,7 +104,7 @@ export class AlternativasService{
 
         const alternativasByPergunta = await alternativasRepository.getAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
-        const alternativaAleadyExists = alternativasByPergunta.filter(a => a.resposta === alternativa.getResposta());
+        const alternativaAleadyExists = alternativasByPergunta.filter(a => a.conteudo === alternativa.getConteudo());
 
         if(alternativaAleadyExists.length != 0 && alternativaAleadyExists[0].id != alternativaId) throw new BadRequestError('Alternativa ja existe');
 

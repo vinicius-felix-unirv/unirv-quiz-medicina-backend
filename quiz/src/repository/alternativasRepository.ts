@@ -10,7 +10,7 @@ export default {
         const newAlternativa = await prisma.alternativas.create({
             data: {
                 perguntasid: alternativa.getPerguntasId(),
-                resposta: alternativa.getResposta(),
+                conteudo: alternativa.getConteudo(),
                 pathimage: alternativa.getPathImage(),
                 correta: alternativa.getCorreta()
             }
@@ -41,7 +41,7 @@ export default {
         const updateAlternativa = await prisma.alternativas.update({
             where: {id: alternativaId},
             data: { 
-                resposta: alternativa.getResposta(),
+                conteudo: alternativa.getConteudo(),
                 pathimage: alternativa.getPathImage(),
                 correta: alternativa.getCorreta()
             }
