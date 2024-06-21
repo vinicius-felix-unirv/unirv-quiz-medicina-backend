@@ -25,8 +25,9 @@ export default {
     return pergunta;
   },
 
-  async getAllPerguntasByQuizIdAnCategoriaPagination(take: number, quizId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
+  async getAllPerguntasByQuizIdAnCategoriaPagination(skip: number, take: number, quizId: number, userId: number, categoriaId: number): Promise<perguntas[]> {
     const perguntas = await prisma.perguntas.findMany({
+      skip: skip,
       take: take,
       where: {
         categoriasid: categoriaId,
@@ -36,6 +37,20 @@ export default {
             usuariosid: userId
           }
         },
+        status: true
+      },
+    });
+
+    return perguntas;
+  },
+
+  async getAllPerguntasByQuizIdAnCategoriaForProf(skip: number, take: number, quizId: number, categoriaId: number): Promise<perguntas[]> {
+    const perguntas = await prisma.perguntas.findMany({
+      skip: skip,
+      take: take,
+      where: {
+        categoriasid: categoriaId,
+        quizid: quizId,
         status: true
       },
     });

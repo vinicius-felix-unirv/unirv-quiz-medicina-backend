@@ -890,15 +890,52 @@
    -----
 * ### GET  /usuarios/:usuariosid/quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
 
-   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e o 'id' da categoria e o valor de 'take'.
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e o 'id' da categoria e os valores de 'skip' e 'take'.
 
    Exemplo: 
 
-         GET http://localhost:3000/usuarios/105/quiz/75/categorias/30/perguntas/10
+         GET http://localhost:3000/usuarios/105/quiz/75/categorias/30/perguntas/0/2
 
    Response:
 
-   Esse endpoint retorna as perguntas de uma categoria que ainda não foram respondidas de um quiz-avaliativo especifico e que o status seja true de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+   Esse endpoint retorna as perguntas de uma categoria que ainda não foram respondidas de um quiz especifico e que o status seja true de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
+
+   ```json
+   [
+      {
+         "id": 82,
+         "conteudo": "olha la",
+         "perguntasnivelid": 12,
+         "tempo": 50,
+         "pathimage": "/teste01",
+         "status": true,
+         "categoriasid": 30,
+         "quizid": 75
+      },
+      {
+         "id": 84,
+         "conteudo": "Vc quer bolo?",
+         "perguntasnivelid": 9,
+         "tempo": 70,
+         "pathimage": "/teste01",
+         "status": true,
+         "categoriasid": 30,
+         "quizid": 75
+      }
+   ]
+   ```
+   ------
+* ### GET  /quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz e o 'id' da categoria e os valores de 'skip' e 'take'.
+
+   Exemplo: 
+
+         GET http://localhost:3000/quiz/75/categorias/30/perguntas/0/2
+
+   Response:
+
+   Esse endpoint retorna as perguntas de uma categoria de um quiz especifico e que o status seja true de forma paginada. A quantidade de elementos por página varia dependendo dos valores de 'skip' e 'take'.
 
    ```json
    [
