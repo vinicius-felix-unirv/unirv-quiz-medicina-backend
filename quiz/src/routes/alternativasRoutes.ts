@@ -6,10 +6,10 @@ import { AlternativasController } from '../controller/AlternativasController';
 const alternativasRoutes = Router();
 const alternativasController = new AlternativasController();
 
-alternativasRoutes.post('/alternativas', isAuthenticated, alternativasController.postAlternativa);
+alternativasRoutes.post('/alternativas',  alternativasController.postAlternativa);
 alternativasRoutes.post('/alternativas/many', isAuthenticated, alternativasController.postAllAlternativa);
 alternativasRoutes.get('/perguntas/:id/alternativas',  alternativasController.getAllAlternativasByPerguntaId);
-alternativasRoutes.put('/alternativas/:id', isAuthenticated, alternativasController.updateAlternativa);
-alternativasRoutes.delete('/alternativas/:id', isAuthenticated, alternativasController.deleteAlternativa);
+alternativasRoutes.put('/alternativas/:id',  alternativasController.updateAlternativa);
+alternativasRoutes.delete('/alternativas/:id',  alternativasController.deleteAlternativa);
 
 export { alternativasRoutes };

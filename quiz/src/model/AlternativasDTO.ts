@@ -5,7 +5,7 @@ export interface IAlternativasDTO {
     id?: number,
     perguntasid: number,
     conteudo: string | null,
-    pathimage: string | null,
+    imagem: string | null,
     correta: boolean,
 
 }
@@ -15,7 +15,7 @@ export class AlternativasDTO {
     private id?: number;
     private perguntasid: number;
     private conteudo: string | null;
-    private pathimage: string | null;
+    private imagem: string | null;
     private correta: boolean;
 
     constructor(data: alternativas | IAlternativasDTO) {
@@ -23,7 +23,7 @@ export class AlternativasDTO {
         this.id = data.id;
         this.perguntasid = data.perguntasid;
         this.conteudo = data.conteudo;
-        this.pathimage = data.pathimage;
+        this.imagem = data.imagem;
         this.correta = data.correta;
     }
 
@@ -33,7 +33,7 @@ export class AlternativasDTO {
 
     getConteudo(): string | null { return this.conteudo; }
 
-    getPathImage(): string | null { return this.pathimage; }
+    getImagem(): string | null { return this.imagem; }
 
     getCorreta(): boolean { return this.correta; }
 }
@@ -45,7 +45,7 @@ export class AllAlternativasDTO {
     constructor(data: {
         perguntasid: number,
         conteudo: string,
-        pathimage: string,
+        imagem: string,
         correta: boolean
     }[]) {
         this.alternativas = data.map(x => new AlternativasDTO(x));

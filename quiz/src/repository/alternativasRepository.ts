@@ -11,7 +11,7 @@ export default {
             data: {
                 perguntasid: alternativa.getPerguntasId(),
                 conteudo: alternativa.getConteudo(),
-                pathimage: alternativa.getPathImage(),
+                imagem: alternativa.getImagem(),
                 correta: alternativa.getCorreta()
             }
         });
@@ -42,7 +42,7 @@ export default {
             where: {id: alternativaId},
             data: { 
                 conteudo: alternativa.getConteudo(),
-                pathimage: alternativa.getPathImage(),
+                imagem: alternativa.getImagem(),
                 correta: alternativa.getCorreta()
             }
         });
