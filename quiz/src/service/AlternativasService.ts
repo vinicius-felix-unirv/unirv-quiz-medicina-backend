@@ -3,7 +3,7 @@ import { AllAlternativasDTO, AlternativasDTO } from '../model/AlternativasDTO';
 import alternativasRepository from '../repository/alternativasRepository';
 import { BadRequestError } from '../exception/BadRequestError';
 import { NotFoundError } from '../exception/NotFoundError';
-import perguntasRepository from '../repository/perguntasRepository';
+import { perguntaService } from './containerConfig';
 
 
 @Service()
@@ -25,11 +25,19 @@ export class AlternativasService{
 
     }
 
+    async checkAlternativaTrueExistInPergunta(perguntaId: number): Promise<void> {
+        const alternativaCorretaExists = await alternativasRepository.checkAlternativaTrueExistInPergunta(perguntaId);
+
+        if(alternativaCorretaExists) throw new BadRequestError('Nao pode existir mais de uma alternativa correta');
+    }
+
     async saveAlternativa(alternativa: AlternativasDTO): Promise<AlternativasDTO>{
 
-        const perguntaExists = await perguntasRepository.getPerguntaById(alternativa.getPerguntasId());
+        await perguntaService.checksPerguntaExistsById(alternativa.getPerguntasId());
 
-        if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+        if(alternativa.getCorreta()){
+            await this.checkAlternativaTrueExistInPergunta(alternativa.getPerguntasId());
+        }
 
         const alternativasByPergunta = await alternativasRepository.getAllAternativasByPerguntaId(alternativa.getPerguntasId());
 
@@ -49,9 +57,7 @@ export class AlternativasService{
         let perguntaId = alternativas.alternativas[0].getPerguntasId();
         for(const alternativa of alternativas.alternativas){
 
-            const perguntaExists = await perguntasRepository.getPerguntaById(alternativa.getPerguntasId());
-
-            if (!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+            await perguntaService.checksPerguntaExistsById(alternativa.getPerguntasId());
 
             if(perguntaId != alternativa.getPerguntasId()) throw new BadRequestError('Nao pode ter mais de uma pergunta');
             perguntaId = alternativa.getPerguntasId();
@@ -87,9 +93,7 @@ export class AlternativasService{
 
     async getAllAlternativasByPerguntaId(perguntaId: number): Promise<AlternativasDTO[]> {
 
-        const perguntaExists = await perguntasRepository.getPerguntaById(perguntaId);
-
-        if(!perguntaExists) throw new NotFoundError('Pergunta nao encontrada');
+        await perguntaService.checksPerguntaExistsById(perguntaId);
 
         const allAlternativasByPergunt = await alternativasRepository.getAllAternativasByPerguntaId(perguntaId);
 

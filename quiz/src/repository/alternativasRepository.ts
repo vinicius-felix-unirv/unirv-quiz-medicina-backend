@@ -54,5 +54,14 @@ export default {
 
         await prisma.alternativas.delete({where: {id: alternativaId}});
         
+    },
+
+    async checkAlternativaTrueExistInPergunta(perguntaId: number): Promise<alternativas | null> {
+        return prisma.alternativas.findFirst({
+            where: {
+                perguntasid: perguntaId,
+                correta: true
+            }
+        });
     }
 };
