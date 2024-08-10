@@ -1732,4 +1732,6 @@
       "role": 1
    }
    ```
+## Relatórios
 
+* ### GET  /relatorios
