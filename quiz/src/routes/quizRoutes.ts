@@ -1,18 +1,18 @@
 import { Router } from 'express';
-// import { isAuthenticated } from '../middlewares/isAuthenticated';
 import { QuizController } from '../controller/QuizController';
+import { authorize } from '../middlewares/isAuthenticated';
 
 
 const quizRoutes = Router();
 const quizController = new QuizController();
  
-quizRoutes.post('/quiz',  quizController.postQuiz);
-quizRoutes.get('/quiz/:skip/:take',  quizController.getAllquiz);
-quizRoutes.get('/cursos/:cursoid/usuarios/:usuarioid/quiz/:skip/:take',  quizController.getAllQuizByUsuarioAndCursoId);
-quizRoutes.get('/cursos/:cursoid/usuarios/:usuarioid/quiz-avaliativos/:skip/:take',  quizController.getAllQuizAvaliativoByUsuarioAndCursoId);
-quizRoutes.get('/cursos/:id/quiz/:skip/:take', quizController.getAllquizByCursoId);
-quizRoutes.get('/quiz/:id',  quizController.getQuizId);
-quizRoutes.put('/quiz/:id',   quizController.putQuiz);
-quizRoutes.put('/quiz/:id/status',  quizController.putStatusQuiz);
+quizRoutes.post('/quiz', authorize([1, 2]), quizController.postQuiz);
+quizRoutes.get('/quiz/:skip/:take', authorize([1 ]), quizController.getAllquiz);
+quizRoutes.get('/cursos/:cursoid/usuarios/:usuarioid/quiz/:skip/:take', authorize([1, 2]), quizController.getAllQuizByUsuarioAndCursoId);
+quizRoutes.get('/cursos/:cursoid/usuarios/:usuarioid/quiz-avaliativos/:skip/:take', authorize([1, 2]),  quizController.getAllQuizAvaliativoByUsuarioAndCursoId);
+quizRoutes.get('/cursos/:id/quiz/:skip/:take', authorize([1, 2, 3]), quizController.getAllquizByCursoId);
+quizRoutes.get('/quiz/:id', authorize([1, 2, 3]), quizController.getQuizId);
+quizRoutes.put('/quiz/:id', authorize([1, 2 ]),  quizController.putQuiz);
+quizRoutes.put('/quiz/:id/status', authorize([1, 2 ]),  quizController.putStatusQuiz);
 
 export { quizRoutes };

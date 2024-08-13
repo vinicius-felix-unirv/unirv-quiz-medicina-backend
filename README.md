@@ -516,6 +516,11 @@
 
 * ### GET /quiz/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3]
+            
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz que deseja buscar. 
 
    Exemplo: 
@@ -539,6 +544,10 @@
    ```
    --------
 * ### GET /curso/:id/quiz/:skip/:take
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso e o valor de 'skip' e 'take' para buscar os quizzes de um curso específico.
 
@@ -584,6 +593,10 @@
    --------
 * ### GET /curso/:id/usuarios/:usuarioid/quiz/:skip/:take
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso, o 'id' do usuario e os valores de 'skip' e 'take' para buscar os quizzes de um curso e usuario específico.
 
    Exemplo: 
@@ -619,6 +632,10 @@
    --------
 * ### GET /curso/:id/usuarios/:usuarioid/quiz-avaliativos/:skip/:take
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso, o 'id' do usuario e os valores de 'skip' e 'take' para buscar os quizzes avaliativos de um curso e usuario específico.
 
    Exemplo: 
@@ -644,6 +661,10 @@
    ```
    --------
 * ### GET /quiz/:skip/:take
+
+   Roles que tem acesso:
+
+         [ 1 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar os valores de 'skip' e 'take' para buscar os todos os quizzes de forma paginada.
 
@@ -689,6 +710,10 @@
    --------
 * ### POST /quiz
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
    Exemplo: 
@@ -725,6 +750,10 @@
    --------
 * ### PUT /quiz/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz que deseja alterar e um json com os seguintes atributos.
 
    Exemplo: 
@@ -757,6 +786,10 @@
    ```
  -------
 * ### PUT /quiz/:id/status
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz que deseja alterar o status;
 

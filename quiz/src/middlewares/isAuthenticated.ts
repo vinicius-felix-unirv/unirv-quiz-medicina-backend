@@ -19,7 +19,6 @@ export const authorize = (allowedRoles: number[]) => {
               return res.status(403).json({ message: 'Permissão negada' });
           }
 
-          // req.user = decoded; // Armazena informações do usuário no req para uso futuro
           next();
       } catch (error) {
           return res.status(401).json({ message: 'Token inválido' });
