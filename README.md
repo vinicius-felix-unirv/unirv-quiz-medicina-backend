@@ -50,11 +50,17 @@
 * [Cursos](#curso)
 * [Email](#email)
 * [Authentication](#authentication)
+* [Relatorios](#relatórios)
 
 
 ## Usuarios
 
 * ### GET /usuarios/:id
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+      
    Para fazer uma chamada a esse endpoint é necessário passar o 'id' do usuário e estar autenticado.
 
    Exemplo:
@@ -88,6 +94,10 @@
    ```
    --------
 * ### GET /cursos/:id/usuarios/:skip/:take
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
 
    Para fazer uma chamada a esse endpoint é necessário passar o 'id' do curso e o valor do skip e take e estar autenticado.
 
@@ -143,6 +153,10 @@
    ```
    ---------
 * ### GET /cursos/:id/usuarios/ranking
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário passar o 'id' do curso e estar autenticado.
 
@@ -274,6 +288,10 @@
    --------
 * ### PUT /usuarios/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário e um json com os seguintes atributos:
 
    Exemplo:
@@ -326,6 +344,10 @@
    ```
    --------
 * ### PUT /usuarios/:id/pontuacao
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessario estar autenticado e passar o 'id' do usuário que se deseja adicionar os pontos e um json com o atributo:
 
@@ -426,6 +448,10 @@
    --------
 * ### GET /campus/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que procuras.
 
    Exemplo:
@@ -444,6 +470,10 @@
    ```
    --------
 * ### PUT /campus/:id
+
+   Roles que tem acesso:
+
+         [ 1 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso que vc deseja alterar e um json com os seguintes atributos:
 
@@ -472,6 +502,10 @@
    --------
 * ### POST /campus
 
+   Roles que tem acesso:
+
+         [ 1 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos:
 
    Exemplo:
@@ -498,6 +532,10 @@
    ```
    --------
 * ### DELETE /campus/:id
+
+   Roles que tem acesso:
+
+         [ 1 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do campus que deseja apagar.
 
@@ -817,6 +855,10 @@
 
 * ### GET /quiz-avaliativos-usuarios/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do
    quiz-avaliativos-usuarios.
 
@@ -836,6 +878,10 @@
    ```
    --------
 * ### GET /quiz-avaliativos-usuarios/:id/:skip/:take
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do
    quiz-avaliativos-usuarios e os valores de skip e take.
@@ -866,6 +912,10 @@
    ```
    --------
 * ### POST /quiz-avaliativos-usuarios
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar um json com os seguintes atributos.
 
@@ -898,6 +948,10 @@
 
 * ### GET /perguntas/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta que deseja buscar.
 
    Exemplo: 
@@ -922,6 +976,10 @@
    ```
    -----
 * ### GET  /usuarios/:usuariosid/quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da usuário, o 'id' do quiz e o 'id' da categoria e os valores de 'skip' e 'take'.
 
@@ -960,6 +1018,10 @@
    ------
 * ### GET  /quiz/:id/categorias/:categoriasid/perguntas/:skip/:take
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' do quiz e o 'id' da categoria e os valores de 'skip' e 'take'.
 
    Exemplo: 
@@ -996,6 +1058,10 @@
    ```
    ------
 * ### POST /perguntas
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
@@ -1034,6 +1100,10 @@
    ```
 * ### PUT  /perguntas/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta e um json com os seguintes atributos.
 
    Exemplo: 
@@ -1071,6 +1141,10 @@
    ------
 * ### PUT  /perguntas/:id/status
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da pergunta que deseja alterar o status.
 
    Exemplo: 
@@ -1097,6 +1171,10 @@
  ## Alternativas 
 
 * ### GET /perguntas/:id/alternativas
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da pergunta que você deseja buscar as alternativas.
 
@@ -1136,6 +1214,10 @@
    -------
 * ### POST /alternativas
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
    Exemplo: 
@@ -1168,6 +1250,10 @@
    ```
    ----
 * ### POST /alternativas/many
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
@@ -1258,6 +1344,10 @@
    ----
 * ### PUT /alternativas/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da alternativa e um json com os seguintes atributos.
 
    Exemplo: 
@@ -1290,6 +1380,10 @@
    ----
 * ### DELETE /alternativas/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da alternativa que você deseja deletar.
 
    Exemplo: 
@@ -1305,6 +1399,10 @@
  ## Categorias
 
 * ### GET /categorias/:id
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da categoria que você deseja buscar.
 
@@ -1325,6 +1423,10 @@
    ```
    ---
 * ### GET  /cursos/:id/categorias
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do curso para buscar todas as categorias dele.
 
@@ -1378,6 +1480,10 @@
    ---
 * ### GET  /quiz/:id/categorias
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do quiz para buscar todas as categorias dele.
 
    Exemplo: 
@@ -1408,6 +1514,10 @@
    ```
    ---
 * ### POST /categorias
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
@@ -1440,6 +1550,10 @@
    -----
 * ### PUT /categorias/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado, passar o 'id' da categoria e um json com os seguintes atributos.
 
    Exemplo: 
@@ -1470,6 +1584,10 @@
    -----
 * ### PUT /categorias/:id/status
 
+   Roles que tem acesso:
+
+         [ 1 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' da categoria que você deseja alterar o status
 
    Exemplo: 
@@ -1494,6 +1612,10 @@
 
 * ### GET /niveis/:id
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do nivel que você deseja buscar.
 
    Exemplo: 
@@ -1514,6 +1636,10 @@
    ```
    ----
 * ### GET /niveis
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado.
 
@@ -1552,6 +1678,10 @@
 
 * ### GET /usuarios/:usuarioid/quiz/:quizid/progresso-perguntas
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário e o 'id' do quiz que você deseja buscar o progresso.
 
    Exemplo: 
@@ -1571,6 +1701,10 @@
    ----
 * ### GET /usuarios/:usuarioid/quiz/:quizid/categorias/:categoriaid/progresso-perguntas
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar o 'id' do usuário, o 'id' do quiz e o 'id' da categoria que você deseja buscar o progresso.
 
    Exemplo: 
@@ -1589,6 +1723,10 @@
    ```
    ----
 * ### POST /progresso-perguntas
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
@@ -1617,6 +1755,10 @@
    ```
    -----
 * ### POST /progresso-perguntas/many
+
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
 
    Para fazer uma chamada a esse endpoint é necessário estar autenticado e passar um json com os seguintes atributos.
 
@@ -1709,6 +1851,10 @@
 
 * ### POST /send-email
 
+   Roles que tem acesso:
+
+         [ 1, 2, 3 ]
+
    Para fazer uma chamada a esse endpoint é necessário passar um json com os seguintes atributos:
 
    Exemplo: 
@@ -1768,3 +1914,70 @@
 ## Relatórios
 
 * ### GET  /relatorios
+
+   Roles que tem acesso:
+
+         [ 1, 2 ]
+
+   Para fazer uma chamada a esse endpoint é necessário estar autenticado.
+
+   Exemplo: 
+
+         GET http://localhost:3000/relatorios
+
+   Response:
+
+   Esse endpoint retorna uma consulta sobre o número de pessoas que estão utilizando o app, ela busca por sexo, idade, cidade e o periodo que ela logou.
+
+   ```json
+   [
+      {
+         "sexo": 1,
+         "cidade": "Adelândia",
+         "quantidade_manha": 1,
+         "quantidade_tarde": 0,
+         "quantidade_noite": 0,
+         "idade_15_19": 0,
+         "idade_20_24": 0,
+         "idade_25_29": 0,
+         "idade_30_34": 0,
+         "idade_35_mais": 0
+      },
+      {
+         "sexo": 1,
+         "cidade": "americana",
+         "quantidade_manha": 1,
+         "quantidade_tarde": 1,
+         "quantidade_noite": 2,
+         "idade_15_19": 0,
+         "idade_20_24": 1,
+         "idade_25_29": 0,
+         "idade_30_34": 0,
+         "idade_35_mais": 1
+      },
+      {
+         "sexo": 2,
+         "cidade": "Aguiar",
+         "quantidade_manha": 0,
+         "quantidade_tarde": 0,
+         "quantidade_noite": 1,
+         "idade_15_19": 0,
+         "idade_20_24": 0,
+         "idade_25_29": 0,
+         "idade_30_34": 0,
+         "idade_35_mais": 0
+      },
+      {
+         "sexo": 2,
+         "cidade": "Alvorada do Norte",
+         "quantidade_manha": 0,
+         "quantidade_tarde": 1,
+         "quantidade_noite": 0,
+         "idade_15_19": 0,
+         "idade_20_24": 0,
+         "idade_25_29": 1,
+         "idade_30_34": 0,
+         "idade_35_mais": 0
+      }
+   ]
+   ```
