@@ -120,15 +120,15 @@ model usuarios {
   pontuacao          Int                       @default(0)
   status             Boolean                   @default(true)
   cidade             String                    @db.VarChar(255)
-  campusid           Int
+  campusid           Int?
   cursoid            Int
-  periodo            Int
-  turma              String                    @db.VarChar(255)
+  periodo            Int?
+  turma              String?                   @db.VarChar(255)
   logs               logs[]
   progressoperguntas progressoperguntas[]
   quizavaliativos    quiz[]
   avaliacoes         quiz_avaliativo_usuario[]
-  campus             campus                    @relation(fields: [campusid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  campus             campus?                   @relation(fields: [campusid], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curso              curso                     @relation(fields: [cursoid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
