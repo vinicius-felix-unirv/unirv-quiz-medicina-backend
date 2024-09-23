@@ -47,10 +47,10 @@ export default {
                       uf: usuario.getUf(),
                       foto: usuario.getFoto(),
                       cidade: usuario.getCidade(),
-                      turma: usuario.getTurma(),
-                      periodo: usuario.getPeriodo(),
+                      turma: usuario.getTurma()!,
+                      periodo: usuario.getPeriodo()!,
                       cursoid: usuario.getCursoId(),
-                      campusid: usuario.getCampusId()
+                      campusid: usuario.getCampusId()!
                     } as usuarios
       }
     );
@@ -74,10 +74,10 @@ export default {
                   uf: usuario.getUf(),
                   foto: usuario.getFoto(),
                   cidade: usuario.getCidade(),
-                  turma: usuario.getTurma(),
-                  periodo: usuario.getPeriodo(),
+                  turma: usuario.getTurma()!,
+                  periodo: usuario.getPeriodo()!,
                   cursoid: usuario.getCursoId(),
-                  campusid: usuario.getCampusId()
+                  campusid: usuario.getCampusId()!
                 }
       }
     );

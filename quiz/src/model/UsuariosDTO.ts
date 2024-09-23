@@ -14,10 +14,10 @@ export interface IUsuarioDTO {
   pontuacao: number;
   status: boolean;
   cidade: string;
-  turma: string;
-  periodo: number;
+  turma: string | null;
+  periodo: number | null;
   cursoid: number;
-  campusid: number;
+  campusid: number | null;
 }
 
 export class UsuarioDTO {
@@ -54,10 +54,10 @@ export class UsuarioDTO {
     this.pontuacao = data.pontuacao;
     this.status = data.status;
     this.cidade = data.cidade;
-    this.turma = data.turma;
-    this.periodo = data.periodo;
+    this.turma = data.turma!;
+    this.periodo = data.periodo!;
     this.cursoid = data.cursoid;
-    this.campusid = data.campusid;
+    this.campusid = data.campusid!;
   }
 
   getId(): number | undefined { return this.id; }
@@ -73,10 +73,10 @@ export class UsuarioDTO {
   getStatus(): boolean { return this.status; }
   getDataNascimento(): Date { return this.datanascimento; }
   getCidade(): string { return this.cidade; }
-  getTurma(): string { return this.turma; }
-  getPeriodo(): number { return this.periodo; }
+  getTurma(): string | null{ return this.turma; }
+  getPeriodo(): number | null { return this.periodo; }
   getCursoId(): number { return this.cursoid; }
-  getCampusId(): number { return this.campusid; }
+  getCampusId(): number | null{ return this.campusid; }
   
   setPasswordHashed(hashedPassword: string) {
     this.senha = hashedPassword;

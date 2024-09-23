@@ -56,7 +56,7 @@ export class UsuarioService {
 
     await cursoService.checksCursoExistsById(usuario.getCursoId());
 
-    await campusService.checksCampusExistsById(usuario.getCampusId());
+    if(usuario.getCampusId()) await campusService.checksCampusExistsById(usuario.getCampusId()!);
 
     const hashedPassword = await hash(usuario.getSenha(), 10);
 
@@ -73,7 +73,7 @@ export class UsuarioService {
 
     await cursoService.checksCursoExistsById(usuario.getCursoId());
 
-    await campusService.checksCampusExistsById(usuario.getCampusId());
+    if(usuario.getCampusId()) await campusService.checksCampusExistsById(usuario.getCampusId()!);
 
     const emailExists = await usuariosRepository.getUsuarioByEmail(usuario.getEmail());
 
