@@ -8,7 +8,6 @@ import dotenv from 'dotenv';
 import swaggerDocument from './swagger-config/swagger.json';
 import cors from 'cors';
 import { NextFunction, Request, Response } from 'express';
-// import { isAuthenticated } from './middlewares/isAuthenticated';
 
 dotenv.config();
 
